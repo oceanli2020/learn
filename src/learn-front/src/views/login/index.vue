@@ -3,35 +3,38 @@
     <el-form :model="loginForm" :rules="loginRules" class="login-form">
       <h3 class="title">{{ title }}</h3>
       <el-form-item prop="username">
-        <el-input v-model="loginForm.username" type="text"  placeholder="用户名">
+        <el-input v-model="loginForm.username" type="text" placeholder="用户名">
         </el-input>
       </el-form-item>
-
-       <el-form-item prop="password">
-        <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码">
+      <el-form-item prop="password">
+        <el-input
+          v-model="loginForm.password"
+          type="password"
+          auto-complete="off"
+          placeholder="密码"
+        >
         </el-input>
       </el-form-item>
-       <el-form-item>
+      <el-form-item>
         <el-input
           v-model="loginForm.validateCode"
-          prop="validateCode"
           class="identify"
           type="text"
           auto-complete="off"
           placeholder="验证码"
         >
         </el-input>
-
+        <span class="vali"> {{ code }}</span>
       </el-form-item>
       <el-form-item>
-        <el-button
-          type="primary"
-          style="width:100%;"
-          @click.native.prevent="handleLogin"
-        >
-          <span >登 录</span>
+        <el-button type="primary" style="width:100%;">
+          <span>登  录</span>
         </el-button>
       </el-form-item>
+      <div class="re">
+          <el-link @click="retrievePwd">忘记密码</el-link>
+      |   <el-link >注册</el-link>
+      </div>
     </el-form>
   </div>
 </template>
@@ -42,50 +45,74 @@ export default {
   data () {
     return {
       title: '登录',
-      identify: '',
-      md5Pwd: '',
+      code: '',
       loginForm: {
         username: '',
-        password: '',
-        // validateCode: '',
-        rememberMe: false
+        password: ''
       },
       loginRules: {
         username: [
           { required: true, trigger: 'blur', message: '用户名不能为空' }
         ],
-        password: [
-          { required: true, trigger: 'blur', message: '密码不能为空' }
-        ],
-        validateCode: [
-          { required: true, trigger: 'blur', message: '验证码不能为空' }
-        ]
-      },
-      loading: false,
-      redirect: undefined
+        password: [{ required: true, trigger: 'blur', message: '密码不能为空' }]
+      }
     }
-  },
-  watch: {
-    $route: {
-      handler: function (route) {
-        this.redirect = route.query && route.query.redirect
-      },
-      immediate: true
-    }
-  },
-  created () {
-    this.requestConfig()
-    this.getCookie()
   },
   mounted () {
-    this.getIdentify()
+    this.createCode()
   },
   methods: {
 
-    getIdentify () {
-      this.identify = new Date().getTime()
+    retrievePwd () {
+      this.$router.push('retrieve')
+    },
+    createCode () {
+      var codeLength = 4 // 验证码的长度
+      // eslint-disable-next-line no-array-constructor
+      var random = new Array(
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'G',
+        'H',
+        'I',
+        'J',
+        'K',
+        'L',
+        'M',
+        'N',
+        'O',
+        'P',
+        'Q',
+        'R',
+        'S',
+        'T',
+        'U',
+        'V',
+        'W',
+        'X',
+        'Y',
+        'Z'
+      ) // 随机数
+      for (var i = 0; i < codeLength; i++) {
+        // 循环操作
+        var index = Math.floor(Math.random() * 36) // 取得随机数的索引（0~35）
+        this.code += random[index] // 根据索引取得随机数加到code上
+      }
     }
-
   }
 }
 </script>
@@ -100,42 +127,30 @@ export default {
   background-position: top center;
 }
 .title {
-  margin: 0px auto 30px;
+  margin: 0px auto 25px;
   font-size: 24px;
   text-align: center;
   color: #333;
 }
-
 .login-form {
   position: relative;
   border-radius: 6px;
   background: #ffffff;
   width: 382px;
   padding: 35px 35px 15px;
-  .el-input {
-    height: 42px;
-    input {
-      height: 42px;
-      border-radius: 2px;
-    }
-    &.identify {
-      width: auto;
-      margin-right: 132px;
-    }
-  }
-  .identify + img {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 122px;
-    height: 42px;
-    border: 1px solid #eee;
-    cursor: pointer;
-  }
 }
-.login-tip {
-  font-size: 13px;
-  text-align: center;
-  color: #bfbfbf;
+.el-input {
+  height: 42px;
+  border-radius: 2px;
+}
+.identify {
+  width: auto;
+  margin-right: 70px;
+}
+.vali {
+  font-size: 20px;
+}
+.re{
+ margin-left: 284px;
 }
 </style>

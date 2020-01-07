@@ -37,7 +37,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .brand {
   float: left;
   min-width: 200px;

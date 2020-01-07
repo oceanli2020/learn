@@ -20,6 +20,15 @@ export const constantRouterMap = [{
   },
   component: () => import('@/views/homepage/index'),
   hidden: true
+},
+{
+  path: '/retrieve',
+  meta: {
+    title: '找回密码',
+    noCache: true
+  },
+  component: () => import('@/views/retrievepwd/index'),
+  hidden: true
 }
 ]
 

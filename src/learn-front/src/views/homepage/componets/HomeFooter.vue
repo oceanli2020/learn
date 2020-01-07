@@ -83,4 +83,7 @@ export default {
   height:150px;
 
 }
+.img{
+  width: 100%;
+}
 </style>

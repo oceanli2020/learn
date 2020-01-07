@@ -83,6 +83,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 /* scoped  即下列css代码只在当前组件有效 */
 .el-row {

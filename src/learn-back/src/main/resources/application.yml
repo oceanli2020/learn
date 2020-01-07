@@ -1,0 +1,4 @@
+server:
+  port: 8088
+
+allowed.origins: http://localhost:8080

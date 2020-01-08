@@ -1,6 +1,11 @@
 <template>
   <div class="login">
-    <el-form :model="loginForm" :rules="loginRules" class="login-form">
+    <el-form
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      ref="loginForm"
+    >
       <h3 class="title">{{ title }}</h3>
       <el-form-item prop="username">
         <el-input v-model="loginForm.username" type="text" placeholder="用户名">
@@ -15,7 +20,7 @@
         >
         </el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item >
         <el-input
           v-model="loginForm.validateCode"
           class="identify"
@@ -27,13 +32,12 @@
         <span class="vali"> {{ code }}</span>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" style="width:100%;">
-          <span>登  录</span>
+        <el-button type="primary" style="width:100%;" @click="login">
+          <span>登 录</span>
         </el-button>
       </el-form-item>
       <div class="re">
-          <el-link @click="retrievePwd">忘记密码</el-link>
-      |   <el-link >注册</el-link>
+        <el-link>注册</el-link>
       </div>
     </el-form>
   </div>
@@ -48,13 +52,16 @@ export default {
       code: '',
       loginForm: {
         username: '',
-        password: ''
+        password: '',
+        validateCode: ''
       },
       loginRules: {
         username: [
           { required: true, trigger: 'blur', message: '用户名不能为空' }
         ],
-        password: [{ required: true, trigger: 'blur', message: '密码不能为空' }]
+        password: [
+          { required: true, trigger: 'blur', message: '密码不能为空' }
+        ]
       }
     }
   },
@@ -62,9 +69,55 @@ export default {
     this.createCode()
   },
   methods: {
-
-    retrievePwd () {
-      this.$router.push('retrieve')
+    validate () {
+      // eslint-disable-next-line eqeqeq
+      if (this.loginForm.validateCode == this.code) {
+        return true
+      }
+      this.$notify.error({
+        title: '失败',
+        message: '验证码错误'
+      })
+      this.code = ''
+      this.createCode()
+      return false
+    },
+    login () {
+      var b
+      this.$refs.loginForm.validate((result) => {
+        if (result) {
+          b = true
+        } else {
+          b = false
+        }
+      })
+      // eslint-disable-next-line eqeqeq
+      if (b == false) { return }
+      // eslint-disable-next-line eqeqeq
+      if (this.validate() == false) {
+        return
+      }
+      this.$axios
+        .post('login', {
+          username: this.loginForm.username,
+          password: this.loginForm.password
+        })
+        .then(response => {
+          // eslint-disable-next-line eqeqeq
+          if (response.data == 'Error....') {
+            this.$notify.error({
+              title: '失败',
+              message: '用户名或密码错误'
+            })
+            this.code = ''
+            this.createCode()
+          } else {
+            this.$router.push('/')
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     createCode () {
       var codeLength = 4 // 验证码的长度
@@ -150,7 +203,7 @@ export default {
 .vali {
   font-size: 20px;
 }
-.re{
- margin-left: 284px;
+.re {
+  margin-left: 354px;
 }
 </style>

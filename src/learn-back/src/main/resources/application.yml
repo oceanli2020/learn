@@ -2,3 +2,14 @@ server:
   port: 8088
 
 allowed.origins: http://localhost:8080
+
+adminPath: 123
+spring:
+  datasource:
+    dynamic:
+      datasource:
+        master:
+          username: postgres
+          password: 123
+          url: jdbc:postgresql://localhost:5432/learn
+          driver-class-name: org.postgresql.Driver

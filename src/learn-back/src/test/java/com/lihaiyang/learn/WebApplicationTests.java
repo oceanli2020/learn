@@ -1,10 +1,11 @@
-package com.lihaiyang.demo;
+package com.lihaiyang.learn;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class WebApplicationTests {
 
     @Test
     void contextLoads() {

@@ -1,4 +1,4 @@
-package com.lihaiyang.demo.util;
+package com.lihaiyang.learn.utils;
 
 
 import org.springframework.beans.factory.annotation.Value;

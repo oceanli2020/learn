@@ -3,7 +3,7 @@ server:
 
 allowed.origins: http://localhost:8080
 
-adminPath: 123
+adminPath: /api/v1
 spring:
   datasource:
     dynamic:

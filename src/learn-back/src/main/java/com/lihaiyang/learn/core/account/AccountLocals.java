@@ -3,7 +3,7 @@ package com.lihaiyang.learn.core.account;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AccountLocals {
+public class   AccountLocals {
     private static final ThreadLocal<Account> ACCOUNTS = new ThreadLocal();
 
     public static Account getAccount() {

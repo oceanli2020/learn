@@ -14,7 +14,7 @@ public class UserDTO {
     private String loginName;
     @Convert
     private String password;
-    @Convert
+ /*   @Convert
     private String name;
     @Convert
     private String email;
@@ -22,7 +22,6 @@ public class UserDTO {
     private String phone;
     @Convert
     private String photo;
-
-    private String roleName;
+*/
 
 }

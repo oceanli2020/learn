@@ -12,7 +12,7 @@ public class EncryptUtils {
 
 
     public static String encryptHexString(String content) throws Exception {
-        return Hex.encodeHexString(aesEncryptToBytes(content, "oceanli0327@163.com"));
+        return Hex.encodeHexString(aesEncryptToBytes(content, "oceanlhy@163.com"));
     }
 
     public static byte[] aesEncryptToBytes(String content, String encryptKey) throws Exception {
@@ -24,7 +24,7 @@ public class EncryptUtils {
     }
 
     public static String decryptHexString(String encrypt) throws Exception {
-        return aesDecryptByBytes(Hex.decodeHex(encrypt), "oceanli0327@163.com ");
+        return aesDecryptByBytes(Hex.decodeHex(encrypt), "oceanlhy@163.com");
     }
 
     public static String aesDecryptByBytes(byte[] encryptBytes, String decryptKey) throws Exception {

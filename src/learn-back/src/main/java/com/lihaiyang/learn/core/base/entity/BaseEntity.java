@@ -24,10 +24,10 @@ public abstract class BaseEntity<T> implements Serializable {
             type = IdType.AUTO
     )
     protected Long id;
-    protected String remarks;
+ /*   protected String remarks;
     @TableLogic
     protected String delFlag;
-
+*/
 
 
 

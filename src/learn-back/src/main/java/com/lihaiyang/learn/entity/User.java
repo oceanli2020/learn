@@ -14,10 +14,10 @@ public class User extends BaseEntity<User> implements Account {
 
     private String loginName;
     private String password;
-    private String name;
+/*    private String name;
     private String email;
     private String phone;
-    private String photo;
+    private String photo;*/
 
     @Override
     public User getAccount() {

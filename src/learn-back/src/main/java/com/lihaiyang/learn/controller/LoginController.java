@@ -9,7 +9,6 @@ import com.lihaiyang.learn.core.result.ResultStatus;
 import com.lihaiyang.learn.core.utils.PasswordUtils;
 import com.lihaiyang.learn.core.utils.TokenUtils;
 import com.lihaiyang.learn.core.utils.UserAgentUtils;
-import com.lihaiyang.learn.core.utils.UserUtils;
 import com.lihaiyang.learn.dto.LoginDTO;
 import com.lihaiyang.learn.dto.LoginInDTO;
 import com.lihaiyang.learn.dto.UserDTO;
@@ -59,7 +58,6 @@ public class LoginController {
             ObjectConvert<UserDTO> objectToDto = new ObjectConvert();
             UserDTO userDTO = new UserDTO();
             userDTO = (UserDTO)objectToDto.toDto(user, userDTO);
-            userDTO.setRoleName("root");
             loginDTO.setUserDTO(userDTO);
             return ResponseEntity.ok(Result.ofSuccess(loginDTO));
         } else {

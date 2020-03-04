@@ -56,7 +56,7 @@
 <script scoped>
 export default {
   name: 'Carousel',
-  data () {
+  data() {
     return {
       imgList: [
         { id: 0, idView: require('@/assets/carousel/carousel_first.jpg') },
@@ -66,7 +66,6 @@ export default {
       ]
     }
   }
-
 }
 </script>
 
@@ -90,7 +89,7 @@ export default {
   width: 1000px;
   position: absolute;
   left: 459px;
-  top: 165px;
+  top: 120px;
 }
 .img {
   width: 100%;

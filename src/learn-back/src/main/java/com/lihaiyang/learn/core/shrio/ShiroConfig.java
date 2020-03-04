@@ -76,6 +76,7 @@ public class ShiroConfig {
     protected ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
         chainDefinition.addPathDefinition("/api/v1/login", "anon");
+        chainDefinition.addPathDefinition("/api/v1/token", "anon");
         chainDefinition.addPathDefinition("/logout", "anon");
         chainDefinition.addPathDefinition("/**", "noSessionCreation,authcToken");
         return chainDefinition;

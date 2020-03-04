@@ -1,12 +1,20 @@
 <template>
   <div class="homepage">
     <el-container>
-      <el-header><horizontal-menu /></el-header>
-      <el-main><carousel /></el-main>
+      <el-header>
+        <horizontal-menu />
+      </el-header>
+      <el-main>
+        <carousel />
+      </el-main>
     </el-container>
     <el-container>
-      <el-main><course-display /></el-main>
-      <el-footer style="height:200px"><home-footer /></el-footer>
+      <el-main>
+        <course-display />
+      </el-main>
+      <el-footer style="height:200px">
+        <home-footer />
+      </el-footer>
     </el-container>
   </div>
 </template>
@@ -24,10 +32,8 @@ export default {
     CourseDisplay,
     HomeFooter
   },
-  data () {
-    return {
-
-    }
+  data() {
+    return {}
   }
 }
 </script>

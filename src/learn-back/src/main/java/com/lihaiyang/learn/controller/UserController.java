@@ -45,6 +45,10 @@ public class UserController {
     public Result info() {
         UserDTO userDTO = new UserDTO();
         User user = UserUtils.getUser();
+        if(user==null)
+        {
+            return Result.ofSuccess(null);
+        }
         ObjectConvert<UserDTO> objectToDto = new ObjectConvert();
         userDTO = (UserDTO)objectToDto.toDto(user, userDTO);
         return Result.ofSuccess(userDTO);

@@ -17,7 +17,7 @@ public class LoginServiceImpl implements ILoginService {
     @Override
     public String getToken(String refreshToken, HttpServletRequest request) {
         if (StringUtils.isBlank(refreshToken)) {
-            throw new UnauthorizedException("refreshToken验证失败");
+            throw new UnauthorizedException("refreshToken为空");
         } else {
             TokenUtils.RefreshToken rToken = TokenUtils.parseRefreshToken(refreshToken);
             boolean isSameUa = rToken.getUserAgent().equals(HttpUtils.getUserUAInfo(rToken.getUserId()));
@@ -26,7 +26,7 @@ public class LoginServiceImpl implements ILoginService {
             if (isSameUa && isNotExp) {
                 return TokenUtils.createToken(rToken.getUserId(), UserAgentUtils.getDeviceType(request).getName());
             } else {
-                throw new UnauthorizedException("refreshToken验证失败");
+                throw new UnauthorizedException("refreshToken错误或已过期");
             }
         }
     }

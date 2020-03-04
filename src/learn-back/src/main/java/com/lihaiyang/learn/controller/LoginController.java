@@ -17,7 +17,6 @@ import com.lihaiyang.learn.service.ILoginService;
 import com.lihaiyang.learn.service.IUserService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,8 +38,7 @@ public class LoginController {
      * 用户登录
      * */
     @PostMapping({"${adminPath}/login"})
-    public ResponseEntity<Result> login(@RequestBody LoginInDTO loginInDTO, HttpServletRequest request) {
-
+    public Result login(@RequestBody LoginInDTO loginInDTO, HttpServletRequest request) {
         String username = loginInDTO.getUsername();
         String password = loginInDTO.getPassword();
         LoginDTO loginDTO = new LoginDTO();
@@ -48,6 +46,9 @@ public class LoginController {
         query.setLoginName(username);
         //根据用户名在数据库查询得到对应用户
         User user = this.userService.getOne(Wrappers.query(query));
+        if(user==null) {
+            return new Result(ResultStatus.USER_NOT_FOUND, "登陆失败");
+        }
         //ThreadLocal
         AccountLocals.setAccount(user);
         //判断输入密码是否正确
@@ -59,9 +60,9 @@ public class LoginController {
             UserDTO userDTO = new UserDTO();
             userDTO = (UserDTO)objectToDto.toDto(user, userDTO);
             loginDTO.setUserDTO(userDTO);
-            return ResponseEntity.ok(Result.ofSuccess(loginDTO));
+            return Result.ofSuccess(loginDTO);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Result(ResultStatus.USERNAME_OR_PASSWORD_ERROR, "登陆失败"));
+            return new Result(ResultStatus.USER_PASS_EDIT_FAIL, "登陆失败");
         }
 
     }
@@ -81,6 +82,7 @@ public class LoginController {
      * */
    @GetMapping({"${adminPath}/token"})
     public Result refreshToken(String refreshToken, HttpServletRequest request) {
+       System.out.println(refreshToken);
         String token = this.loginService.getToken(refreshToken, request);
         return Result.ofSuccess(token);
     }

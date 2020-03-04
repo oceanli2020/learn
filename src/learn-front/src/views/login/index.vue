@@ -1,38 +1,25 @@
 <template>
   <div class="login">
-    <el-form
-      :model="loginForm"
-      :rules="loginRules"
-      class="login-form"
-      ref="loginForm"
-    >
+    <el-form :model="loginForm" :rules="loginRules" class="login-form" ref="loginForm">
       <h3 class="title">{{ title }}</h3>
       <el-form-item prop="username">
-        <el-input v-model="loginForm.username" type="text" placeholder="用户名">
-        </el-input>
+        <el-input placeholder="用户名" type="text" v-model="loginForm.username"></el-input>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input
-          v-model="loginForm.password"
-          type="password"
-          auto-complete="off"
-          placeholder="密码"
-        >
-        </el-input>
-      </el-form-item>
-      <el-form-item >
-        <el-input
-          v-model="loginForm.validateCode"
-          class="identify"
-          type="text"
-          auto-complete="off"
-          placeholder="验证码"
-        >
-        </el-input>
-        <span class="vali"> {{ code }}</span>
+        <el-input auto-complete="off" placeholder="密码" type="password" v-model="loginForm.password"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" style="width:100%;" @click="login">
+        <el-input
+          auto-complete="off"
+          class="identify"
+          placeholder="验证码"
+          type="text"
+          v-model="loginForm.validateCode"
+        ></el-input>
+        <span class="vali">{{ code }}</span>
+      </el-form-item>
+      <el-form-item>
+        <el-button @click="login" style="width:100%;" type="primary">
           <span>登 录</span>
         </el-button>
       </el-form-item>
@@ -46,7 +33,7 @@
 <script>
 export default {
   name: 'Login',
-  data () {
+  data() {
     return {
       title: '登录',
       code: '',
@@ -59,17 +46,15 @@ export default {
         username: [
           { required: true, trigger: 'blur', message: '用户名不能为空' }
         ],
-        password: [
-          { required: true, trigger: 'blur', message: '密码不能为空' }
-        ]
+        password: [{ required: true, trigger: 'blur', message: '密码不能为空' }]
       }
     }
   },
-  mounted () {
+  mounted() {
     this.createCode()
   },
   methods: {
-    validate () {
+    validate() {
       // eslint-disable-next-line eqeqeq
       if (this.loginForm.validateCode == this.code) {
         return true
@@ -78,48 +63,42 @@ export default {
         title: '失败',
         message: '验证码错误'
       })
+      this.loginForm.validateCode = ''
       this.code = ''
       this.createCode()
       return false
     },
-    login () {
-      var b
-      this.$refs.loginForm.validate((result) => {
-        if (result) {
-          b = true
+    login() {
+      var b = this.validate()
+      if (b === false) return
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.$store
+            .dispatch('login', this.loginForm)
+            .then(res => {
+              if (res.data.code === 200) {
+                this.$router.push('/')
+              } else {
+                this.$notify.error({
+                  title: '失败',
+                  message: res.data.message
+                })
+                this.loginForm.validateCode = ''
+                this.loginForm.username = ''
+                this.loginForm.password = ''
+                this.code = ''
+                this.createCode()
+              }
+            })
+            .catch(error => {
+              console.log(error)
+            })
         } else {
-          b = false
+          console.log('error submit!!')
         }
       })
-      // eslint-disable-next-line eqeqeq
-      if (b == false) { return }
-      // eslint-disable-next-line eqeqeq
-      if (this.validate() == false) {
-        return
-      }
-      this.$axios
-        .post('login', {
-          username: this.loginForm.username,
-          password: this.loginForm.password
-        })
-        .then(response => {
-          // eslint-disable-next-line eqeqeq
-          if (response.data == 'Error....') {
-            this.$notify.error({
-              title: '失败',
-              message: '用户名或密码错误'
-            })
-            this.code = ''
-            this.createCode()
-          } else {
-            this.$router.push('/')
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
     },
-    createCode () {
+    createCode() {
       var codeLength = 4 // 验证码的长度
       // eslint-disable-next-line no-array-constructor
       var random = new Array(

@@ -32,3 +32,16 @@ export function info() {
     method: 'get'
   })
 }
+export function register(userName, password, email, phoneNumber) {
+  const data = {
+    userName,
+    password,
+    email,
+    phoneNumber
+  }
+  return request({
+    url: adminPath + '/sys/user/register',
+    method: 'post',
+    data
+  })
+}

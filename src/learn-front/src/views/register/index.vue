@@ -15,7 +15,7 @@
 import Header from './Header'
 import Main from './Main'
 export default {
-  name: 'Login',
+  name: 'Register',
   components: {
     Header,
     Main

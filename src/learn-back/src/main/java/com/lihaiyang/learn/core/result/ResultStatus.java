@@ -11,6 +11,8 @@ public enum ResultStatus {
     USER_NOT_FOUND(-1002, "用户不存在"),
     DATA_NOT_NULL(-1004, "字段不能为空"),
     USER_ALREADY_EXIST(-1005, "用户已存在"),
+    EMAIL_ALREADY_EXIST(-1006, "邮箱已被注册"),
+    PHONENUMBER_ALREADY_EXIST(-1007, "手机号码已被注册"),
     USER_PASS_EDIT_FAIL(-1008, "密码不正确"),
     DATA_NOT_POWER(-4004, "无权操作");
 

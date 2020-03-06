@@ -12,12 +12,12 @@ import lombok.Data;
 public class User extends BaseEntity<User> implements Account {
     private static final long serialVersionUID = 1L;
 
-    private String loginName;
+    private String userName;
     private String password;
-/*    private String name;
+    private String realName;
     private String email;
-    private String phone;
-    private String photo;*/
+    private String phoneNumber;
+    private String profilePhoto;
 
     @Override
     public User getAccount() {

@@ -43,7 +43,7 @@ public class LoginController {
         String password = loginInDTO.getPassword();
         LoginDTO loginDTO = new LoginDTO();
         User query = new User();
-        query.setLoginName(username);
+        query.setUserName(username);
         //根据用户名在数据库查询得到对应用户
         User user = this.userService.getOne(Wrappers.query(query));
         if(user==null) {

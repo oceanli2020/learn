@@ -5,7 +5,7 @@ import { refreshToken } from '@/api/login'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: 'http://localhost:8088' // api 的 base_url  use proxy table
+  baseURL: 'http://localhost:8088' // api 的 base_url
 })
 
 // request interceptor
@@ -24,8 +24,9 @@ service.interceptors.request.use(
     Promise.reject(error)
   }
 )
-let retryRequest = [] // 存放token 过期的请求
+let retryRequest = [] // 存放token过期的请求
 let isRefresh = false // 是否在请求新的token
+
 // response interceptor
 service.interceptors.response.use(
   res => {

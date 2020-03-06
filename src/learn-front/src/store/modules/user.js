@@ -40,7 +40,7 @@ const user = {
               commit('SET_REFRESH_TOKEN', data.data.refreshToken)
               setToken(data.data.token)
               setRefreshToken(data.data.refreshToken)
-              commit('SET_USER_NAME', data.data.userDTO.loginName)
+              commit('SET_USER_NAME', data.data.userDTO.userName)
             }
             resolve(response)
           })

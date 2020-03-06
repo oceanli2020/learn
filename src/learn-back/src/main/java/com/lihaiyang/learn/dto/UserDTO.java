@@ -8,20 +8,17 @@ import lombok.Data;
 @Data
 public class UserDTO {
 
+
     @Convert
-    private Long id;
+    private String userName;
     @Convert
-    private String loginName;
-    @Convert
-    private String password;
- /*   @Convert
-    private String name;
+    private String realName;
     @Convert
     private String email;
     @Convert
-    private String phone;
+    private String phoneNumber;
     @Convert
-    private String photo;
-*/
+    private String profilePhoto;
+
 
 }

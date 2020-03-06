@@ -3,21 +3,21 @@
     <el-link type="primary" class="brand" href="http://localhost:8080/">在线教育平台</el-link>
     <div class="left-menu" style="cursor: pointer; margin-right:300px">
       <el-menu class="el-menu" mode="horizontal">
-        <el-menu-item>处理中心</el-menu-item>
-        <el-menu-item>处理中心</el-menu-item>
-        <el-menu-item>处理中心</el-menu-item>
+        <el-menu-item>功能优势</el-menu-item>
+        <el-menu-item>企业合作</el-menu-item>
+        <el-menu-item>帮助中心</el-menu-item>
       </el-menu>
     </div>
     <div v-if="change">
       <el-input v-model="input" placeholder="请输入内容" class="select"></el-input>
-      <el-button type="info" style="margin-right:100px" icon="el-icon-search" @click="test">搜索</el-button>
-      <el-button type="success" style="margin-right:10px;margin-top:15px">开课</el-button>
+      <el-button type="info" style="margin-right:100px" icon="el-icon-search">搜索</el-button>
+      <el-button type="success" style="margin-right:10px;margin-top:15px" @click="test">开课</el-button>
       <el-button type="primary" @click="toLogin">登录 &nbsp;| &nbsp; 注册</el-button>
     </div>
     <div v-else>
       <el-input v-model="input" placeholder="请输入内容" class="select"></el-input>
-      <el-button type="info" style="margin-right:100px" icon="el-icon-search" @click="test">搜索</el-button>
-      <el-button type="success" style="margin-right:10px;margin-top:15px">开课</el-button>
+      <el-button type="info" style="margin-right:100px" icon="el-icon-search">搜索</el-button>
+      <el-button type="success" style="margin-right:10px;margin-top:15px" @click="test">开课</el-button>
       <el-dropdown @command="handleCommand">
         <el-button type="primary">
           <span>{{username | ellipsis}}</span>
@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     toLogin() {
-      this.$router.push('login')
+      this.$router.push('/login')
     },
     info() {
       if (store.getters.username) {
@@ -77,7 +77,7 @@ export default {
     test() {
       info()
         .then(res => {
-          alert(res.data.data.loginName)
+          alert(res.data.data.userName)
         })
         .catch(err => {
           alert('请登录后操作')

@@ -45,8 +45,9 @@
   </div>
 </template>
 
-<script scoped>
+<script>
 import store from '@/store'
+
 export default {
   name: 'HorizontalMenu',
   inject: ['reload'],

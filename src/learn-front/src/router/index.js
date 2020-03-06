@@ -31,6 +31,15 @@ export const constantRouterMap = [
     },
     component: () => import('@/views/register/index'),
     hidden: true
+  },
+  {
+    path: '/personal',
+    meta: {
+      title: '个人主页',
+      noCache: true
+    },
+    component: () => import('@/views/personal/index'),
+    hidden: true
   }
 ]
 

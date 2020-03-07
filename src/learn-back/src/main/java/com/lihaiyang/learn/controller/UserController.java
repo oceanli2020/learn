@@ -1,19 +1,19 @@
 package com.lihaiyang.learn.controller;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+
 import com.lihaiyang.learn.core.config.MobileProperties;
 import com.lihaiyang.learn.core.convert.ObjectConvert;
 import com.lihaiyang.learn.core.result.Result;
+import com.lihaiyang.learn.core.result.ResultStatus;
 import com.lihaiyang.learn.core.utils.PasswordUtils;
 import com.lihaiyang.learn.core.utils.UserUtils;
 import com.lihaiyang.learn.dto.UserDTO;
 import com.lihaiyang.learn.entity.User;
 import com.lihaiyang.learn.service.IUserService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 @RestController
 @RequestMapping({"${adminPath}/sys/user"})
@@ -28,19 +28,7 @@ public class UserController {
 
 
     /**
-     * 新增用户
-     * */
- /*   @PostMapping
-    public Result save(@RequestBody User user) {
-        String password = PasswordUtils.entryptPassword(this.mobileProperties.getInitialPassword());
-        user.setPassword(password);
-        user.setDelFlag("0");
-        this.userService.save(user);
-        return Result.ofSuccess("保存用户" + user.getUserName() + "成功");
-    }*/
-
-    /**
-     * 注册用户
+     * 用户注册
      */
     @PostMapping({"register"})
     public List<Result> register(@RequestBody User user) {
@@ -58,19 +46,47 @@ public class UserController {
 
 
     /**
-     * 当前用户信息
+     * 获取当前用户信息
      */
-    @GetMapping({"info"})
+    @GetMapping
     public Result info() {
         UserDTO userDTO = new UserDTO();
         User user = UserUtils.getUser();
-        if (user == null) {
-            return Result.ofSuccess(null);
-        }
         ObjectConvert<UserDTO> objectToDto = new ObjectConvert();
         userDTO = (UserDTO) objectToDto.toDto(user, userDTO);
         return Result.ofSuccess(userDTO);
     }
 
+    /**
+     * 当前用户密码验证
+     */
+    @GetMapping({"checkpass"})
+    public Result checkPass(String passwordInput) {
+        User user = UserUtils.getUser();
+        if(PasswordUtils.validatePassword(passwordInput, user.getPassword())){
+            return Result.ofSuccess("密码正确");
+        }
+        return  new Result(ResultStatus.USER_PASS_EDIT_FAIL,"密码错误");
+
+    }
+    /**
+     * 用户修改个人信息
+     */
+    @PutMapping
+    public Result update(@RequestBody User userEntity) {
+        if(userEntity.getPassword().equals("******")){
+            userEntity.setPassword(null);
+        }else {
+            userEntity.setPassword(PasswordUtils.entryptPassword(userEntity.getPassword()));
+        }
+        User user = UserUtils.getUser();
+        boolean b = this.userService.update(userEntity, Wrappers.query(user));
+        if (b == false) {
+            return new Result(ResultStatus.FAIL,"修改失败");
+        }
+        return Result.ofSuccess("修改成功");
+
+
+    }
 
 }

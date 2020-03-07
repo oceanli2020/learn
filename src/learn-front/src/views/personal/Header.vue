@@ -1,6 +1,8 @@
 <template>
   <div style="margin-left:100px;margin-right:100px;margin-top:10px">
-    <el-link type="primary" class="brand" href="http://localhost:8080/">在线教育平台</el-link>
+    <el-link type="primary" class="brand" href="http://localhost:8080/"
+      >在线教育平台</el-link
+    >
     <div class="left-menu" style="cursor: pointer; margin-right:300px">
       <el-menu class="el-menu" mode="horizontal">
         <el-menu-item>功能优势</el-menu-item>
@@ -9,15 +11,37 @@
       </el-menu>
     </div>
     <div v-if="change">
-      <el-input v-model="input" placeholder="请输入内容" class="select" size="medium"></el-input>
-      <el-button type="info" style="margin-right:120px" icon="el-icon-search" size="medium">搜索</el-button>
+      <el-input
+        v-model="input"
+        placeholder="请输入内容"
+        class="select"
+        size="medium"
+      ></el-input>
+      <el-button
+        type="info"
+        style="margin-right:120px"
+        icon="el-icon-search"
+        size="medium"
+        >搜索</el-button
+      >
       <el-link :underline="false" style="margin-right:20px">开课</el-link>
       <el-link :underline="false" @click="toLogin">登录 | 注册</el-link>
       <!-- <el-button type="primary" @click="toLogin">登录 &nbsp;| &nbsp; 注册</el-button> -->
     </div>
     <div v-else>
-      <el-input v-model="input" placeholder="请输入内容" class="select" size="medium"></el-input>
-      <el-button type="info" style="margin-right:120px" icon="el-icon-search" size="medium">搜索</el-button>
+      <el-input
+        v-model="input"
+        placeholder="请输入内容"
+        class="select"
+        size="medium"
+      ></el-input>
+      <el-button
+        type="info"
+        style="margin-right:120px"
+        icon="el-icon-search"
+        size="medium"
+        >搜索</el-button
+      >
       <el-link :underline="false" style="margin-right:20px">开课</el-link>
       <el-avatar :size="medium" :src="circleUrl" class="avatar"></el-avatar>
       <el-dropdown @command="handleCommand" show-timeout="0" hide-timeout="100">
@@ -30,8 +54,8 @@
           class="item"
         >
           <el-link :underline="false">
-            <span>{{username | ellipsis}}</span>
-          </el-link>b
+            <span>{{ username | ellipsis }}</span> </el-link
+          >b
         </el-tooltip>
         <i class="el-icon-arrow-down el-icon--right"></i>
         <el-dropdown-menu slot="dropdown">

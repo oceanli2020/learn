@@ -17,31 +17,12 @@ export function refreshToken(refreshToken) {
   return request({
     url: adminPath + '/token',
     method: 'get',
-    params: { refreshToken: refreshToken }
+    params: { refreshToken }
   })
 }
 export function logout() {
   return request({
     url: '/logout',
     method: 'get'
-  })
-}
-export function info() {
-  return request({
-    url: adminPath + '/sys/user/info',
-    method: 'get'
-  })
-}
-export function register(userName, password, email, phoneNumber) {
-  const data = {
-    userName,
-    password,
-    email,
-    phoneNumber
-  }
-  return request({
-    url: adminPath + '/sys/user/register',
-    method: 'post',
-    data
   })
 }

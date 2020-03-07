@@ -45,7 +45,7 @@
   </div>
 </template>
 
-<script scoped>
+<script>
 import store from '@/store'
 export default {
   name: 'HorizontalMenu',
@@ -55,7 +55,7 @@ export default {
       input: '',
       username: '',
       change: true,
-      circleUrl: require('@/assets/avatar.jpg')
+      circleUrl: require('@/assets/avatar.jpg') // 暂时写死
     }
   },
   mounted() {

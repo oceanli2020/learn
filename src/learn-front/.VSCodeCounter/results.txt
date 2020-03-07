@@ -1,0 +1,103 @@
+Date : 2020-03-07 18:52:35
+Directory : d:\Project\learn\src\learn-front
+Total : 53 files,  19751 codes, 150 comments, 226 blanks, all 20127 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          3 |     16,909 |          0 |          3 |     16,912 |
+| Vue        |         17 |      1,818 |         27 |         66 |      1,911 |
+| JavaScript |         29 |        980 |        122 |        141 |      1,243 |
+| Markdown   |          1 |         20 |          0 |         11 |         31 |
+| HTML       |          1 |         11 |          1 |          1 |         13 |
+| Properties |          1 |          8 |          0 |          2 |         10 |
+| Ignore     |          1 |          5 |          0 |          2 |          7 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                             | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                |         53 |     19,751 |        150 |        226 |     20,127 |
+| build                                                                            |          7 |        466 |         40 |         55 |        561 |
+| config                                                                           |          4 |         47 |         30 |         21 |         98 |
+| src                                                                              |         26 |      2,117 |         44 |        103 |      2,264 |
+| src\api                                                                          |          2 |         69 |          0 |          7 |         76 |
+| src\router                                                                       |          1 |         49 |          0 |          5 |         54 |
+| src\store                                                                        |          3 |         84 |          3 |         10 |         97 |
+| src\store\modules                                                                |          1 |         66 |          3 |          5 |         74 |
+| src\utils                                                                        |          2 |         77 |          8 |         11 |         96 |
+| src\views                                                                        |         16 |      1,776 |         25 |         63 |      1,864 |
+| src\views\homepage                                                               |          5 |        578 |          7 |         22 |        607 |
+| src\views\homepage\componets                                                     |          4 |        527 |          7 |         19 |        553 |
+| src\views\login                                                                  |          3 |        251 |          3 |          9 |        263 |
+| src\views\personal                                                               |          5 |        678 |         12 |         22 |        712 |
+| src\views\register                                                               |          3 |        269 |          3 |         10 |        282 |
+| test                                                                             |          7 |        142 |         25 |         24 |        191 |
+| test\e2e                                                                         |          4 |        103 |         22 |         19 |        144 |
+| test\e2e\custom-assertions                                                       |          1 |         18 |          8 |          2 |         28 |
+| test\e2e\specs                                                                   |          1 |         12 |          5 |          3 |         20 |
+| test\unit                                                                        |          3 |         39 |          3 |          5 |         47 |
+| test\unit\specs                                                                  |          1 |         10 |          0 |          2 |         12 |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                         | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| d:\Project\learn\src\learn-front\.editorconfig                                   | Properties |          8 |          0 |          2 |         10 |
+| d:\Project\learn\src\learn-front\.eslintignore                                   | Ignore     |          5 |          0 |          2 |          7 |
+| d:\Project\learn\src\learn-front\.eslintrc.js                                    | JavaScript |         19 |          8 |          2 |         29 |
+| d:\Project\learn\src\learn-front\.postcssrc.js                                   | JavaScript |          7 |          2 |          2 |         11 |
+| d:\Project\learn\src\learn-front\.prettierrc                                     | JSON       |          4 |          0 |          1 |          5 |
+| d:\Project\learn\src\learn-front\README.md                                       | Markdown   |         20 |          0 |         11 |         31 |
+| d:\Project\learn\src\learn-front\build\build.js                                  | JavaScript |         35 |          0 |          7 |         42 |
+| d:\Project\learn\src\learn-front\build\check-versions.js                         | JavaScript |         45 |          0 |         10 |         55 |
+| d:\Project\learn\src\learn-front\build\utils.js                                  | JavaScript |         80 |          5 |         17 |        102 |
+| d:\Project\learn\src\learn-front\build\vue-loader.conf.js                        | JavaScript |         21 |          0 |          2 |         23 |
+| d:\Project\learn\src\learn-front\build\webpack.base.conf.js                      | JavaScript |         85 |          4 |          4 |         93 |
+| d:\Project\learn\src\learn-front\build\webpack.dev.conf.js                       | JavaScript |         82 |          7 |          7 |         96 |
+| d:\Project\learn\src\learn-front\build\webpack.prod.conf.js                      | JavaScript |        118 |         24 |          8 |        150 |
+| d:\Project\learn\src\learn-front\config\dev.env.js                               | JavaScript |          6 |          0 |          2 |          8 |
+| d:\Project\learn\src\learn-front\config\index.js                                 | JavaScript |         31 |         30 |         16 |         77 |
+| d:\Project\learn\src\learn-front\config\prod.env.js                              | JavaScript |          4 |          0 |          1 |          5 |
+| d:\Project\learn\src\learn-front\config\test.env.js                              | JavaScript |          6 |          0 |          2 |          8 |
+| d:\Project\learn\src\learn-front\index.html                                      | HTML       |         11 |          1 |          1 |         13 |
+| d:\Project\learn\src\learn-front\package-lock.json                               | JSON       |     16,810 |          0 |          1 |     16,811 |
+| d:\Project\learn\src\learn-front\package.json                                    | JSON       |         95 |          0 |          1 |         96 |
+| d:\Project\learn\src\learn-front\src\App.vue                                     | Vue        |         42 |          2 |          3 |         47 |
+| d:\Project\learn\src\learn-front\src\api\login.js                                | JavaScript |         26 |          0 |          3 |         29 |
+| d:\Project\learn\src\learn-front\src\api\user.js                                 | JavaScript |         43 |          0 |          4 |         47 |
+| d:\Project\learn\src\learn-front\src\main.js                                     | JavaScript |         20 |          6 |          4 |         30 |
+| d:\Project\learn\src\learn-front\src\router\index.js                             | JavaScript |         49 |          0 |          5 |         54 |
+| d:\Project\learn\src\learn-front\src\store\getters.js                            | JavaScript |          6 |          0 |          1 |          7 |
+| d:\Project\learn\src\learn-front\src\store\index.js                              | JavaScript |         12 |          0 |          4 |         16 |
+| d:\Project\learn\src\learn-front\src\store\modules\user.js                       | JavaScript |         66 |          3 |          5 |         74 |
+| d:\Project\learn\src\learn-front\src\utils\auth.js                               | JavaScript |         21 |          0 |          6 |         27 |
+| d:\Project\learn\src\learn-front\src\utils\request.js                            | JavaScript |         56 |          8 |          5 |         69 |
+| d:\Project\learn\src\learn-front\src\views\homepage\componets\Carousel.vue       | Vue        |        224 |          0 |          5 |        229 |
+| d:\Project\learn\src\learn-front\src\views\homepage\componets\CourseDisplay.vue  | Vue        |         95 |          2 |          3 |        100 |
+| d:\Project\learn\src\learn-front\src\views\homepage\componets\HomeFooter.vue     | Vue        |         82 |          2 |          6 |         90 |
+| d:\Project\learn\src\learn-front\src\views\homepage\componets\HorizontalMenu.vue | Vue        |        126 |          3 |          5 |        134 |
+| d:\Project\learn\src\learn-front\src\views\homepage\index.vue                    | Vue        |         51 |          0 |          3 |         54 |
+| d:\Project\learn\src\learn-front\src\views\login\Header.vue                      | Vue        |         33 |          0 |          3 |         36 |
+| d:\Project\learn\src\learn-front\src\views\login\Main.vue                        | Vue        |        186 |          3 |          3 |        192 |
+| d:\Project\learn\src\learn-front\src\views\login\index.vue                       | Vue        |         32 |          0 |          3 |         35 |
+| d:\Project\learn\src\learn-front\src\views\personal\Footer.vue                   | Vue        |         38 |          5 |          5 |         48 |
+| d:\Project\learn\src\learn-front\src\views\personal\Header.vue                   | Vue        |        126 |          3 |          6 |        135 |
+| d:\Project\learn\src\learn-front\src\views\personal\OptionFirst.vue              | Vue        |         23 |          0 |          3 |         26 |
+| d:\Project\learn\src\learn-front\src\views\personal\OptionSecond.vue             | Vue        |        371 |          3 |          5 |        379 |
+| d:\Project\learn\src\learn-front\src\views\personal\index.vue                    | Vue        |        120 |          1 |          3 |        124 |
+| d:\Project\learn\src\learn-front\src\views\register\Header.vue                   | Vue        |         33 |          0 |          3 |         36 |
+| d:\Project\learn\src\learn-front\src\views\register\Main.vue                     | Vue        |        204 |          3 |          4 |        211 |
+| d:\Project\learn\src\learn-front\src\views\register\index.vue                    | Vue        |         32 |          0 |          3 |         35 |
+| d:\Project\learn\src\learn-front\test\e2e\custom-assertions\elementCount.js      | JavaScript |         18 |          8 |          2 |         28 |
+| d:\Project\learn\src\learn-front\test\e2e\nightwatch.conf.js                     | JavaScript |         40 |          1 |          6 |         47 |
+| d:\Project\learn\src\learn-front\test\e2e\runner.js                              | JavaScript |         33 |          8 |          8 |         49 |
+| d:\Project\learn\src\learn-front\test\e2e\specs\test.js                          | JavaScript |         12 |          5 |          3 |         20 |
+| d:\Project\learn\src\learn-front\test\unit\jest.conf.js                          | JavaScript |         27 |          3 |          1 |         31 |
+| d:\Project\learn\src\learn-front\test\unit\setup.js                              | JavaScript |          2 |          0 |          2 |          4 |
+| d:\Project\learn\src\learn-front\test\unit\specs\HelloWorld.spec.js              | JavaScript |         10 |          0 |          2 |         12 |
+| Total                                                                            |            |     19,751 |        150 |        226 |     20,127 |
++----------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

@@ -36,10 +36,10 @@
       </el-form-item>
     </el-form>
   </div>
-</template>
+</template>user
 
 <script>
-import { register } from '@/api/login'
+import { register } from '@/api/user'
 import { Notification } from 'element-ui'
 export default {
   name: 'Main',

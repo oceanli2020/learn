@@ -13,13 +13,13 @@
             default-active="2"
           >
             <el-menu-item index="1" @click="changeContent(1)">
-              <span slot="title">导航一</span>
+              <span slot="title">课程表</span>
             </el-menu-item>
             <el-menu-item index="2" @click="changeContent(2)">
               <span slot="title">个人信息</span>
             </el-menu-item>
             <el-menu-item index="3">
-              <span slot="title">导航三</span>
+              <span slot="title">我的收藏</span>
             </el-menu-item>
             <el-menu-item index="4">
               <span slot="title">导航四</span>
@@ -28,7 +28,7 @@
               <span slot="title">导航五</span>
             </el-menu-item>
             <el-menu-item index="6">
-              <span slot="title">导航六</span>
+              <span slot="title">退出登录</span>
             </el-menu-item>
           </el-menu>
         </el-aside>

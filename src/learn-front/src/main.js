@@ -8,10 +8,6 @@ import store from './store'
 import locale from 'element-ui/lib/locale/lang/en' // element的国际化
 import 'element-ui/lib/theme-chalk/index.css'
 
-/* var axios = require('axios')
-axios.defaults.baseURL = 'http://localhost:8088/'
-Vue.prototype.$axios = axios */
-
 Vue.use(ElementUI, {
   locale
 })

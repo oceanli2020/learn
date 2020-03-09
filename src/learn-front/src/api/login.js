@@ -1,6 +1,5 @@
 import request from '@/utils/request'
-
-var adminPath = '/api/v1'
+import { prefixURL } from '@/utils/global'
 
 export function login(username, password) {
   const data = {
@@ -8,14 +7,14 @@ export function login(username, password) {
     password
   }
   return request({
-    url: adminPath + '/login',
+    url: prefixURL + 'login',
     method: 'post',
     data
   })
 }
 export function refreshToken(refreshToken) {
   return request({
-    url: adminPath + '/token',
+    url: prefixURL + 'token',
     method: 'get',
     params: { refreshToken }
   })

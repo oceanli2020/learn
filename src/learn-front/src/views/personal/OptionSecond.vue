@@ -238,7 +238,7 @@
 </template>
 
 <script>
-import { info, update, checkPass } from '@/api/user'
+import { update, checkPass } from '@/api/user'
 export default {
   name: 'OptionSecond',
 
@@ -356,25 +356,38 @@ export default {
       this.imageUrl = URL.createObjectURL(file.raw)
     },
     getUserInfo() {
-      info()
-        .then(res => {
-          const data = res.data.data
-          this.user.user_name = data.userName
-          this.user.real_name = data.realName
+      this.$storestore.dispatch('getInfo').then(res => {
+        const data = res.data.data
+        this.user.user_name = data.userName
+        this.user.real_name = data.realName
+        this.user.profile_photo = data.profilePhoto
+        this.user.email = data.email
+        this.user.phone_number = data.phoneNumber
+        if (data.profilePhoto !== '') {
           this.user.profile_photo = data.profilePhoto
-          this.user.email = data.email
-          this.user.phone_number = data.phoneNumber
-          if (data.profilePhoto !== '') {
-            this.user.profile_photo = data.profilePhoto
-            this.squareUrl = require('@/' + this.user.profile_photo)
-          }
-        })
+          this.squareUrl = require('@/' + this.user.profile_photo)
+        }
+      })
         .catch(err => {
           console.log(err)
         })
     },
+    checkPassword(passwordInput) {
+      return new Promise((resolve, reject) => {
+        checkPass(passwordInput)
+          .then(res => {
+            if (res.data.code === -1008) {
+              resolve(false)
+            }
+            resolve(true)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    },
     submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
           if (formName === 'user_nameForm') {
             this.user.user_name = this.user_input.user_name
@@ -390,16 +403,28 @@ export default {
             this.user.email = this.user_input.email
           }
           if (formName === 'passwordForm') {
-            if (this.checkPassword(this.user_input.old_password) === false) {
+            try {
+              const res = await this.checkPassword(this.user_input.old_password)
+              if (res === false) {
+                this.$message({
+                  showClose: true,
+                  duration: 2500,
+                  message: '密码不正确',
+                  type: 'error'
+                })
+                this.$refs.passwordForm.resetFields()
+                return
+              }
+            } catch (error) {
+              console.log(error)
               this.$message({
                 showClose: true,
                 duration: 2500,
-                message: '密码不正确',
+                message: '提交时出错',
                 type: 'error'
               })
-              this.$refs.passwordForm.resetFields()
-              return
             }
+
             this.user.password = this.user_input.new_password
           }
           update(
@@ -494,16 +519,7 @@ export default {
         return false
       }
     },
-    checkPassword(passwordInput) {
-      checkPass(passwordInput)
-        .then(res => {
-          if (res.data.code === -1008) {
-            return false
-          }
-          return true
-        })
-        .catch()
-    },
+
     updateStore(username) {
       this.$store.commit('SET_USER_NAME', username)
     }

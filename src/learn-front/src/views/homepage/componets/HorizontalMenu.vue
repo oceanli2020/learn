@@ -49,13 +49,13 @@
 import store from '@/store'
 export default {
   name: 'HorizontalMenu',
-  inject: ['reload'],
   data() {
     return {
       input: '',
       username: '',
       change: true,
-      circleUrl: require('@/assets/avatar.jpg') // 暂时写死
+      circleUrl: '',
+      profilePhoto: ''
     }
   },
   mounted() {
@@ -66,16 +66,17 @@ export default {
       this.$router.push('/login')
     },
     info() {
-      if (store.getters.username) {
+      if (store.getters.token) {
         this.username = store.getters.username
+        this.profilePhoto = store.getters.profilePhoto
+        this.circleUrl = require('@/' + this.profilePhoto)
         this.change = false
       }
     },
     toLogout() {
       this.$store
-        .dispatch('logout', '')
+        .dispatch('logout')
         .then(() => {
-          // this.reload()
           location.reload()
         })
         .catch(() => {})

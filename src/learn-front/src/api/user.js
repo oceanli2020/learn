@@ -1,10 +1,9 @@
 import request from '@/utils/request'
-
-var adminPath = '/api/v1'
+import { prefixURL } from '@/utils/global'
 
 export function info() {
   return request({
-    url: adminPath + '/sys/user',
+    url: prefixURL + 'sys/user',
     method: 'get'
   })
 }
@@ -16,7 +15,7 @@ export function register(userName, password, email, phoneNumber) {
     phoneNumber
   }
   return request({
-    url: adminPath + '/sys/user/register',
+    url: prefixURL + 'sys/user/register',
     method: 'post',
     data
   })
@@ -39,14 +38,14 @@ export function update(
     realName
   }
   return request({
-    url: adminPath + '/sys/user',
+    url: prefixURL + 'sys/user',
     method: 'put',
     data
   })
 }
 export function checkPass(passwordInput) {
   return request({
-    url: adminPath + '/sys/user/checkpass',
+    url: prefixURL + 'sys/user/checkpass',
     method: 'get',
     params: { passwordInput }
   })

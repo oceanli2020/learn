@@ -74,33 +74,40 @@ import store from '@/store'
 
 export default {
   name: 'HorizontalMenu',
-  inject: ['reload'],
   data() {
     return {
       input: '',
       username: '',
       change: true,
-      circleUrl: require('@/assets/avatar.jpg')
+      circleUrl: '',
+      profilePhoto: ''
     }
   },
   mounted() {
     this.info()
+  },
+
+  watch: {
+    '$store.getters.username': function () {
+      this.username = store.getters.username
+    }
   },
   methods: {
     toLogin() {
       this.$router.push('/login')
     },
     info() {
-      if (store.getters.username) {
+      if (store.getters.token) {
         this.username = store.getters.username
+        this.profilePhoto = store.getters.profilePhoto
+        this.circleUrl = require('@/' + this.profilePhoto)
         this.change = false
       }
     },
     toLogout() {
       this.$store
-        .dispatch('logout', '')
+        .dispatch('logout')
         .then(() => {
-          // this.reload()
           location.reload()
         })
         .catch(() => {})

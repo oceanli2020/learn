@@ -150,16 +150,19 @@ export default {
             this.registerForm.phone_number
           )
             .then(res => {
-              if (res.data.length === 1 && res.data[0].code === 200) {
-                alert(res.data[0].data)
+              if (res.length === 1 && res[0].code === 200) {
+                this.$message({
+                  message: res[0].data,
+                  type: 'success'
+                })
                 this.$router.push('/login')
               } else {
                 var f = function(a) {
                   setTimeout(() => {
-                    Notification.error(res.data[a].message)
+                    Notification.error(res[a].message)
                   }, 0)
                 }
-                for (var i = 0; i < res.data.length; i++) {
+                for (var i = 0; i < res.length; i++) {
                   f(i)
                 }
               }

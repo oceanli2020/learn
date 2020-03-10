@@ -356,8 +356,8 @@ export default {
       this.imageUrl = URL.createObjectURL(file.raw)
     },
     getUserInfo() {
-      this.$storestore.dispatch('getInfo').then(res => {
-        const data = res.data.data
+      this.$store.dispatch('getInfo').then(res => {
+        const data = res.data
         this.user.user_name = data.userName
         this.user.real_name = data.realName
         this.user.profile_photo = data.profilePhoto
@@ -376,7 +376,7 @@ export default {
       return new Promise((resolve, reject) => {
         checkPass(passwordInput)
           .then(res => {
-            if (res.data.code === -1008) {
+            if (res.code === -1008) {
               resolve(false)
             }
             resolve(true)
@@ -438,7 +438,7 @@ export default {
             this.$message({
               showClose: true,
               duration: 2000,
-              message: res.data.data,
+              message: res.data,
               type: 'success'
             })
           })

@@ -61,12 +61,12 @@
               </div>
             </template>
             <div>
-              <!-- :before-upload="beforeAvatarUpload" //规定上传文件的大小和格式-->
               <el-upload
                 class="avatar-uploader"
                 action=""
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
               >
                 <img v-if="imageUrl" :src="imageUrl" class="avatar" />
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -319,13 +319,13 @@ export default {
         password: '******'
       },
       user_input: {
-        user_name: '',
-        real_name: '',
-        profile_photo: '',
-        email: '',
-        phone_number: '',
+        user_name: null,
+        real_name: null,
+        profile_photo: null,
+        email: null,
+        phone_number: null,
         old_password: '',
-        new_password: '',
+        new_password: null,
         check_password: ''
       },
       lastActiveName: '',
@@ -344,16 +344,29 @@ export default {
       index_email: true,
       index_phone_number: true,
       index_password: true,
+      imageUrl: '',
       squareUrl:
         'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'
     }
   },
-  mounted() {
+  created() {
     this.getUserInfo()
   },
   methods: {
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw)
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
     },
     getUserInfo() {
       this.$store.dispatch('getInfo').then(res => {
@@ -390,17 +403,104 @@ export default {
       this.$refs[formName].validate(async valid => {
         if (valid) {
           if (formName === 'user_nameForm') {
-            this.user.user_name = this.user_input.user_name
-            this.updateStore(this.user.user_name)
+            update(this.user_input.user_name,
+              this.user_input.profile_photo,
+              this.user_input.real_name,
+              this.user_input.email,
+              this.user_input.phone_number,
+              this.user_input.new_password).then(res => {
+              if (res.code === -1005) {
+                this.$message({
+                  showClose: true,
+                  duration: 2500,
+                  message: res.message,
+                  type: 'error'
+                })
+              } else {
+                this.$message({
+                  showClose: true,
+                  duration: 2500,
+                  message: '修改成功',
+                  type: 'success'
+                })
+                this.user.user_name = this.user_input.user_name
+                this.updateStore(this.user.user_name)
+              }
+            }).catch(error => {
+              console.log(error)
+            })
           }
           if (formName === 'real_nameForm') {
-            this.user.real_name = this.user_input.real_name
+            update(this.user_input.user_name,
+              this.user_input.profile_photo,
+              this.user_input.real_name,
+              this.user_input.email,
+              this.user_input.phone_number,
+              this.user_input.new_password).then(() => {
+              this.$message({
+                showClose: true,
+                duration: 2500,
+                message: '修改成功',
+                type: 'success'
+              })
+              this.user.real_name = this.user_input.real_name
+            }).catch(error => {
+              console.log(error)
+            })
           }
           if (formName === 'phone_numberForm') {
-            this.user.phone_number = this.user_input.phone_number
+            update(this.user_input.user_name,
+              this.user_input.profile_photo,
+              this.user_input.real_name,
+              this.user_input.email,
+              this.user_input.phone_number,
+              this.user_input.new_password).then(res => {
+              if (res.code === -1007) {
+                this.$message({
+                  showClose: true,
+                  duration: 2500,
+                  message: res.message,
+                  type: 'error'
+                })
+              } else {
+                this.$message({
+                  showClose: true,
+                  duration: 2500,
+                  message: '修改成功',
+                  type: 'success'
+                })
+                this.user.phone_number = this.user_input.phone_number
+              }
+            }).catch(error => {
+              console.log(error)
+            })
           }
           if (formName === 'emailForm') {
-            this.user.email = this.user_input.email
+            update(this.user_input.user_name,
+              this.user_input.profile_photo,
+              this.user_input.real_name,
+              this.user_input.email,
+              this.user_input.phone_number,
+              this.user_input.new_password).then(res => {
+              if (res.code === -1006) {
+                this.$message({
+                  showClose: true,
+                  duration: 2500,
+                  message: res.message,
+                  type: 'error'
+                })
+              } else {
+                this.$message({
+                  showClose: true,
+                  duration: 2500,
+                  message: '修改成功',
+                  type: 'success'
+                })
+                this.user.email = this.user_input.email
+              }
+            }).catch(error => {
+              console.log(error)
+            })
           }
           if (formName === 'passwordForm') {
             try {
@@ -423,25 +523,25 @@ export default {
                 message: '提交时出错',
                 type: 'error'
               })
+              return
             }
-
-            this.user.password = this.user_input.new_password
-          }
-          update(
-            this.user.user_name,
-            this.user.profile_photo,
-            this.user.real_name,
-            this.user.email,
-            this.user.phone_number,
-            this.user.password
-          ).then(res => {
-            this.$message({
-              showClose: true,
-              duration: 2000,
-              message: res.data,
-              type: 'success'
+            update(this.user_input.user_name,
+              this.user_input.profile_photo,
+              this.user_input.real_name,
+              this.user_input.email,
+              this.user_input.phone_number,
+              this.user_input.new_password).then(() => {
+              this.$message({
+                showClose: true,
+                duration: 2500,
+                message: '修改成功',
+                type: 'success'
+              })
+              this.user.password = this.user_input.new_password
+            }).catch(error => {
+              console.log(error)
             })
-          })
+          }
         } else {
           console.log('error submit!!')
           return false
@@ -584,14 +684,15 @@ export default {
 .password_input {
   width: 300px;
 }
-.avatar-uploader .el-upload {
+.avatar-uploader{
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;
+  width:180px;
   position: relative;
   overflow: hidden;
 }
-.avatar-uploader .el-upload:hover {
+.avatar-uploader:hover {
   border-color: #409eff;
 }
 .avatar-uploader-icon {

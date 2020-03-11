@@ -71,7 +71,7 @@ export default {
   methods: {
     judge() {
       if (!store.getters.token) {
-        this.$confirm('该操作需要登录，是否登录?', '提示', {
+        this.$confirm('该页面需要登录，是否登录?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',

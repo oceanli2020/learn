@@ -77,11 +77,11 @@ const user = {
     // 登出
     logout({ commit }) {
       return new Promise((resolve, reject) => {
+        commit('SET_TOKEN', '')
+        removeToken()
+        removeRefreshToken()
         logout()
           .then(() => {
-            commit('SET_TOKEN', '')
-            removeToken()
-            removeRefreshToken()
             resolve()
           })
           .catch(error => {

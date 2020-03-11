@@ -1,6 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
-
+import router from '@/router'
+import { MessageBox } from 'element-ui'
 import {
   getToken,
   setToken,
@@ -53,7 +54,19 @@ service.interceptors.request.use(
             .catch(err => {
               console.log(err)
               store.dispatch('logout').then(() => {
-                location.reload() // 为了重新实例化vue-router对象 避免bug
+                // location.reload() // 为了重新实例化vue-router对象 避免bug
+                MessageBox.confirm('登录状态已过期，是否重新登录?', '提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning',
+                  center: true
+                })
+                  .then(() => {
+                    router.push('/login')
+                  })
+                  .catch(() => {
+                    router.push('/')
+                  })
               })
             })
         }

@@ -12,4 +12,6 @@ public interface IUserService extends IBaseService<User> {
 
     List<Result> checkUser(User user);
 
+
+
 }

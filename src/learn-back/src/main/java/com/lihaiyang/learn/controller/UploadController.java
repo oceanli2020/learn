@@ -23,6 +23,8 @@ public class UploadController {
     @Value("${fileUploadPath}")
     private String fileUploadPath;
 
+    private String separator="/";
+
     /**
      * 文件上传：头像
      */
@@ -35,7 +37,7 @@ public class UploadController {
         // 按年份建立目录
         SimpleDateFormat stFormat1 = new SimpleDateFormat("yyyy");
         String year = stFormat1.format(new Date());
-        String path = fileUploadPath + File.separator + year;
+        String path = fileUploadPath + separator + year;
         // 测试绝对路径的目录是否存在，不存在，则建立对应目录;
         File file2 = new File(path);
         if (!file2.exists()) {
@@ -53,7 +55,7 @@ public class UploadController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        path+=File.separator+newfileName;
+        path+=separator+newfileName;
         User user = new User();
         user.setId(UserUtils.getUser().getId());
         user.setProfilePhoto(path);

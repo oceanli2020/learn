@@ -17,12 +17,14 @@ spring:
     multipart:
       maxFileSize: 1024MB
       maxRequestSize: 1024MB
+  resources:
+      static-locations: file:/D:/upload/avatar  #静态资源路径
 
 #mybatis-plus配置控制台打印完整带参数SQL语句
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-fileUploadPath: "D:\\upload\\avatar"
+fileUploadPath: D:/upload/avatar
 
 

@@ -76,12 +76,12 @@ export default {
           this.$store
             .dispatch('login', this.loginForm)
             .then(res => {
-              if (res.data.code === 200) {
+              if (res.code === 200) {
                 this.$router.push('/')
               } else {
                 this.$notify.error({
                   title: '失败',
-                  message: res.data.message
+                  message: res.message
                 })
                 this.loginForm.validateCode = ''
                 this.loginForm.username = ''

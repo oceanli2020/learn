@@ -13,7 +13,7 @@ public class MobileProperties {
 
     private int passwordIterations = 1024;
 
-    private long tokenTimeout = 6000000L;
+    private long tokenTimeout =  1200000L;
 
     private long refreshTokenTimeout = 60000000L;
 

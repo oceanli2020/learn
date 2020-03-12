@@ -15,8 +15,7 @@ const user = {
     realname: '',
     email: '',
     phoneNumber: '',
-    profilePhoto: '',
-    requestLists: []
+    profilePhoto: ''
   },
 
   mutations: {
@@ -37,12 +36,6 @@ const user = {
     },
     SET_PROFILE_PHOTO: (state, profilePhoto) => {
       state.profilePhoto = profilePhoto
-    },
-    SET_REQUEST_LISTS: (state, requestList) => {
-      state.requestLists.push(requestList)
-    },
-    RESET_REQUEST_LISTS: state => {
-      state.requestLists = []
     }
   },
 
@@ -53,15 +46,14 @@ const user = {
       const password = userInfo.password
       return new Promise((resolve, reject) => {
         login(username, password)
-          .then(response => {
-            const data = response.data
-            if (data.code === 200) {
-              setToken(data.data.token)
-              setRefreshToken(data.data.refreshToken)
-              commit('SET_TOKEN', data.data.token) // 将token保存到cookie里 -> 作为前端用户已登录的标识
-              setUserInfo(data, commit)
+          .then(res => {
+            if (res.code === 200) {
+              setToken(res.data.token)
+              setRefreshToken(res.data.refreshToken)
+              commit('SET_TOKEN', res.data.token) // 将token保存到cookie里 -> 作为前端用户已登录的标识
+              setUserInfo(res.data.userDTO, commit)
             }
-            resolve(response)
+            resolve(res)
           })
           .catch(error => {
             // 登录失败，回传提示信息
@@ -74,7 +66,7 @@ const user = {
       return new Promise((resolve, reject) => {
         info()
           .then(res => {
-            setUserInfo(res, commit)
+            setUserInfo(res.data, commit)
             resolve(res)
           })
           .catch(error => {
@@ -99,11 +91,11 @@ const user = {
     }
   }
 }
-export const setUserInfo = (data, commit) => {
-  commit('SET_USER_NAME', data.data.userDTO.userName)
-  commit('SET_REAL_NAME', data.data.userDTO.realName)
-  commit('SET_EMAIL', data.data.userDTO.email)
-  commit('SET_PHONE_NUMBER', data.data.userDTO.phoneNumber)
-  commit('SET_PROFILE_PHOTO', data.data.userDTO.profilePhoto)
+export const setUserInfo = (res, commit) => {
+  commit('SET_USER_NAME', res.userName)
+  commit('SET_REAL_NAME', res.realName)
+  commit('SET_EMAIL', res.email)
+  commit('SET_PHONE_NUMBER', res.phoneNumber)
+  commit('SET_PROFILE_PHOTO', res.profilePhoto)
 }
 export default user

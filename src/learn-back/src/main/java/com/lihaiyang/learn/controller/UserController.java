@@ -30,7 +30,7 @@ public class UserController {
     /**
      * 用户注册
      */
-    @PostMapping({"register"})
+    @PostMapping({"/register"})
     public List<Result> register(@RequestBody User user) {
         List<Result> rs = this.userService.checkUser(user);
         if (rs.size() != 0) {
@@ -60,29 +60,49 @@ public class UserController {
     /**
      * 当前用户密码验证
      */
-    @GetMapping({"checkpass"})
-    public Result checkPass(String passwordInput) {
+    @GetMapping({"/checkpass"})
+    public Result checkPass(@RequestParam("passwordInput") String passwordInput) {
         User user = UserUtils.getUser();
-        if(PasswordUtils.validatePassword(passwordInput, user.getPassword())){
+        if (PasswordUtils.validatePassword(passwordInput, user.getPassword())) {
             return Result.ofSuccess("密码正确");
         }
-        return  new Result(ResultStatus.USER_PASS_EDIT_FAIL,"密码错误");
+        return new Result(ResultStatus.USER_PASS_EDIT_FAIL, "密码错误");
 
     }
+
     /**
      * 用户修改个人信息
      */
     @PutMapping
-    public Result update(@RequestBody User userEntity) {
-        if(userEntity.getPassword().equals("******")){
-            userEntity.setPassword(null);
-        }else {
-            userEntity.setPassword(PasswordUtils.entryptPassword(userEntity.getPassword()));
+    public Result update(@RequestBody User userInput) {
+        if (userInput.getPassword() != null) {
+            userInput.setPassword(PasswordUtils.entryptPassword(userInput.getPassword()));
         }
         User user = UserUtils.getUser();
-        boolean b = this.userService.update(userEntity, Wrappers.query(user));
+        if ((userInput.getUserName() != null) && !user.getUserName().equals(userInput.getUserName())) {
+            User query = new User();
+            query.setUserName(userInput.getUserName());
+            if (userService.getOne(Wrappers.query(query)) != null) {
+                return new Result(ResultStatus.USER_ALREADY_EXIST, "修改失败");
+            }
+        }
+        if ((userInput.getEmail() != null) && !user.getEmail().equals(userInput.getEmail())) {
+            User query = new User();
+            query.setEmail(userInput.getEmail());
+            if (userService.getOne(Wrappers.query(query)) != null) {
+                return new Result(ResultStatus.EMAIL_ALREADY_EXIST, "修改失败");
+            }
+        }
+        if ((userInput.getPhoneNumber() != null)&& !user.getPhoneNumber().equals(userInput.getPhoneNumber())) {
+            User query = new User();
+            query.setPhoneNumber(userInput.getPhoneNumber());
+            if (userService.getOne(Wrappers.query(query)) != null) {
+                return new Result(ResultStatus.PHONENUMBER_ALREADY_EXIST, "修改失败");
+            }
+        }
+        boolean b = this.userService.update(userInput, Wrappers.query(user));
         if (b == false) {
-            return new Result(ResultStatus.FAIL,"修改失败");
+            return new Result(ResultStatus.FAIL, "修改失败");
         }
         return Result.ofSuccess("修改成功");
 

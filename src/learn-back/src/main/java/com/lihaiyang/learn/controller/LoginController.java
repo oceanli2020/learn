@@ -18,10 +18,7 @@ import com.lihaiyang.learn.service.IUserService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 登录Controller
@@ -81,8 +78,7 @@ public class LoginController {
      * token刷新
      * */
    @GetMapping({"${adminPath}/token"})
-    public Result refreshToken(String refreshToken, HttpServletRequest request) {
-       System.out.println(refreshToken);
+    public Result refreshToken(@RequestParam("refreshToken") String refreshToken, HttpServletRequest request) {
         String token = this.loginService.getToken(refreshToken, request);
         return Result.ofSuccess(token);
     }

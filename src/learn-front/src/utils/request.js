@@ -96,6 +96,21 @@ service.interceptors.response.use(
     return response.data
   },
   error => {
+    let code = error.response.data.code
+    if (code === -401) {
+      MessageBox.confirm('登录状态已过期，是否重新登录?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      })
+        .then(() => {
+          router.push('/login')
+        })
+        .catch(() => {
+          router.push('/')
+        })
+    }
     return Promise.reject(error)
   }
 )

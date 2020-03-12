@@ -13,8 +13,16 @@ spring:
           password: 123456
           url: jdbc:postgresql://localhost:5432/learn
           driver-class-name: org.postgresql.Driver
+  servlet:
+    multipart:
+      maxFileSize: 1024MB
+      maxRequestSize: 1024MB
 
 #mybatis-plus配置控制台打印完整带参数SQL语句
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+fileUploadPath: "D:\\upload\\avatar"
+
+

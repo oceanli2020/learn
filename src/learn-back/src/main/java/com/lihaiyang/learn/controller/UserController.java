@@ -30,7 +30,7 @@ public class UserController {
     /**
      * 用户注册
      */
-    @PostMapping({"register"})
+    @PostMapping({"/register"})
     public List<Result> register(@RequestBody User user) {
         List<Result> rs = this.userService.checkUser(user);
         if (rs.size() != 0) {
@@ -60,8 +60,8 @@ public class UserController {
     /**
      * 当前用户密码验证
      */
-    @GetMapping({"checkpass"})
-    public Result checkPass(String passwordInput) {
+    @GetMapping({"/checkpass"})
+    public Result checkPass(@RequestParam("passwordInput") String passwordInput) {
         User user = UserUtils.getUser();
         if (PasswordUtils.validatePassword(passwordInput, user.getPassword())) {
             return Result.ofSuccess("密码正确");

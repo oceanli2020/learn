@@ -50,3 +50,12 @@ export function checkPass(passwordInput) {
     params: { passwordInput }
   })
 }
+
+export function uploadAvatar(data) {
+  return request({
+    url: prefixURL + 'upload/avatar',
+    method: 'post',
+    headers: { 'Content-Type': 'multipart/form-data' },
+    data
+  })
+}

@@ -63,7 +63,8 @@
             <div>
               <el-upload
                 class="avatar-uploader"
-                action=""
+                actio=""
+                :http-request='uploadFileMethod'
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload"
@@ -238,7 +239,7 @@
 </template>
 
 <script>
-import { update, checkPass } from '@/api/user'
+import { update, checkPass, uploadAvatar } from '@/api/user'
 export default {
   name: 'OptionSecond',
 
@@ -353,9 +354,16 @@ export default {
     this.getUserInfo()
   },
   methods: {
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw)
+    uploadFileMethod(fileObj) {
+      let fromData = new FormData()
+      fromData.set('file', fileObj.file)
+      uploadAvatar(fromData).then(res => {
+        this.imageUrl = URL.createObjectURL(fileObj.file)
+      }).catch(error => {
+        console.log(error)
+      })
     },
+    // 规定上传文件的类型和大小
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg'
       const isLt2M = file.size / 1024 / 1024 < 2

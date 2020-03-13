@@ -30,7 +30,7 @@ export function isTokenExpired() {
   const decoded = jwt.decode(token, { complete: true })
   const exp = decoded.payload.exp
   const now = new Date().getTime() / 1000
-  const lessTime = 5 * 60
-  const moreTime = 20 * 60
+  const lessTime = 5 * 6000
+  const moreTime = 200 * 6000
   return exp - now < lessTime && now < exp + moreTime
 }

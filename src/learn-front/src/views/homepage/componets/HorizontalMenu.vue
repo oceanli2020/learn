@@ -47,6 +47,7 @@
 
 <script>
 import store from '@/store'
+import {getImg} from '@/api/user'
 export default {
   name: 'HorizontalMenu',
   data() {
@@ -73,7 +74,9 @@ export default {
           this.circleUrl =
             'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'
         } else {
-          this.circleUrl = this.profilePhoto //  error
+          getImg(this.profilePhoto).then(res => {
+            this.circleUrl = 'http://localhost:8088/' + this.profilePhoto
+          })
         }
         this.change = false
       }

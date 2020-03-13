@@ -386,7 +386,7 @@ export default {
         this.user.phone_number = data.phoneNumber
         if (data.profilePhoto !== '') {
           this.user.profile_photo = data.profilePhoto
-          this.squareUrl = require('@/' + this.user.profile_photo)
+          this.squareUrl = 'http://localhost:8088/' + this.user.profile_photo
         }
       })
         .catch(err => {
@@ -563,6 +563,7 @@ export default {
       }
       if (name === '2') {
         this.index_profile_photo = true
+        this.imageUrl = ''
       }
       if (name === '3') {
         this.index_real_name = true

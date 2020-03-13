@@ -20,8 +20,8 @@ public class UploadController {
     @Autowired
     private IUserService userService;
 
-    @Value("${fileUploadPath}")
-    private String fileUploadPath;
+    @Value("${AvatarUploadPath}")
+    private String AvatarUploadPath;
 
     private String separator="/";
 
@@ -37,7 +37,7 @@ public class UploadController {
         // 按年份建立目录
         SimpleDateFormat stFormat1 = new SimpleDateFormat("yyyy");
         String year = stFormat1.format(new Date());
-        String path = fileUploadPath + separator + year;
+        String path = AvatarUploadPath + separator + year;
         // 测试绝对路径的目录是否存在，不存在，则建立对应目录;
         File file2 = new File(path);
         if (!file2.exists()) {
@@ -55,12 +55,15 @@ public class UploadController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        path+=separator+newfileName;
+        // 文件保存的绝对路径
+        path += separator + newfileName;
+        //去掉静态资源前缀的路径
+        path = "avatar"+  separator + year + separator + newfileName;
         User user = new User();
         user.setId(UserUtils.getUser().getId());
         user.setProfilePhoto(path);
         userService.updateById(user);
-        return Result.ofSuccess(path);
+        return Result.ofSuccess("图片上传成功");
     }
 
 }

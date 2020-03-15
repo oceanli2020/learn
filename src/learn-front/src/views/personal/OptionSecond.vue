@@ -3,11 +3,7 @@
     <div class="info">
       <span class="title">个人信息</span>
       <div style="margin-top:40px">
-        <el-collapse
-          accordion
-          @change="changeEvents(activeNames)"
-          v-model="activeNames"
-        >
+        <el-collapse accordion @change="changeEvents(activeNames)" v-model="activeNames">
           <el-collapse-item name="1">
             <template slot="title">
               <span class="text">昵称&#12288;&#12288;</span>
@@ -15,8 +11,7 @@
                 class="content"
                 style="margin-left:70px"
                 v-if="index_user_name"
-                >{{ user.user_name }}</span
-              >
+              >{{ user.user_name }}</span>
             </template>
             <div>
               <el-form
@@ -27,19 +22,10 @@
                 class="user_nameForm"
               >
                 <el-form-item label="新昵称" prop="user_name">
-                  <el-input
-                    type="text"
-                    v-model="user_input.user_name"
-                    class="user_name_input"
-                  ></el-input>
+                  <el-input type="text" v-model="user_input.user_name" class="user_name_input"></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="primary"
-                    @click="submitForm('user_nameForm')"
-                    size="medium"
-                    >保存</el-button
-                  >
+                  <el-button type="primary" @click="submitForm('user_nameForm')" size="medium">保存</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -47,24 +33,15 @@
           <el-collapse-item name="2">
             <template slot="title">
               <span class="text">头像&#12288;&#12288;</span>
-              <div
-                class="content"
-                style="margin-left:70px"
-                v-if="index_profile_photo"
-              >
-                <el-avatar
-                  shape="square"
-                  size="large"
-                  :src="squareUrl"
-                  class="l-avatar"
-                ></el-avatar>
+              <div class="content" style="margin-left:70px" v-if="index_profile_photo">
+                <el-avatar shape="square" size="large" :src="squareUrl" class="l-avatar"></el-avatar>
               </div>
             </template>
             <div>
               <el-upload
                 class="avatar-uploader"
-                actio=""
-                :http-request='uploadFileMethod'
+                actio
+                :http-request="uploadFileMethod"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload"
@@ -81,8 +58,7 @@
                 class="content"
                 style="margin-left:70px"
                 v-if="index_real_name"
-                >{{ user.real_name }}</span
-              >
+              >{{ user.real_name }}</span>
             </template>
             <div>
               <el-form
@@ -93,19 +69,10 @@
                 class="real_nameForm"
               >
                 <el-form-item label="更改真实姓名" prop="real_name">
-                  <el-input
-                    type="text"
-                    v-model="user_input.real_name"
-                    class="real_name_input"
-                  ></el-input>
+                  <el-input type="text" v-model="user_input.real_name" class="real_name_input"></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="primary"
-                    @click="submitForm('real_nameForm')"
-                    size="medium"
-                    >保存</el-button
-                  >
+                  <el-button type="primary" @click="submitForm('real_nameForm')" size="medium">保存</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -113,12 +80,7 @@
           <el-collapse-item name="4">
             <template slot="title">
               <span class="text">邮箱&#12288;&#12288;</span>
-              <span
-                class="content"
-                style="margin-left:70px"
-                v-if="index_email"
-                >{{ user.email }}</span
-              >
+              <span class="content" style="margin-left:70px" v-if="index_email">{{ user.email }}</span>
             </template>
             <div>
               <el-form
@@ -129,19 +91,10 @@
                 class="emailForm"
               >
                 <el-form-item label="更改邮箱" prop="email">
-                  <el-input
-                    type="text"
-                    v-model="user_input.email"
-                    class="email_input"
-                  ></el-input>
+                  <el-input type="text" v-model="user_input.email" class="email_input"></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="primary"
-                    @click="submitForm('emailForm')"
-                    size="medium"
-                    >保存</el-button
-                  >
+                  <el-button type="primary" @click="submitForm('emailForm')" size="medium">保存</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -153,8 +106,7 @@
                 class="content"
                 style="margin-left:70px"
                 v-if="index_phone_number"
-                >{{ user.phone_number }}</span
-              >
+              >{{ user.phone_number }}</span>
             </template>
             <div>
               <el-form
@@ -172,12 +124,7 @@
                   ></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="primary"
-                    @click="submitForm('phone_numberForm')"
-                    size="medium"
-                    >保存</el-button
-                  >
+                  <el-button type="primary" @click="submitForm('phone_numberForm')" size="medium">保存</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -189,8 +136,7 @@
                 class="content"
                 style="margin-left:70px"
                 v-if="index_password"
-                >{{ user.password }}</span
-              >
+              >{{ user.password }}</span>
             </template>
             <div>
               <el-form
@@ -222,12 +168,7 @@
                   ></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button
-                    type="primary"
-                    @click="submitForm('passwordForm')"
-                    size="medium"
-                    >保存</el-button
-                  >
+                  <el-button type="primary" @click="submitForm('passwordForm')" size="medium">保存</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -239,7 +180,7 @@
 </template>
 
 <script>
-import { update, checkPass, uploadAvatar } from '@/api/user'
+import { update, checkPass, uploadAvatar, getImg } from '@/api/user'
 export default {
   name: 'OptionSecond',
 
@@ -355,13 +296,22 @@ export default {
   },
   methods: {
     uploadFileMethod(fileObj) {
+      this.imageUrl = URL.createObjectURL(fileObj.file)
       let fromData = new FormData()
       fromData.set('file', fileObj.file)
-      uploadAvatar(fromData).then(res => {
-        this.imageUrl = URL.createObjectURL(fileObj.file)
-      }).catch(error => {
-        console.log(error)
-      })
+      uploadAvatar(fromData)
+        .then(res => {
+          this.$message({
+            showClose: true,
+            duration: 2500,
+            message: res.data,
+            type: 'success'
+          })
+          this.squareUrl = this.imageUrl
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     // 规定上传文件的类型和大小
     beforeAvatarUpload(file) {
@@ -377,18 +327,20 @@ export default {
       return isJPG && isLt2M
     },
     getUserInfo() {
-      this.$store.dispatch('getInfo').then(res => {
-        const data = res.data
-        this.user.user_name = data.userName
-        this.user.real_name = data.realName
-        this.user.profile_photo = data.profilePhoto
-        this.user.email = data.email
-        this.user.phone_number = data.phoneNumber
-        if (data.profilePhoto !== '') {
+      this.$store
+        .dispatch('getInfo')
+        .then(res => {
+          const data = res.data
+          this.user.user_name = data.userName
+          this.user.real_name = data.realName
           this.user.profile_photo = data.profilePhoto
-          this.squareUrl = 'http://localhost:8088/' + this.user.profile_photo
-        }
-      })
+          this.user.email = data.email
+          this.user.phone_number = data.phoneNumber
+          if (data.profilePhoto !== '') {
+            this.user.profile_photo = data.profilePhoto
+            this.squareUrl = getImg(this.user.profile_photo)
+          }
+        })
         .catch(err => {
           console.log(err)
         })
@@ -411,104 +363,120 @@ export default {
       this.$refs[formName].validate(async valid => {
         if (valid) {
           if (formName === 'user_nameForm') {
-            update(this.user_input.user_name,
+            update(
+              this.user_input.user_name,
               this.user_input.profile_photo,
               this.user_input.real_name,
               this.user_input.email,
               this.user_input.phone_number,
-              this.user_input.new_password).then(res => {
-              if (res.code === -1005) {
-                this.$message({
-                  showClose: true,
-                  duration: 2500,
-                  message: res.message,
-                  type: 'error'
-                })
-              } else {
-                this.$message({
-                  showClose: true,
-                  duration: 2500,
-                  message: '修改成功',
-                  type: 'success'
-                })
-                this.user.user_name = this.user_input.user_name
-                this.updateStore(this.user.user_name)
-              }
-            }).catch(error => {
-              console.log(error)
-            })
+              this.user_input.new_password
+            )
+              .then(res => {
+                if (res.code === -1005) {
+                  this.$message({
+                    showClose: true,
+                    duration: 2500,
+                    message: res.message,
+                    type: 'error'
+                  })
+                } else {
+                  this.$message({
+                    showClose: true,
+                    duration: 2500,
+                    message: '修改成功',
+                    type: 'success'
+                  })
+                  this.user.user_name = this.user_input.user_name
+                  this.updateStore(this.user.user_name)
+                }
+              })
+              .catch(error => {
+                console.log(error)
+              })
           }
           if (formName === 'real_nameForm') {
-            update(this.user_input.user_name,
+            update(
+              this.user_input.user_name,
               this.user_input.profile_photo,
               this.user_input.real_name,
               this.user_input.email,
               this.user_input.phone_number,
-              this.user_input.new_password).then(() => {
-              this.$message({
-                showClose: true,
-                duration: 2500,
-                message: '修改成功',
-                type: 'success'
+              this.user_input.new_password
+            )
+              .then(() => {
+                this.$message({
+                  showClose: true,
+                  duration: 2500,
+                  message: '修改成功',
+                  type: 'success'
+                })
+                this.user.real_name = this.user_input.real_name
               })
-              this.user.real_name = this.user_input.real_name
-            }).catch(error => {
-              console.log(error)
-            })
+              .catch(error => {
+                console.log(error)
+              })
           }
           if (formName === 'phone_numberForm') {
-            update(this.user_input.user_name,
+            update(
+              this.user_input.user_name,
               this.user_input.profile_photo,
               this.user_input.real_name,
               this.user_input.email,
               this.user_input.phone_number,
-              this.user_input.new_password).then(res => {
-              if (res.code === -1007) {
-                this.$message({
-                  showClose: true,
-                  duration: 2500,
-                  message: res.message,
-                  type: 'error'
-                })
-              } else {
-                this.$message({
-                  showClose: true,
-                  duration: 2500,
-                  message: '修改成功',
-                  type: 'success'
-                })
-                this.user.phone_number = this.user_input.phone_number
-              }
-            }).catch(error => {
-              console.log(error)
-            })
+              this.user_input.new_password
+            )
+              .then(res => {
+                if (res.code === -1007) {
+                  this.$message({
+                    showClose: true,
+                    duration: 2500,
+                    message: res.message,
+                    type: 'error'
+                  })
+                } else {
+                  this.$message({
+                    showClose: true,
+                    duration: 2500,
+                    message: '修改成功',
+                    type: 'success'
+                  })
+                  this.user.phone_number = this.user_input.phone_number
+                }
+              })
+              .catch(error => {
+                console.log(error)
+              })
           }
           if (formName === 'emailForm') {
-            update(this.user_input.user_name,
+            update(
+              this.user_input.user_name,
               this.user_input.profile_photo,
               this.user_input.real_name,
               this.user_input.email,
               this.user_input.phone_number,
-              this.user_input.new_password).then(res => {
-              if (res.code === -1006) {
-                this.$message({
-                  showClose: true,
-                  duration: 2500,
-                  message: res.message,
-                  type: 'error'
-                })
-              } else {
-                this.$message({
-                  showClose: true,
-                  duration: 2500,
-                  message: '修改成功',
-                  type: 'success'
-                })
-                this.user.email = this.user_input.email
-              }
-            }).catch(error => {
-              console.log(error)
-            })
+              this.user_input.new_password
+            )
+              .then(res => {
+                if (res.code === -1006) {
+                  this.$message({
+                    showClose: true,
+                    duration: 2500,
+                    message: res.message,
+                    type: 'error'
+                  })
+                } else {
+                  this.$message({
+                    showClose: true,
+                    duration: 2500,
+                    message: '修改成功',
+                    type: 'success'
+                  })
+                  this.user.email = this.user_input.email
+                }
+              })
+              .catch(error => {
+                console.log(error)
+              })
           }
           if (formName === 'passwordForm') {
             try {
@@ -533,22 +501,26 @@ export default {
               })
               return
             }
-            update(this.user_input.user_name,
+            update(
+              this.user_input.user_name,
               this.user_input.profile_photo,
               this.user_input.real_name,
               this.user_input.email,
               this.user_input.phone_number,
-              this.user_input.new_password).then(() => {
-              this.$message({
-                showClose: true,
-                duration: 2500,
-                message: '修改成功',
-                type: 'success'
+              this.user_input.new_password
+            )
+              .then(() => {
+                this.$message({
+                  showClose: true,
+                  duration: 2500,
+                  message: '修改成功',
+                  type: 'success'
+                })
+                this.user.password = this.user_input.new_password
               })
-              this.user.password = this.user_input.new_password
-            }).catch(error => {
-              console.log(error)
-            })
+              .catch(error => {
+                console.log(error)
+              })
           }
         } else {
           console.log('error submit!!')
@@ -693,11 +665,11 @@ export default {
 .password_input {
   width: 300px;
 }
-.avatar-uploader{
+.avatar-uploader {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;
-  width:180px;
+  width: 180px;
   position: relative;
   overflow: hidden;
 }

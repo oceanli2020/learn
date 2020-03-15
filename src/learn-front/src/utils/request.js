@@ -30,10 +30,7 @@ service.interceptors.request.use(
     if (getToken()) {
       config.headers['Authorization'] = getToken()
       // 判断token是否将要过期
-      if (
-        isTokenExpired() &&
-        config.url.indexOf(prefixURL + 'token') === -1
-      ) {
+      if (isTokenExpired() && config.url.indexOf(prefixURL + 'token') === -1) {
         // 判断是否正在刷新
         if (!window.isRefreshing) {
           // 将刷新token的标志置为true

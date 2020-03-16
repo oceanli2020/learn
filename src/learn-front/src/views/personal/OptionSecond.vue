@@ -40,7 +40,7 @@
             <div>
               <el-upload
                 class="avatar-uploader"
-                actio
+                action=''
                 :http-request="uploadFileMethod"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
@@ -296,6 +296,7 @@ export default {
   },
   methods: {
     uploadFileMethod(fileObj) {
+      alert(URL.createObjectURL(fileObj.file))
       this.imageUrl = URL.createObjectURL(fileObj.file)
       let fromData = new FormData()
       fromData.set('file', fileObj.file)
@@ -336,9 +337,12 @@ export default {
           this.user.profile_photo = data.profilePhoto
           this.user.email = data.email
           this.user.phone_number = data.phoneNumber
-          if (data.profilePhoto !== '') {
+          if (data.profilePhoto !== '' && data.profilePhoto !== null) {
             this.user.profile_photo = data.profilePhoto
-            this.squareUrl = getImg(this.user.profile_photo)
+            getImg(this.user.profile_photo).then(res => {
+              //  this.squareUrl = 'http://localhost:8088/' + this.user.profile_photo
+              alert(res)
+            })
           }
         })
         .catch(err => {

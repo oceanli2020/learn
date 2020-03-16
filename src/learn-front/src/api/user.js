@@ -62,6 +62,7 @@ export function uploadAvatar(data) {
 export function getImg(name) {
   return request({
     url: name,
-    method: 'get'
+    method: 'get',
+    responseType: 'File'
   })
 }

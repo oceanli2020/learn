@@ -68,6 +68,9 @@ export default {
   watch: {
     '$store.getters.username': function() {
       this.username = store.getters.username
+    },
+    '$store.getters.profilePhoto': function() {
+      this.profilePhoto = store.getters.profilePhoto
     }
   },
   methods: {
@@ -78,11 +81,13 @@ export default {
       if (store.getters.token) {
         this.username = store.getters.username
         this.profilePhoto = store.getters.profilePhoto
-        if (this.profilePhoto === null) {
+        if (this.profilePhoto === null || this.profilePhoto === '') {
           this.circleUrl =
             'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'
         } else {
-          getImg(this.profilePhoto).then(res => {})
+          getImg(this.profilePhoto).then(res => {
+            this.circleUrl = 'http://localhost:8088/' + this.profilePhoto
+          })
         }
         this.change = false
       }

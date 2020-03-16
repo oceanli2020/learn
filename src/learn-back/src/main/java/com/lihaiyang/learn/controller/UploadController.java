@@ -63,7 +63,7 @@ public class UploadController {
         user.setId(UserUtils.getUser().getId());
         user.setProfilePhoto(path);
         userService.updateById(user);
-        return Result.ofSuccess("图片上传成功");
+        return Result.ofSuccess(path);
     }
 
 }

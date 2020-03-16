@@ -40,7 +40,7 @@
             <div>
               <el-upload
                 class="avatar-uploader"
-                action=''
+                action
                 :http-request="uploadFileMethod"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
@@ -296,7 +296,6 @@ export default {
   },
   methods: {
     uploadFileMethod(fileObj) {
-      alert(URL.createObjectURL(fileObj.file))
       this.imageUrl = URL.createObjectURL(fileObj.file)
       let fromData = new FormData()
       fromData.set('file', fileObj.file)
@@ -305,10 +304,11 @@ export default {
           this.$message({
             showClose: true,
             duration: 2500,
-            message: res.data,
+            message: '图片上传成功',
             type: 'success'
           })
           this.squareUrl = this.imageUrl
+          this.$store.commit('SET_PROFILE_PHOTO', res.data)
         })
         .catch(error => {
           console.log(error)
@@ -340,8 +340,12 @@ export default {
           if (data.profilePhoto !== '' && data.profilePhoto !== null) {
             this.user.profile_photo = data.profilePhoto
             getImg(this.user.profile_photo).then(res => {
-              //  this.squareUrl = 'http://localhost:8088/' + this.user.profile_photo
-              alert(res)
+              this.squareUrl = `data: image/jpeg;base64,${btoa(
+                new Uint8Array(res).reduce(
+                  (data, byte) => data + String.fromCharCode(byte),
+                  ''
+                )
+              )}`
             })
           }
         })
@@ -619,7 +623,7 @@ export default {
   /* background-color: yellow; */
   position: absolute;
   left: 700px;
-  top: 120px;
+  top: 150px;
 }
 .title {
   color: #303030;
@@ -684,13 +688,13 @@ export default {
   font-size: 28px;
   color: #8c939d;
   width: 178px;
-  height: 178px;
-  line-height: 178px;
+  height: 200px;
+  line-height: 200px;
   text-align: center;
 }
 .avatar {
   width: 178px;
-  height: 178px;
+  height: 200px;
   display: block;
 }
 </style>

@@ -63,6 +63,6 @@ export function getImg(name) {
   return request({
     url: name,
     method: 'get',
-    responseType: 'File'
+    responseType: 'arraybuffer'
   })
 }

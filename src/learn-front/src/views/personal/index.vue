@@ -99,7 +99,7 @@ export default {
   /* background-color: blueviolet; */
 }
 .el-main {
-  height: 793px;
+  height: 901px;
 }
 .el-footer {
   background-color: #606266;
@@ -115,7 +115,7 @@ export default {
   width: 1000px;
   position: absolute;
   left: 459px;
-  top: 120px;
+  top: 150px;
 }
 .el-menu-vertical {
   text-align: left;

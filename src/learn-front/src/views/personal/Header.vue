@@ -71,6 +71,14 @@ export default {
     },
     '$store.getters.profilePhoto': function() {
       this.profilePhoto = store.getters.profilePhoto
+      getImg(this.profilePhoto).then(res => {
+        this.circleUrl = `data: image/jpeg;base64,${btoa(
+          new Uint8Array(res).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ''
+          )
+        )}`
+      })
     }
   },
   methods: {
@@ -86,7 +94,12 @@ export default {
             'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'
         } else {
           getImg(this.profilePhoto).then(res => {
-            this.circleUrl = 'http://localhost:8088/' + this.profilePhoto
+            this.circleUrl = `data: image/jpeg;base64,${btoa(
+              new Uint8Array(res).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                ''
+              )
+            )}`
           })
         }
         this.change = false

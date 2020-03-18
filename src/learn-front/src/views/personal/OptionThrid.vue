@@ -1,5 +1,5 @@
 <template>
-  <div class="option_second">
+  <div class="option_thrid">
     <div class="info">
       <span class="title">个人信息</span>
       <div style="margin-top:40px">
@@ -182,7 +182,7 @@
 <script>
 import { update, checkPass, uploadAvatar, getImg } from '@/api/user'
 export default {
-  name: 'OptionSecond',
+  name: 'OptionThrid',
 
   data() {
     var checkName = (rule, value, callback) => {

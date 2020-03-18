@@ -2,7 +2,7 @@
   <div class="personal">
     <el-container>
       <el-header>
-        <Header />
+        <Header @childFn="parentFn" />
       </el-header>
       <el-container>
         <el-aside width="200px" class="aside">
@@ -10,16 +10,16 @@
             class="el-menu-vertical"
             text-color="#303030 "
             active-text-color="#2894FF"
-            default-active="2"
+            :default-active="index"
           >
-            <el-menu-item index="1" @click="changeContent(1)">
+            <el-menu-item index="1" @click="changeContent('1')">
               <span slot="title">课程表</span>
             </el-menu-item>
-            <el-menu-item index="2" @click="changeContent(2)">
-              <span slot="title">个人信息</span>
-            </el-menu-item>
-            <el-menu-item index="3">
+            <el-menu-item index="2" @click="changeContent('2')">
               <span slot="title">我的收藏</span>
+            </el-menu-item>
+            <el-menu-item index="3" @click="changeContent('3')">
+              <span slot="title">个人信息</span>
             </el-menu-item>
             <el-menu-item index="4">
               <span slot="title">导航四</span>
@@ -32,11 +32,14 @@
             </el-menu-item>
           </el-menu>
         </el-aside>
-        <el-main v-if="index===1">
+        <el-main v-if="index==='1'">
           <option-first />
         </el-main>
-        <el-main v-else-if="index===2">
-          <option-second />
+        <el-main v-else-if="index==='2'">
+          <!-- <option-second /> -->
+        </el-main>
+        <el-main v-else-if="index==='3'">
+          <option-thrid />
         </el-main>
       </el-container>
       <el-footer style="height:100px">
@@ -49,7 +52,7 @@
 <script>
 import Header from './Header'
 import OptionFirst from './OptionFirst'
-import OptionSecond from './OptionSecond'
+import OptionThrid from './OptionThrid'
 import Footer from './Footer'
 import store from '@/store'
 export default {
@@ -57,12 +60,12 @@ export default {
   components: {
     Header,
     OptionFirst,
-    OptionSecond,
+    OptionThrid,
     Footer
   },
   data() {
     return {
-      index: 2
+      index: this.$route.query.index
     }
   },
   mounted() {
@@ -87,6 +90,9 @@ export default {
     },
     changeContent(i) {
       this.index = i
+    },
+    parentFn(payload) {
+      this.index = payload
     }
   }
 }

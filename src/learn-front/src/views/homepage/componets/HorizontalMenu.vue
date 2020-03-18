@@ -96,11 +96,13 @@ export default {
     },
     handleCommand(command) {
       if (command === 'a') {
+        this.$router.push({ path: '/personal', query: { index: '1' } })
       }
       if (command === 'b') {
+        this.$router.push({ path: '/personal', query: { index: '2' } })
       }
       if (command === 'c') {
-        this.$router.push('/personal')
+        this.$router.push({ path: '/personal', query: { index: '3' } })
       }
       if (command === 'd') {
         this.toLogout()

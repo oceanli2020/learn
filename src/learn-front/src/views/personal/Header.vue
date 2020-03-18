@@ -115,11 +115,13 @@ export default {
     },
     handleCommand(command) {
       if (command === 'a') {
+        this.$emit('childFn', '1')
       }
       if (command === 'b') {
+        this.$emit('childFn', '2')
       }
       if (command === 'c') {
-        this.$router.push('/personal')
+        this.$emit('childFn', '3')
       }
       if (command === 'd') {
         this.toLogout()

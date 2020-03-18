@@ -1,5 +1,5 @@
 import { login, logout } from '@/api/login'
-import {info} from '@/api/user'
+import { info } from '@/api/user'
 import {
   getToken,
   setToken,
@@ -78,6 +78,11 @@ const user = {
     logout({ commit }) {
       return new Promise((resolve, reject) => {
         commit('SET_TOKEN', '')
+        commit('SET_USER_NAME', '')
+        commit('SET_REAL_NAME', '')
+        commit('SET_EMAIL', '')
+        commit('SET_PHONE_NUMBER', '')
+        commit('SET_PROFILE_PHOTO', '')
         removeToken()
         removeRefreshToken()
         logout()

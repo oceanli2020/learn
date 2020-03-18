@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-left:100px;margin-right:100px;margin-top:10px">
+  <div style="margin-left:230px;margin-right:200px;margin-top:10px">
     <el-link type="primary" class="brand" href="http://localhost:8080/">在线教育平台</el-link>
     <div class="left-menu" style="cursor: pointer; margin-right:300px">
       <el-menu class="el-menu" mode="horizontal">

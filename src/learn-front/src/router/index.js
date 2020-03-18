@@ -40,6 +40,15 @@ export const constantRouterMap = [
     },
     component: () => import('@/views/personal/index'),
     hidden: true
+  },
+  {
+    path: '/course',
+    meta: {
+      title: '课程列表',
+      noCache: true
+    },
+    component: () => import('@/views/course/index'),
+    hidden: true
   }
 ]
 

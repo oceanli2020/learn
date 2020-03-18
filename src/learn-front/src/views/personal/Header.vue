@@ -1,7 +1,7 @@
 <template>
-  <div style="margin-left:100px;margin-right:100px;margin-top:10px">
+  <div style="margin-left:230px;margin-right:200px;margin-top:10px">
     <el-link type="primary" class="brand" href="http://localhost:8080/">在线教育平台</el-link>
-    <div class="left-menu" style="cursor: pointer; margin-right:300px">
+    <div class="left-menu" style="cursor: pointer; margin-right:0px">
       <el-menu class="el-menu" mode="horizontal">
         <el-menu-item>功能优势</el-menu-item>
         <el-menu-item>企业合作</el-menu-item>
@@ -10,13 +10,25 @@
     </div>
     <div v-if="change">
       <el-input v-model="input" placeholder="请输入内容" class="select" size="medium"></el-input>
-      <el-button type="info" style="margin-right:120px" icon="el-icon-search" size="medium">搜索</el-button>
+      <el-button
+        type="info"
+        style="margin-right:213px"
+        icon="el-icon-search"
+        size="medium"
+        @click="search"
+      >搜索</el-button>
       <el-link :underline="false" style="margin-right:20px">开课</el-link>
       <el-link :underline="false" @click="toLogin">登录 | 注册</el-link>
     </div>
     <div v-else>
       <el-input v-model="input" placeholder="请输入内容" class="select" size="medium"></el-input>
-      <el-button type="info" style="margin-right:120px" icon="el-icon-search" size="medium">搜索</el-button>
+      <el-button
+        type="info"
+        style="margin-right:213px"
+        icon="el-icon-search"
+        size="medium"
+        @click="search"
+      >搜索</el-button>
       <el-link :underline="false" style="margin-right:20px">开课</el-link>
 
       <el-avatar :size="medium" :src="circleUrl" class="avatar"></el-avatar>
@@ -126,6 +138,9 @@ export default {
       if (command === 'd') {
         this.toLogout()
       }
+    },
+    search() {
+      this.$router.push('/course')
     }
   },
   filters: {

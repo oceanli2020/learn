@@ -30,7 +30,9 @@
         @click="search"
       >搜索</el-button>
       <el-link :underline="false" style="margin-right:20px">开课</el-link>
+
       <el-avatar :size="medium" :src="circleUrl" class="avatar"></el-avatar>
+
       <el-dropdown @command="handleCommand" show-timeout="0" hide-timeout="100">
         <!-- v-bind:用于属性绑定 -->
         <el-tooltip
@@ -41,7 +43,7 @@
           class="item"
         >
           <el-link :underline="false">
-            <span>{{username | ellipsis}}</span>
+            <span>{{ username | ellipsis }}</span>
           </el-link>b
         </el-tooltip>
         <i class="el-icon-arrow-down el-icon--right"></i>
@@ -59,6 +61,7 @@
 <script>
 import store from '@/store'
 import { getImg } from '@/api/user'
+
 export default {
   name: 'HorizontalMenu',
   data() {
@@ -119,9 +122,7 @@ export default {
         this.toLogout()
       }
     },
-    search() {
-      this.$router.push('/course')
-    }
+    search() {}
   },
   filters: {
     ellipsis(value) {

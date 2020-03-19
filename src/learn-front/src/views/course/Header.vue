@@ -44,9 +44,9 @@
         >
           <el-link :underline="false">
             <span>{{ username | ellipsis }}</span>
-          </el-link>b
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </el-link>
         </el-tooltip>
-        <i class="el-icon-arrow-down el-icon--right"></i>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="a">课程表</el-dropdown-item>
           <el-dropdown-item command="b">我的收藏</el-dropdown-item>

@@ -69,193 +69,16 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
-      <div style="margin-top:20px">
+      <div style="margin-top:20px" >
         <el-row :gutter="20">
-          <el-col :span="6">
+          <el-col :span="6" v-for="item in tabledata" :key="item.id">
             <div class="grid-content bg-purple">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
+              <el-card class="box-card"  shadow="hover">
+                <div class="clearfix">
                   <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
                 </div>
-                <div class="text">共10节</div>
-                <div class="text">免费</div>
-              </el-card>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="grid-content bg-purple">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
-                </div>
-                <div class="text">共10节</div>
-                <div class="text">免费</div>
-              </el-card>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="grid-content bg-purple">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
-                </div>
-                <div class="text">共10节</div>
-                <div class="text">免费</div>
-              </el-card>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="grid-content bg-purple">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
-                </div>
-                <div class="text">共10节</div>
-                <div class="text">免费</div>
-              </el-card>
-            </div>
-          </el-col>
-        </el-row>
-      </div>
-      <div style="margin-top:20px">
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <div class="grid-content bg-purple">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
-                </div>
-                <div class="text">共10节</div>
-                <div class="text">免费</div>
-              </el-card>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="grid-content bg-purple">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
-                </div>
-                <div class="text">共10节</div>
-                <div class="text">免费</div>
-              </el-card>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="grid-content bg-purple">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
-                </div>
-                <div class="text">共10节</div>
-                <div class="text">免费</div>
-              </el-card>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="grid-content bg-purple">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
-                </div>
-                <div class="text">共10节</div>
-                <div class="text">免费</div>
-              </el-card>
-            </div>
-          </el-col>
-        </el-row>
-      </div>
-      <div style="margin-top:20px">
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <div class="grid-content bg-purple">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
-                </div>
-                <div class="text">共10节</div>
-                <div class="text">免费</div>
-              </el-card>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="grid-content bg-purple">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
-                </div>
-                <div class="text">共10节</div>
-                <div class="text">免费</div>
-              </el-card>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="grid-content bg-purple">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
-                </div>
-                <div class="text">共10节</div>
-                <div class="text">免费</div>
-              </el-card>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="grid-content bg-purple">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
-                </div>
-                <div class="text">共10节</div>
-                <div class="text">免费</div>
-              </el-card>
-            </div>
-          </el-col>
-        </el-row>
-      </div>
-      <div style="margin-top:20px">
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <div class="grid-content bg-purple">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
-                </div>
-                <div class="text">共10节</div>
-                <div class="text">免费</div>
-              </el-card>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="grid-content bg-purple">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
-                </div>
-                <div class="text">共10节</div>
-                <div class="text">免费</div>
-              </el-card>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="grid-content bg-purple">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
-                </div>
-                <div class="text">共10节</div>
-                <div class="text">免费</div>
-              </el-card>
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div class="grid-content bg-purple">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
-                </div>
-                <div class="text">共10节</div>
-                <div class="text">免费</div>
+                <div class="text" style="font-size:5px;margin-top:20px">共10节</div>
+                <div class="text"  style="font-size:5px;">免费</div>
               </el-card>
             </div>
           </el-col>
@@ -279,7 +102,8 @@ export default {
   data() {
     return {
       checkList: [],
-      icon: true
+      icon: true,
+      tabledata: 10
     }
   },
   methods: {

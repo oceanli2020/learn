@@ -69,16 +69,17 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
-      <div style="margin-top:20px" >
+      <div style="margin-top:20px">
         <el-row :gutter="20">
           <el-col :span="6" v-for="item in tabledata" :key="item.id">
-            <div class="grid-content bg-purple">
-              <el-card class="box-card"  shadow="hover">
+            <div class="grid-content" style="margin-top:3px">
+              <!--padding: 内边距-->
+              <el-card class="box-card" shadow="hover" :body-style="{ padding: '15px'}">
                 <div class="clearfix">
-                  <span style="font-size: 14px;">平面设计/插画/PS/AI/CDR/logo设计/VI设计/品牌设计/海报设计</span>
+                  <span style="font-size: 14px;">{{item.name}}</span>
                 </div>
-                <div class="text" style="font-size:5px;margin-top:20px">共10节</div>
-                <div class="text"  style="font-size:5px;">免费</div>
+                <div class="text" style="margin-top:20px">共10节</div>
+                <div class="text" style>{{item.price}}</div>
               </el-card>
             </div>
           </el-col>
@@ -87,8 +88,13 @@
       <div class="block">
         <el-pagination
           background
+          @current-change="currentChange"
+          @prev-click="prevClick"
+          @next-click="nextClick"
+          :page-size="size"
+          :current-page="current"
           layout="prev, pager, next"
-          :total="150"
+          :total="total"
           style="text-align: center"
         ></el-pagination>
       </div>
@@ -97,14 +103,21 @@
 </template>
 
 <script>
+import { getCourse } from '@/api/course'
 export default {
   name: 'Main',
   data() {
     return {
       checkList: [],
       icon: true,
-      tabledata: 10
+      tabledata: null, // 后端数据
+      current: 1, // 当前页码
+      total: null, // 总条目
+      size: 16 // 每页条目数
     }
+  },
+  mounted() {
+    this.info()
   },
   methods: {
     visibleChange(visible) {
@@ -113,7 +126,16 @@ export default {
       } else {
         this.icon = true
       }
-    }
+    },
+    info() {
+      getCourse(this.current, this.size).then(res => {
+        this.tabledata = res.data.courseList
+        this.total = res.data.total
+      })
+    },
+    currentChange() {},
+    prevClick() {},
+    nextClick() {}
   }
 }
 </script>
@@ -134,7 +156,7 @@ export default {
   margin: 15px 0;
 }
 .text {
-  font-size: 14px;
+  font-size: 5px;
 }
 .clearfix:before,
 .clearfix:after {
@@ -144,32 +166,15 @@ export default {
 .clearfix:after {
   clear: both;
 }
-
 .box-card {
   width: 250px;
   height: 150px;
 }
 .el-row {
+  /* margin-bottom: 下外边距 */
   margin-bottom: 20px;
 }
 .el-col {
   border-radius: 4px;
-}
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
 }
 </style>>

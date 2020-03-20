@@ -81,7 +81,7 @@ export default {
       this.$router.push('/login')
     },
     info() {
-      if (store.getters.username) {
+      if (store.getters.token) {
         this.username = store.getters.username
         this.profilePhoto = store.getters.profilePhoto
         if (this.profilePhoto === null || this.profilePhoto === '') {

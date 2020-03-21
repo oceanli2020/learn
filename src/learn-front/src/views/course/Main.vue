@@ -9,8 +9,7 @@
       </el-breadcrumb>
       <el-divider></el-divider>
       <div>
-        <span style=" font-size: 14px; color:#787878 ">分类</span>
-        <el-link :underline="false" style="margin-left:50px;" type="primary">全部</el-link>
+        <el-link :underline="false" type="primary">全部</el-link>
         <el-link :underline="false" style="margin-left:50px">Java</el-link>
         <el-link :underline="false" style="margin-left:50px">Python</el-link>
         <el-link :underline="false" style="margin-left:50px">C++</el-link>
@@ -25,6 +24,7 @@
           <el-link
             :underline="false"
             style="margin-left:0px;margin-right:55px;vertical-align:top;"
+             type="primary"
           >全部</el-link>
           <el-checkbox label="录播"></el-checkbox>
           <el-checkbox label="直播"></el-checkbox>
@@ -129,13 +129,22 @@ export default {
     },
     info() {
       getCourse(this.current, this.size).then(res => {
-        this.tabledata = res.data.courseList
-        this.total = res.data.total
+        this.tabledata = res.data.content
+        this.total = res.data.totalElements
       })
     },
-    currentChange() {},
-    prevClick() {},
-    nextClick() {}
+    currentChange(val) {
+      this.current = val
+      getCourse(this.current, this.size).then(res => {
+        this.tabledata = res.data.content
+        this.total = res.data.totalElements
+      })
+    },
+    prevClick(val) {
+      // alert(val)
+    },
+    nextClick(val) { // alert(val)
+    }
   }
 }
 </script>

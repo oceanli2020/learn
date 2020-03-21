@@ -12,3 +12,10 @@ export function getCourse(current, size) {
     data
   })
 }
+
+export function getCourseType(parentId) {
+  return request({
+    url: prefixURL + 'course/type/' + parentId,
+    method: 'get'
+  })
+}

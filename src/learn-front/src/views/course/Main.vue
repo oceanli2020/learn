@@ -2,29 +2,35 @@
   <div class="main">
     <div class="center">
       <el-breadcrumb separator-class="el-icon-arrow-right" style="margin-top:15px">
-        <el-breadcrumb-item :to="{ path: '/' }">全部课程</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/' }">IT·互联网</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/' }">编程语言</el-breadcrumb-item>
-        <el-breadcrumb-item>Javascript</el-breadcrumb-item>
+        <el-breadcrumb-item>
+          <a href>全部课程</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item
+          v-for="bread in breadList"
+          :key="bread"
+          :to="{ path: '/course' }"
+        >{{bread.name}}</el-breadcrumb-item>
       </el-breadcrumb>
       <el-divider></el-divider>
       <div>
-        <el-link :underline="false" type="primary">全部</el-link>
-        <el-link :underline="false" style="margin-left:50px">Java</el-link>
-        <el-link :underline="false" style="margin-left:50px">Python</el-link>
-        <el-link :underline="false" style="margin-left:50px">C++</el-link>
-        <el-link :underline="false" style="margin-left:50px">C++</el-link>
-        <el-link :underline="false" style="margin-left:50px">C++</el-link>
-        <el-link :underline="false" style="margin-left:50px">C++</el-link>
+        <el-link :underline="false" type="primary" @click="resetType()">全部</el-link>
+        <el-link
+          :underline="false"
+          style="margin-left:50px"
+          v-for="type in typeList"
+          :key="type"
+          @click="changeType(type.id,type.name)"
+        >{{type.name}}</el-link>
       </div>
       <el-divider></el-divider>
       <div>
-        <el-checkbox-group v-model="checkList">
+        <el-checkbox-group v-model="checkList" @change="checkBOX()">
           <!--vertical-align:top 把元素的顶端与行中最高元素的顶端对齐: -->
           <el-link
             :underline="false"
             style="margin-left:0px;margin-right:55px;vertical-align:top;"
-             type="primary"
+            :type="linkType"
+            @click="resetBOX()"
           >全部</el-link>
           <el-checkbox label="录播"></el-checkbox>
           <el-checkbox label="直播"></el-checkbox>
@@ -34,16 +40,31 @@
       </div>
       <el-divider></el-divider>
       <div>
-        <el-link :underline="false" type="primary">综合排序</el-link>
-        <el-link :underline="false" style="margin-left:20px">
+        <el-link :underline="false" :type="comprehensiveType" @click="comprehensiveSort()">综合排序</el-link>
+        <el-link
+          :underline="false"
+          style="margin-left:20px"
+          :type="praiseType"
+          @click="praiseSort()"
+        >
           好评
           <i class="el-icon-caret-bottom"></i>
         </el-link>
-        <el-link :underline="false" style="margin-left:20px">
+        <el-link
+          :underline="false"
+          style="margin-left:20px"
+          :type="popularityType"
+          @click="popularitySort()"
+        >
           人气
           <i class="el-icon-caret-bottom"></i>
         </el-link>
-        <el-link :underline="false" style="margin-left:20px;margin-right:20px">
+        <el-link
+          :underline="false"
+          style="margin-left:20px;margin-right:20px"
+          :type="priceType"
+          @click="priceSort()"
+        >
           价格
           <i class="el-icon-caret-bottom"></i>
         </el-link>
@@ -56,7 +77,7 @@
         >
           <!-- v-bind:用于属性绑定 -->
           <el-link :underline="false">
-            <span>价格区间</span>
+            <span>{{this.dropDownTitle}}</span>
             <i v-if="icon" class="el-icon-arrow-down"></i>
             <i v-else class="el-icon-arrow-up"></i>
           </el-link>
@@ -71,14 +92,14 @@
       </div>
       <div style="margin-top:20px">
         <el-row :gutter="20">
-          <el-col :span="6" v-for="item in tabledata" :key="item.id">
+          <el-col :span="6" v-for="item in tabledata" :key="item">
             <div class="grid-content" style="margin-top:3px">
               <!--padding: 内边距-->
               <el-card class="box-card" shadow="hover" :body-style="{ padding: '15px'}">
                 <div class="clearfix">
                   <span style="font-size: 14px;">{{item.name}}</span>
                 </div>
-                <div class="text" style="margin-top:20px">共10节</div>
+                <div class="text" style="margin-top:20px"></div>
                 <div class="text" style>{{item.price}}</div>
               </el-card>
             </div>
@@ -103,22 +124,33 @@
 </template>
 
 <script>
-import { getCourse } from '@/api/course'
+import { getCourse, getCourseType } from '@/api/course'
 export default {
   name: 'Main',
   data() {
     return {
+      breadList: [],
+      typeList: null,
+      allTypeList: null,
       checkList: [],
       icon: true,
       tabledata: null, // 后端数据
       current: 1, // 当前页码
       total: null, // 总条目
-      size: 16 // 每页条目数
+      size: 16, // 每页条目数
+      parentId: 0,
+      linkType: 'primary',
+      comprehensiveType: 'primary',
+      praiseType: '',
+      popularityType: '',
+      priceType: '',
+      dropDownTitle: '价格区间'
     }
   },
   mounted() {
     this.info()
   },
+  watch: {},
   methods: {
     visibleChange(visible) {
       if (visible) {
@@ -128,10 +160,78 @@ export default {
       }
     },
     info() {
+      getCourseType(this.parentId).then(res => {
+        this.typeList = res.data
+        this.allTypeList = res.data
+      })
       getCourse(this.current, this.size).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
       })
+    },
+    changeType(pId, pName) {
+      this.parentId = pId
+      getCourseType(this.parentId).then(res => {
+        this.typeList = res.data
+      })
+      this.breadList.push({ name: pName })
+    },
+    resetType() {
+      this.breadList = []
+      this.parentId = 0
+      this.typeList = this.allTypeList
+    },
+    checkBOX() {
+      if (this.checkList.length === 0) {
+        this.linkType = 'primary'
+      } else {
+        this.linkType = ''
+      }
+    },
+    resetBOX() {
+      this.checkList = []
+      this.linkType = 'primary'
+    },
+    comprehensiveSort() {
+      this.comprehensiveType = 'primary'
+      this.praiseType = ''
+      this.popularityType = ''
+      this.priceType = ''
+    },
+    praiseSort() {
+      this.comprehensiveType = ''
+      this.praiseType = 'primary'
+      this.popularityType = ''
+      this.priceType = ''
+    },
+    popularitySort() {
+      this.comprehensiveType = ''
+      this.praiseType = ''
+      this.popularityType = 'primary'
+      this.priceType = ''
+    },
+    priceSort() {
+      this.comprehensiveType = ''
+      this.praiseType = ''
+      this.popularityType = ''
+      this.priceType = 'primary'
+    },
+    handleCommand(command) {
+      if (command === 'a') {
+        this.dropDownTitle = '价格区间'
+      }
+      if (command === 'b') {
+        this.dropDownTitle = '￥1-99'
+      }
+      if (command === 'c') {
+        this.dropDownTitle = '￥100-499'
+      }
+      if (command === 'd') {
+        this.dropDownTitle = '￥500-999'
+      }
+      if (command === 'f') {
+        this.dropDownTitle = '￥999----'
+      }
     },
     currentChange(val) {
       this.current = val
@@ -140,11 +240,8 @@ export default {
         this.total = res.data.totalElements
       })
     },
-    prevClick(val) {
-      // alert(val)
-    },
-    nextClick(val) { // alert(val)
-    }
+    prevClick(val) {},
+    nextClick(val) {}
   }
 }
 </script>

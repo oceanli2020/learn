@@ -21,13 +21,13 @@
             <el-menu-item index="3" @click="changeContent('3')">
               <span slot="title">个人信息</span>
             </el-menu-item>
-            <el-menu-item index="4">
-              <span slot="title">导航四</span>
+            <el-menu-item index="4" @click="changeContent('4')">
+              <span slot="title">全部订单</span>
             </el-menu-item>
-            <el-menu-item index="5">
-              <span slot="title">导航五</span>
+            <el-menu-item index="5" @click="changeContent('5')">
+              <span slot="title">优惠券</span>
             </el-menu-item>
-            <el-menu-item index="6">
+            <el-menu-item index="6" @click="toLogout()">
               <span slot="title">退出登录</span>
             </el-menu-item>
           </el-menu>
@@ -41,6 +41,8 @@
         <el-main v-else-if="index==='3'">
           <option-thrid />
         </el-main>
+        <el-main v-else-if="index==='4'"></el-main>
+        <el-main v-else-if="index==='5'"></el-main>
       </el-container>
       <el-footer style="height:100px">
         <Footer />
@@ -69,6 +71,9 @@ export default {
     }
   },
   mounted() {
+    if (this.$route.query.index === undefined) {
+      this.index = '3'
+    }
     this.judge()
   },
   methods: {
@@ -93,6 +98,14 @@ export default {
     },
     parentFn(payload) {
       this.index = payload
+    },
+    toLogout() {
+      this.$store
+        .dispatch('logout')
+        .then(() => {
+          location.reload()
+        })
+        .catch(() => {})
     }
   }
 }

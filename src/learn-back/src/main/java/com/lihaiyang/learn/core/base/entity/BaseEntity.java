@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Maps;
 import lombok.Data;
 
@@ -25,6 +26,18 @@ public abstract class BaseEntity<T> implements Serializable {
     protected String remarks;
     @TableLogic
     protected String delFlag;
+
+    @TableField(exist = false)
+    protected Map<String, String> sqlMap;
+
+    @JsonIgnore
+    public Map<String, String> getSqlMap() {
+        if (this.sqlMap == null) {
+            this.sqlMap = Maps.newHashMap();
+        }
+
+        return this.sqlMap;
+    }
 
 
 

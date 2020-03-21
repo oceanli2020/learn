@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lihaiyang.learn.dao.CourseDao ">
+<mapper namespace="com.lihaiyang.learn.dao.CourseDao">
 
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        c.id,
+        c.name,
+        c.price
+    </sql>
+
+    <select id="selectPage" resultType="com.lihaiyang.learn.entity.Course">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_course c
+        WHERE c.del_flag='0'
+    </select>
 
 </mapper>

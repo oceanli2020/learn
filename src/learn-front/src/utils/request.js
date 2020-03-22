@@ -94,19 +94,22 @@ service.interceptors.response.use(
   },
   error => {
     let code = error.response.data.code
-    if (code === -401) {
-      MessageBox.confirm('登录状态已过期，是否重新登录?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-        center: true
+    let status = error.response.status
+    if (code === -401 || status === 401) {
+      store.dispatch('logout').then(() => {
+        MessageBox.confirm('登录状态已过期，是否重新登录?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        })
+          .then(() => {
+            router.push('/login')
+          })
+          .catch(() => {
+            router.push('/')
+          })
       })
-        .then(() => {
-          router.push('/login')
-        })
-        .catch(() => {
-          router.push('/')
-        })
     }
     return Promise.reject(error)
   }

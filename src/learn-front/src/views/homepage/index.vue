@@ -9,9 +9,9 @@
       </el-main>
     </el-container>
     <el-container>
-      <el-main>
+      <!-- <el-main>
         <course-display />
-      </el-main>
+      </el-main>-->
       <el-footer style="height:200px">
         <home-footer />
       </el-footer>

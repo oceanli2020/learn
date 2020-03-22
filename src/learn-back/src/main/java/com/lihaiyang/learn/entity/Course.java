@@ -1,5 +1,6 @@
 package com.lihaiyang.learn.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.lihaiyang.learn.core.base.entity.BaseEntity;
 import lombok.Data;
@@ -10,5 +11,12 @@ public class Course extends BaseEntity<Course> {
     private static final long serialVersionUID = 1L;
 
     private String name;
+
     private Double price;
+
+    private Long courseTypeId;
+
+    @TableField(exist = false)
+    private String priceString;
+
 }

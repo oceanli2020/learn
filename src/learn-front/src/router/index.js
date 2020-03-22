@@ -49,6 +49,15 @@ export const constantRouterMap = [
     },
     component: () => import('@/views/course/index'),
     hidden: true
+  },
+  {
+    path: '/video',
+    meta: {
+      title: '视频播放',
+      noCache: true
+    },
+    component: () => import('@/views/video/index'),
+    hidden: true
   }
 ]
 

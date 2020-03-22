@@ -10,35 +10,35 @@
         >
           <el-menu-item index="1">
             <i class="el-icon-ice-cream-round"></i>
-            <span slot="title">导航一</span>
+            <span slot="title">{{courseTypeList[0].name}}</span>
           </el-menu-item>
           <el-menu-item index="2">
             <i class="el-icon-water-cup"></i>
-            <span slot="title">导航二</span>
+            <span slot="title">{{courseTypeList[1].name}}</span>
           </el-menu-item>
           <el-menu-item index="3">
             <i class="el-icon-chat-line-square"></i>
-            <span slot="title">导航三</span>
+            <span slot="title">{{courseTypeList[2].name}}</span>
           </el-menu-item>
           <el-menu-item index="4">
             <i class="el-icon-attract"></i>
-            <span slot="title">导航四</span>
+            <span slot="title">{{courseTypeList[3].name}}</span>
           </el-menu-item>
           <el-menu-item index="5">
             <i class="el-icon-monitor"></i>
-            <span slot="title">导航五</span>
+            <span slot="title">{{courseTypeList[4].name}}</span>
           </el-menu-item>
           <el-menu-item index="6">
             <i class="el-icon-headset"></i>
-            <span slot="title">导航六</span>
+            <span slot="title">{{courseTypeList[5].name}}</span>
           </el-menu-item>
           <el-menu-item index="7">
             <i class="el-icon-star-off"></i>
-            <span slot="title">导航七</span>
+            <span slot="title">{{courseTypeList[6].name}}</span>
           </el-menu-item>
           <el-menu-item index="8">
             <i class="el-icon-bell"></i>
-            <span slot="title">导航八</span>
+            <span slot="title">{{courseTypeList[6].name}}</span>
           </el-menu-item>
         </el-menu>
       </el-col>
@@ -70,7 +70,7 @@
           <el-row>
             <el-col :span="12">
               <div class="grid-content bg-purple">
-                <img class="course-img" id="changeImg2" />
+                <img class="course-img" id="changeImg2" :src="Img2Url" />
               </div>
             </el-col>
             <el-col :span="12">
@@ -136,6 +136,7 @@
 </template>
 
 <script scoped>
+import { getCourseType } from '@/api/course'
 export default {
   name: 'Carousel',
   data() {
@@ -159,13 +160,21 @@ export default {
       cText: 'Java架构师,Java高级开发|java进阶大型互联网架构师',
       dText: 'JAVA高级开发 架构师课程',
       eText: 'JAVA架构师精品课 企业级架构/分布式/高并发/微服务',
-      fText: 'C/C++ 零基到大神精讲(C++17最新标准/游戏编程/项目实战)'
+      fText: 'C/C++ 零基到大神精讲(C++17最新标准/游戏编程/项目实战)',
+      courseTypeList: [],
+      Img2Url: ''
     }
   },
   mounted() {
-    document.getElementById('changeImg2').src = require('@/' + this.a)
+    this.info()
+    this.Img2Url = require('@/' + this.a)
   },
   methods: {
+    info() {
+      getCourseType(0).then(res => {
+        this.courseTypeList = res.data
+      })
+    },
     changeImg(x, y) {
       document.getElementById(y).src = require('@/' + x)
     }

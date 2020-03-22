@@ -93,14 +93,23 @@
       <div style="margin-top:20px">
         <el-row :gutter="20">
           <el-col :span="6" v-for="item in tabledata" :key="item">
-            <div class="grid-content" style="margin-top:3px">
+            <div class="grid-content" style="margin-top:3px;">
               <!--padding: 内边距-->
               <el-card class="box-card" shadow="hover" :body-style="{ padding: '15px'}">
-                <div class="clearfix">
-                  <span style="font-size: 14px;">{{item.name}}</span>
+                <div class="clearfix" style="height:60px">
+                  <el-link :underline="false" @click="clickLink(item.id)">
+                    <span style="font-size: 14px;">{{item.name}}</span>
+                  </el-link>
                 </div>
-                <div class="text" style="margin-top:20px"></div>
-                <div class="text" style>{{item.price}}</div>
+                <div class="text" style="margin-top:30px">
+                  共37节
+                  <el-divider direction="vertical"></el-divider>
+                  <span class="text" style>新东方教育</span>
+                </div>
+                <div style="font-size: 14px;color:#FF0000;margin-top:5px">
+                  {{item.priceString}}
+                  <span class="text" style="margin-left:8px">165164人报名</span>
+                </div>
               </el-card>
             </div>
           </el-col>
@@ -138,13 +147,16 @@ export default {
       current: 1, // 当前页码
       total: null, // 总条目
       size: 16, // 每页条目数
+      sort: 'id',
+      query: {},
       parentId: 0,
       linkType: 'primary',
       comprehensiveType: 'primary',
       praiseType: '',
       popularityType: '',
       priceType: '',
-      dropDownTitle: '价格区间'
+      dropDownTitle: '价格区间',
+      lastType: 0
     }
   },
   mounted() {
@@ -164,17 +176,27 @@ export default {
         this.typeList = res.data
         this.allTypeList = res.data
       })
-      getCourse(this.current, this.size).then(res => {
+      getCourse(this.current, this.size, this.sort, this.query).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
       })
     },
     changeType(pId, pName) {
+      if (this.parentId === pId) return
+      if (this.lastType === 1) {
+        this.breadList.pop()
+      }
+      this.breadList.push({ name: pName })
       this.parentId = pId
       getCourseType(this.parentId).then(res => {
-        this.typeList = res.data
+        var arr = Object.keys(res.data)
+        if (arr.length !== 0) {
+          this.lastType = 0
+          this.typeList = res.data
+        } else {
+          this.lastType = 1
+        }
       })
-      this.breadList.push({ name: pName })
     },
     resetType() {
       this.breadList = []
@@ -241,7 +263,10 @@ export default {
       })
     },
     prevClick(val) {},
-    nextClick(val) {}
+    nextClick(val) {},
+    clickLink(val) {
+      this.$router.push({ path: '/video', query: { id: val } })
+    }
   }
 }
 </script>
@@ -263,6 +288,7 @@ export default {
 }
 .text {
   font-size: 5px;
+  color: #707070;
 }
 .clearfix:before,
 .clearfix:after {

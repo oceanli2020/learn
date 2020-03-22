@@ -1,10 +1,12 @@
 import request from '@/utils/request'
 import { prefixURL } from '@/utils/global'
 
-export function getCourse(current, size) {
+export function getCourse(current, size, sort, query) {
   const data = {
     current,
-    size
+    size,
+    sort,
+    query
   }
   return request({
     url: prefixURL + 'course/page',
@@ -16,6 +18,13 @@ export function getCourse(current, size) {
 export function getCourseType(parentId) {
   return request({
     url: prefixURL + 'course/type/' + parentId,
+    method: 'get'
+  })
+}
+
+export function getCourseInfo(courseId) {
+  return request({
+    url: prefixURL + 'course/' + courseId,
     method: 'get'
   })
 }

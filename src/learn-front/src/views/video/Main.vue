@@ -4,12 +4,9 @@
       <div style="padding-top:20px;padding-bottom:20px;">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/course' }">全部课程</el-breadcrumb-item>
-          <el-breadcrumb-item
-            v-for="bread in breadList"
-            :key="bread"
-            :to="{ path: '/course' ,query: { id: bread.id }  }"
-            @click="test()"
-          >{{bread.name}}</el-breadcrumb-item>
+          <el-breadcrumb-item v-for="bread in breadList" :key="bread">
+            <el-link :underline="false" @click="changePath(bread.id)">{{bread.name}}</el-link>
+          </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="video"></div>
@@ -19,6 +16,7 @@
 
 <script>
 import { getCourseInfo } from '@/api/course'
+
 export default {
   name: 'Main',
   data() {
@@ -35,11 +33,13 @@ export default {
     info() {
       getCourseInfo(this.courseId).then(res => {
         this.breadList = res.data.courseTypeList
-        this.breadList.push({name: res.data.course.name})
+        this.breadList.push({ name: res.data.course.name })
+        this.$store.commit('SET_BREAD_LIST', this.breadList)
       })
     },
-    test() {
-      alert(111)
+    changePath(val) {
+      if (this.breadList[this.breadList.length - 1].id === val) return
+      this.$router.push({ path: '/course', query: { id: val } })
     }
   }
 }

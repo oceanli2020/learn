@@ -3,13 +3,11 @@
     <div class="center">
       <el-breadcrumb separator-class="el-icon-arrow-right" style="margin-top:15px">
         <el-breadcrumb-item>
-          <a href>全部课程</a>
+          <el-link :underline="false" href>全部课程</el-link>
         </el-breadcrumb-item>
-        <el-breadcrumb-item
-          v-for="bread in breadList"
-          :key="bread"
-          :to="{ path: '0' }"
-        >{{bread.name}}</el-breadcrumb-item>
+        <el-breadcrumb-item v-for="bread in breadList" :key="bread">
+          <el-link :underline="false" @click="changeTypeBread(bread.id,bread.name)">{{bread.name}}</el-link>
+        </el-breadcrumb-item>
       </el-breadcrumb>
       <el-divider></el-divider>
       <div>
@@ -134,13 +132,13 @@
 
 <script>
 import { getCourse, getCourseType } from '@/api/course'
+import store from '@/store'
 export default {
   name: 'Main',
   data() {
     return {
       breadList: [],
       typeList: null,
-      allTypeList: null,
       checkList: [],
       icon: true,
       tabledata: null, // 后端数据
@@ -148,7 +146,7 @@ export default {
       total: null, // 总条目
       size: 16, // 每页条目数
       sort: 'id',
-      query: {courseTypeId: 0},
+      query: { courseTypeId: 0 },
       parentId: 0,
       linkType: 'primary',
       comprehensiveType: 'primary',
@@ -160,7 +158,14 @@ export default {
     }
   },
   mounted() {
-    this.info()
+    var arr = Object.keys(store.getters.breadList)
+    if (this.$route.query.id === undefined) {
+      this.info()
+    } else if (arr.length === 0) {
+      this.info()
+    } else {
+      this.routerInfo()
+    }
   },
   watch: {},
   methods: {
@@ -171,11 +176,72 @@ export default {
         this.icon = true
       }
     },
+    routerInfo() {
+      this.parentId = this.$route.query.id
+      this.breadList = store.getters.breadList
+      this.$store.commit('SET_BREAD_LIST', [])
+      var index = -1
+      var length = this.breadList.length
+      for (let i = 0; i < length; i++) {
+        if (this.breadList[i].id === this.parentId) {
+          index = i
+          if (index === length - 2) {
+            this.lastType = 1
+          }
+          break
+        }
+      }
+      while (index < length - 1) {
+        this.breadList.pop()
+        index++
+      }
+      var pId
+      if (this.lastType === 1) {
+        pId = this.breadList[this.breadList.length - 2].id
+      } else {
+        pId = this.parentId
+      }
+      getCourseType(pId).then(res => {
+        this.typeList = res.data
+      })
+      this.query.courseTypeId = this.parentId
+      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+        this.tabledata = res.data.content
+        this.total = res.data.totalElements
+      })
+    },
     info() {
       getCourseType(this.parentId).then(res => {
         this.typeList = res.data
-        this.allTypeList = res.data
       })
+      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+        this.tabledata = res.data.content
+        this.total = res.data.totalElements
+      })
+    },
+    async changeTypeBread(pId, pName) {
+      if (this.parentId === pId) return
+      var index = -1
+      for (let i = 0; i < this.breadList.length; i++) {
+        if (this.breadList[i].id === pId) {
+          index = i
+        }
+        if (index !== -1) {
+          this.breadList.pop()
+        }
+      }
+      this.parentId = pId
+      await getCourseType(this.parentId).then(res => {
+        var arr = Object.keys(res.data)
+        if (arr.length !== 0) {
+          this.lastType = 0
+          this.typeList = res.data
+        } else {
+          this.lastType = 1
+        }
+      })
+      this.current = 1
+      this.query.courseTypeId = pId
       getCourse(this.current, this.size, this.sort, this.query).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
@@ -186,7 +252,7 @@ export default {
       if (this.lastType === 1) {
         this.breadList.pop()
       }
-      this.breadList.push({ name: pName })
+      this.breadList.push({ id: pId, name: pName })
       this.parentId = pId
       await getCourseType(this.parentId).then(res => {
         var arr = Object.keys(res.data)
@@ -207,7 +273,9 @@ export default {
     resetType() {
       this.breadList = []
       this.parentId = 0
-      this.typeList = this.allTypeList
+      getCourseType(this.parentId).then(res => {
+        this.typeList = res.data
+      })
       this.current = 1
       this.query.courseTypeId = 0
       getCourse(this.current, this.size, this.sort, this.query).then(res => {

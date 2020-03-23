@@ -15,5 +15,6 @@
         LEFT JOIN sys_course_type ct1 ON ct1.id=#{id} AND ct1.del_flag='0'
         WHERE ct.del_flag='0'
         AND (ct.id=#{id} OR ct1.parent_ids LIKE '%,'||ct.id||',%')
+        ORDER BY ct.id
       </select>
 </mapper>

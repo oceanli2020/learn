@@ -8,7 +8,7 @@
         <el-breadcrumb-item
           v-for="bread in breadList"
           :key="bread"
-          :to="{ path: '/course' }"
+          :to="{ path: '0' }"
         >{{bread.name}}</el-breadcrumb-item>
       </el-breadcrumb>
       <el-divider></el-divider>
@@ -148,7 +148,7 @@ export default {
       total: null, // 总条目
       size: 16, // 每页条目数
       sort: 'id',
-      query: {'courseTypeId': 0},
+      query: {courseTypeId: 0},
       parentId: 0,
       linkType: 'primary',
       comprehensiveType: 'primary',

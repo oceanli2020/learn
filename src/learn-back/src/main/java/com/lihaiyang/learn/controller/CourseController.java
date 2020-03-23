@@ -15,6 +15,9 @@ import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @RestController
 @RequestMapping({"${adminPath}/course"})
@@ -50,10 +53,10 @@ public class CourseController {
 
         Course course = courseService.getById(courseId);
         Long courseTypeId = course.getCourseTypeId();
-        CourseType courseType = courseTypeService.getById(courseTypeId);
+        List<CourseType> courseTypeList = courseTypeService.getAllById(courseTypeId);
         CourseDTO courseDTO = new CourseDTO();
-        courseDTO.setCourseTypeName(courseType.getName());
         courseDTO.setCourse(course);
+        courseDTO.setCourseTypeList(courseTypeList);
         return Result.ofSuccess(courseDTO);
     }
 

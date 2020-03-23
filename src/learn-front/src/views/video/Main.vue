@@ -7,7 +7,8 @@
           <el-breadcrumb-item
             v-for="bread in breadList"
             :key="bread"
-            :to="{ path: '/course' }"
+            :to="{ path: '/course' ,query: { id: bread.id }  }"
+            @click="test()"
           >{{bread.name}}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -27,18 +28,19 @@ export default {
     }
   },
   mounted() {
-    this.info(
-      getCourseInfo(this.courseId).then(res => {
-        this.breadList = [
-          { name: res.data.courseTypeName },
-          { name: res.data.course.name }
-        ]
-      })
-    )
+    this.info()
   },
   watch: {},
   methods: {
-    info() {}
+    info() {
+      getCourseInfo(this.courseId).then(res => {
+        this.breadList = res.data.courseTypeList
+        this.breadList.push({name: res.data.course.name})
+      })
+    },
+    test() {
+      alert(111)
+    }
   }
 }
 </script>

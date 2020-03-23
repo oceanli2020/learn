@@ -148,7 +148,7 @@ export default {
       total: null, // 总条目
       size: 16, // 每页条目数
       sort: 'id',
-      query: {},
+      query: {'courseTypeId': 0},
       parentId: 0,
       linkType: 'primary',
       comprehensiveType: 'primary',
@@ -181,14 +181,14 @@ export default {
         this.total = res.data.totalElements
       })
     },
-    changeType(pId, pName) {
+    async changeType(pId, pName) {
       if (this.parentId === pId) return
       if (this.lastType === 1) {
         this.breadList.pop()
       }
       this.breadList.push({ name: pName })
       this.parentId = pId
-      getCourseType(this.parentId).then(res => {
+      await getCourseType(this.parentId).then(res => {
         var arr = Object.keys(res.data)
         if (arr.length !== 0) {
           this.lastType = 0
@@ -196,12 +196,24 @@ export default {
         } else {
           this.lastType = 1
         }
+        this.current = 1
+        this.query.courseTypeId = pId
+      })
+      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+        this.tabledata = res.data.content
+        this.total = res.data.totalElements
       })
     },
     resetType() {
       this.breadList = []
       this.parentId = 0
       this.typeList = this.allTypeList
+      this.current = 1
+      this.query.courseTypeId = 0
+      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+        this.tabledata = res.data.content
+        this.total = res.data.totalElements
+      })
     },
     checkBOX() {
       if (this.checkList.length === 0) {
@@ -257,7 +269,7 @@ export default {
     },
     currentChange(val) {
       this.current = val
-      getCourse(this.current, this.size).then(res => {
+      getCourse(this.current, this.size, this.sort, this.query).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
       })

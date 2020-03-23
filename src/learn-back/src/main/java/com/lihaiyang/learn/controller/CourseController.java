@@ -30,10 +30,10 @@ public class CourseController {
     @PostMapping("/page")
     public Result page(@RequestBody PageDTO pageDTO){
 
-       /* Long courseTypeId = pageDTO.getQueryField("courseTypeId",Long.class);
+        Long courseTypeId = pageDTO.getQueryField("courseTypeId",Long.class);
         Course entity = new Course();
-        entity.setCourseTypeId(courseTypeId);*/
-        IPage<Course> listPage = courseService.page(pageDTO.getPage());
+        entity.setCourseTypeId(courseTypeId);
+        IPage<Course> listPage = courseService.page(pageDTO.getPage(),entity,pageDTO.getSortSql());
         listPage.getRecords().forEach(course -> {
             if(course.getPrice()==0){
                 course.setPriceString("免费");

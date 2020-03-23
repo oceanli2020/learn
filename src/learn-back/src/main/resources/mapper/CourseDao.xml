@@ -14,7 +14,13 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM sys_course c
+        LEFT JOIN sys_course_type ct ON ct.id = c.course_type_id AND ct.del_flag='0'
         WHERE c.del_flag='0'
+        <if test="ew.entity.courseTypeId != null and ew.entity.courseTypeId!= ''">
+            AND (c.course_type_id = #{ew.entity.courseTypeId} OR ct.parent_ids like '%,'||#{ew.entity.courseTypeId}||',%')
+        </if>
+        ORDER BY ${ew.entity.sqlMap.sortSql}
     </select>
 
+    
 </mapper>

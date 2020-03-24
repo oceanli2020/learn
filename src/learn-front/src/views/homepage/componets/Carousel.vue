@@ -7,6 +7,7 @@
           background-color="#545c64"
           text-color="#FFFFFF"
           active-text-color="#FFFFFF"
+          @select="selectMenu"
         >
           <el-menu-item index="1">
             <i class="el-icon-ice-cream-round"></i>
@@ -38,7 +39,7 @@
           </el-menu-item>
           <el-menu-item index="8">
             <i class="el-icon-bell"></i>
-            <span slot="title">{{courseTypeList[6].name}}</span>
+            <span slot="title">{{courseTypeList[7].name}}</span>
           </el-menu-item>
         </el-menu>
       </el-col>
@@ -136,7 +137,7 @@
 </template>
 
 <script scoped>
-import { getCourseType } from '@/api/course'
+import { getChildrenType } from '@/api/course'
 export default {
   name: 'Carousel',
   data() {
@@ -171,12 +172,16 @@ export default {
   },
   methods: {
     info() {
-      getCourseType(0).then(res => {
+      getChildrenType(0).then(res => {
         this.courseTypeList = res.data
       })
     },
     changeImg(x, y) {
       document.getElementById(y).src = require('@/' + x)
+    },
+    selectMenu(index) {
+      this.$store.commit('SET_COURSETYPE_ID', this.courseTypeList[index - 1].id)
+      this.$router.push('/course')
     }
   }
 }

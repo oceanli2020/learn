@@ -79,7 +79,7 @@ public class ShiroConfig {
         chainDefinition.addPathDefinition("/api/v1/token", "anon");
         chainDefinition.addPathDefinition("/logout", "anon");
         chainDefinition.addPathDefinition("/api/v1/sys/user/register", "anon");
-        chainDefinition.addPathDefinition("/api/v1/course/type/*", "anon");
+        chainDefinition.addPathDefinition("/api/v1/course/type/*/*", "anon");
         chainDefinition.addPathDefinition("/api/v1/course/*", "anon");
         chainDefinition.addPathDefinition("/**", "noSessionCreation,authcToken");
         return chainDefinition;

@@ -131,7 +131,7 @@
 </template>
 
 <script>
-import { getCourse, getCourseType } from '@/api/course'
+import { getCourse, getChildrenType, getParentsType } from '@/api/course'
 import store from '@/store'
 export default {
   name: 'Main',
@@ -173,13 +173,24 @@ export default {
         this.icon = true
       }
     },
-    routerInfo() {
+    async routerInfo() {
       this.parentId = store.getters.courseTypeId
-
       this.$store.commit('SET_COURSETYPE_ID', '')
-
-      getCourseType(this.parentId).then(res => {
-        this.typeList = res.data
+      await getParentsType(this.parentId).then(res => {
+        this.breadList = res.data
+      })
+      getChildrenType(this.parentId).then(res => {
+        var arr = Object.keys(res.data)
+        if (arr.length !== 0) {
+          this.typeList = res.data
+        } else {
+          this.lastType = 1
+          getChildrenType(this.breadList[this.breadList.length - 2].id).then(
+            res => {
+              this.typeList = res.data
+            }
+          )
+        }
       })
       this.query.courseTypeId = this.parentId
       getCourse(this.current, this.size, this.sort, this.query).then(res => {
@@ -188,7 +199,7 @@ export default {
       })
     },
     info() {
-      getCourseType(this.parentId).then(res => {
+      getChildrenType(this.parentId).then(res => {
         this.typeList = res.data
       })
       getCourse(this.current, this.size, this.sort, this.query).then(res => {
@@ -202,13 +213,16 @@ export default {
       for (let i = 0; i < this.breadList.length; i++) {
         if (this.breadList[i].id === pId) {
           index = i
-        }
-        if (index !== -1) {
-          this.breadList.pop()
+          break
         }
       }
+      var length = this.breadList.length
+      while (index < length - 1) {
+        this.breadList.pop()
+        index++
+      }
       this.parentId = pId
-      await getCourseType(this.parentId).then(res => {
+      await getChildrenType(this.parentId).then(res => {
         var arr = Object.keys(res.data)
         if (arr.length !== 0) {
           this.lastType = 0
@@ -231,7 +245,7 @@ export default {
       }
       this.breadList.push({ id: pId, name: pName })
       this.parentId = pId
-      await getCourseType(this.parentId).then(res => {
+      await getChildrenType(this.parentId).then(res => {
         var arr = Object.keys(res.data)
         if (arr.length !== 0) {
           this.lastType = 0
@@ -250,7 +264,7 @@ export default {
     resetType() {
       this.breadList = []
       this.parentId = 0
-      getCourseType(this.parentId).then(res => {
+      getChildrenType(this.parentId).then(res => {
         this.typeList = res.data
       })
       this.current = 1

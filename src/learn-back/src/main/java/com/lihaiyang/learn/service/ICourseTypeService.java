@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ICourseTypeService  extends IBaseService<CourseType> {
 
-    List<CourseType> getAllById(Long id);
+    List<CourseType> getParentsById(Long id);
 }

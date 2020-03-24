@@ -8,7 +8,7 @@
         ct.name
     </sql>
 
-    <select id="selectAllById" resultType="com.lihaiyang.learn.entity.CourseType">
+    <select id="selectParentsById" resultType="com.lihaiyang.learn.entity.CourseType">
         SELECT
         <include refid="Base_Column_List"/>
         FROM sys_course_type ct

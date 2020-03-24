@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface CourseTypeDao extends BaseDao<CourseType> {
 
-    List<CourseType> selectAllById(@Param("id")Long id);
+    List<CourseType> selectParentsById(@Param("id")Long id);
 }

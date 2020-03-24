@@ -26,9 +26,6 @@ public class CourseController {
     @Autowired
     private ICourseService courseService;
 
-    @Autowired
-    private ICourseTypeService courseTypeService;
-
 
     @PostMapping("/page")
     public Result page(@RequestBody PageDTO pageDTO){
@@ -48,15 +45,12 @@ public class CourseController {
 
     }
 
-    @GetMapping("/{courseId}")
-    public Result get(@PathVariable Long courseId){
+    @GetMapping("/{id}")
+    public Result get(@PathVariable Long id){
 
-        Course course = courseService.getById(courseId);
-        Long courseTypeId = course.getCourseTypeId();
-        List<CourseType> courseTypeList = courseTypeService.getAllById(courseTypeId);
+        Course course = courseService.getById(id);
         CourseDTO courseDTO = new CourseDTO();
         courseDTO.setCourse(course);
-        courseDTO.setCourseTypeList(courseTypeList);
         return Result.ofSuccess(courseDTO);
     }
 

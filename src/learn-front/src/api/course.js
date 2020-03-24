@@ -15,13 +15,18 @@ export function getCourse(current, size, sort, query) {
   })
 }
 
-export function getCourseType(parentId) {
+export function getChildrenType(parentId) {
   return request({
-    url: prefixURL + 'course/type/' + parentId,
+    url: prefixURL + 'course/type/children/' + parentId,
     method: 'get'
   })
 }
-
+export function getParentsType(id) {
+  return request({
+    url: prefixURL + 'course/type/parents/' + id,
+    method: 'get'
+  })
+}
 export function getCourseInfo(courseId) {
   return request({
     url: prefixURL + 'course/' + courseId,

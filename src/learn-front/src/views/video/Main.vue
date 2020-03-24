@@ -15,13 +15,15 @@
 </template>
 
 <script>
-import { getCourseInfo } from '@/api/course'
+import { getCourseInfo, getParentsType } from '@/api/course'
 export default {
   name: 'Main',
   data() {
     return {
       breadList: [],
-      courseId: this.$route.query.id
+      courseId: '',
+      courseName: '',
+      courseTypeId: ''
     }
   },
   mounted() {
@@ -29,10 +31,15 @@ export default {
   },
   watch: {},
   methods: {
-    info() {
-      getCourseInfo(this.courseId).then(res => {
-        this.breadList = res.data.courseTypeList
-        this.breadList.push({ name: res.data.course.name })
+    async info() {
+      this.courseId = this.$route.query.id
+      await getCourseInfo(this.courseId).then(res => {
+        this.courseName = res.data.course.name
+        this.courseTypeId = res.data.course.courseTypeId
+      })
+      getParentsType(this.courseTypeId).then(res => {
+        this.breadList = res.data
+        this.breadList.push({ name: this.courseName })
       })
     },
     changePath(val) {

@@ -13,7 +13,7 @@ import java.util.List;
 public class CourseTypeServiceImpl extends BaseServiceImpl<CourseTypeDao, CourseType> implements ICourseTypeService {
 
     @Override
-    public List<CourseType> getAllById(Long id){
-        return  baseMapper.selectAllById(id);
+    public List<CourseType> getParentsById(Long id){
+        return  baseMapper.selectParentsById(id);
     }
 }

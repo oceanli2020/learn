@@ -15,12 +15,17 @@ public class CourseTypeController {
     @Autowired
     private ICourseTypeService courseTypeService;
 
-    @GetMapping("/{parentId}")
-    public Result get(@PathVariable Long parentId){
+    @GetMapping("/children/{parentId}")
+    public Result getChildren(@PathVariable Long parentId){
 
         CourseType courseType = new CourseType();
         courseType.setParentId(parentId);
         return Result.ofSuccess(courseTypeService.list(Wrappers.query(courseType)));
 
+    }
+
+    @GetMapping("/parents/{id}")
+    public Result getParents(@PathVariable Long id){
+        return  Result.ofSuccess(courseTypeService.getParentsById(id));
     }
 }

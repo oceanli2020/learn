@@ -137,7 +137,7 @@ export default {
   name: 'Main',
   data() {
     return {
-      breadList: [],
+      breadList: [], // 面包屑数组
       typeList: null,
       checkList: [],
       icon: true,
@@ -158,10 +158,7 @@ export default {
     }
   },
   mounted() {
-    var arr = Object.keys(store.getters.breadList)
-    if (this.$route.query.id === undefined) {
-      this.info()
-    } else if (arr.length === 0) {
+    if (store.getters.courseTypeId === '') {
       this.info()
     } else {
       this.routerInfo()
@@ -177,31 +174,11 @@ export default {
       }
     },
     routerInfo() {
-      this.parentId = this.$route.query.id
-      this.breadList = store.getters.breadList
-      this.$store.commit('SET_BREAD_LIST', [])
-      var index = -1
-      var length = this.breadList.length
-      for (let i = 0; i < length; i++) {
-        if (this.breadList[i].id === this.parentId) {
-          index = i
-          if (index === length - 2) {
-            this.lastType = 1
-          }
-          break
-        }
-      }
-      while (index < length - 1) {
-        this.breadList.pop()
-        index++
-      }
-      var pId
-      if (this.lastType === 1) {
-        pId = this.breadList[this.breadList.length - 2].id
-      } else {
-        pId = this.parentId
-      }
-      getCourseType(pId).then(res => {
+      this.parentId = store.getters.courseTypeId
+
+      this.$store.commit('SET_COURSETYPE_ID', '')
+
+      getCourseType(this.parentId).then(res => {
         this.typeList = res.data
       })
       this.query.courseTypeId = this.parentId

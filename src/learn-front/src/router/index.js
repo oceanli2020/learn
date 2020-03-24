@@ -53,7 +53,7 @@ export const constantRouterMap = [
   {
     path: '/video',
     meta: {
-      title: '视频播放',
+      title: '视频播放页面',
       noCache: true
     },
     component: () => import('@/views/video/index'),

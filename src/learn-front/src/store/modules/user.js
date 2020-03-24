@@ -15,8 +15,7 @@ const user = {
     realname: '',
     email: '',
     phoneNumber: '',
-    profilePhoto: '',
-    breadList: []
+    profilePhoto: ''
   },
 
   mutations: {
@@ -37,9 +36,6 @@ const user = {
     },
     SET_PROFILE_PHOTO: (state, profilePhoto) => {
       state.profilePhoto = profilePhoto
-    },
-    SET_BREAD_LIST: (state, breadList) => {
-      state.breadList = breadList
     }
   },
 

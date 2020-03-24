@@ -79,18 +79,7 @@ export default {
   methods: {
     judge() {
       if (!store.getters.token) {
-        this.$confirm('该页面需要登录，是否登录?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-          center: true
-        })
-          .then(() => {
-            this.$router.push('/login')
-          })
-          .catch(() => {
-            this.$router.push('/')
-          })
+        this.$router.push('/')
       }
     },
     changeContent(i) {

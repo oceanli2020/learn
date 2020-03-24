@@ -16,7 +16,6 @@
 
 <script>
 import { getCourseInfo } from '@/api/course'
-
 export default {
   name: 'Main',
   data() {
@@ -34,12 +33,12 @@ export default {
       getCourseInfo(this.courseId).then(res => {
         this.breadList = res.data.courseTypeList
         this.breadList.push({ name: res.data.course.name })
-        this.$store.commit('SET_BREAD_LIST', this.breadList)
       })
     },
     changePath(val) {
       if (this.breadList[this.breadList.length - 1].id === val) return
-      this.$router.push({ path: '/course', query: { id: val } })
+      this.$store.commit('SET_COURSETYPE_ID', val)
+      this.$router.push('/course')
     }
   }
 }

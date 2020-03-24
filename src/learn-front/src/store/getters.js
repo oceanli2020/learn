@@ -5,6 +5,6 @@ const getters = {
   email: state => state.user.email,
   phoneNumber: state => state.user.phoneNumber,
   profilePhoto: state => state.user.profilePhoto,
-  breadList: state => state.user.breadList
+  courseTypeId: state => state.course.courseTypeId
 }
 export default getters

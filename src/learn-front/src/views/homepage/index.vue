@@ -9,7 +9,8 @@
       </el-main>
     </el-container>
     <el-container>
-      <!-- <el-main>
+      <!-- 该页面需要修改 -->
+      <!--<el-main>
         <course-display />
       </el-main>-->
       <el-footer style="height:200px">

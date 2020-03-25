@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 import jwt from 'jsonwebtoken'
 
-const TokenKey = 'token'
+const TokenKey = 'Admin-Token'
 const refreshTokenKey = 'refreshToken'
 
 export function setToken(token) {

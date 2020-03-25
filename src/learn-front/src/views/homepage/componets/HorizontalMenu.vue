@@ -17,7 +17,15 @@
         size="medium"
         @click="search"
       >搜索</el-button>
-      <el-link :underline="false" style="margin-right:20px">开课</el-link>
+         <el-dropdown @command="a" show-timeout="0" hide-timeout="100" style="margin-right:30px">
+          <el-link :underline="false">
+            <span>开课</span>
+          </el-link>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="a">个人开课</el-dropdown-item>
+          <el-dropdown-item command="b">机构开课</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
       <el-link :underline="false" @click="toLogin">登录 | 注册</el-link>
     </div>
     <div v-else>
@@ -29,7 +37,15 @@
         size="medium"
         @click="search"
       >搜索</el-button>
-      <el-link :underline="false" style="margin-right:20px">开课</el-link>
+         <el-dropdown @command="a" show-timeout="0" hide-timeout="100" style="margin-right:30px">
+          <el-link :underline="false">
+            <span>开课</span>
+          </el-link>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="a">个人开课</el-dropdown-item>
+          <el-dropdown-item command="b">机构开课</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
       <el-avatar :size="medium" :src="circleUrl" class="avatar"></el-avatar>
       <el-dropdown @command="handleCommand" show-timeout="0" hide-timeout="100">
         <!-- v-bind:用于属性绑定 -->

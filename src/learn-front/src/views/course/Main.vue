@@ -185,7 +185,13 @@ export default {
           this.typeList = res.data
         } else {
           this.lastType = 1
-          getChildrenType(this.breadList[this.breadList.length - 2].id).then(
+          var pId
+          if (this.breadList.length < 2) {
+            pId = 0
+          } else {
+            pId = this.breadList[this.breadList.length - 2].id
+          }
+          getChildrenType(pId).then(
             res => {
               this.typeList = res.data
             }

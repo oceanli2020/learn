@@ -46,7 +46,7 @@
           <el-dropdown-item command="b">机构开课</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <el-avatar :size="medium" :src="circleUrl" class="avatar"></el-avatar>
+      <el-avatar  :src="circleUrl" class="avatar"></el-avatar>
       <el-dropdown @command="handleCommand" show-timeout="0" hide-timeout="100">
         <!-- v-bind:用于属性绑定 -->
         <el-tooltip

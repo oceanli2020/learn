@@ -5,9 +5,12 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import store from './store'
+import Video from 'video.js'
 import locale from 'element-ui/lib/locale/lang/en' // element的国际化
 import 'element-ui/lib/theme-chalk/index.css'
-
+import 'video.js/dist/video-js.min.css'
+import 'videojs-flash'
+Vue.prototype.$video = Video
 Vue.use(ElementUI, {
   locale
 })

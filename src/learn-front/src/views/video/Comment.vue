@@ -14,15 +14,19 @@
       >
       </el-input>
       <el-button type="primary" size="mini" style="height:65px"
-        >发表评论</el-button><br>
+        >发表评论</el-button
+      ><br />
       <el-divider class="divider"></el-divider>
     </div>
-    <div class="text" v-for="index in 10" :key="index">
-      <el-avatar :size="50" :src="circleUrl" class="avt"></el-avatar>
-      <div style="margin-left:120px;font-size:15px">
-{{msg}}
+    <div class="area" v-for="index in 9" :key="index">
+      <div  class="avt"><el-avatar :size="50" :src="circleUrl"></el-avatar></div>
+      <div class="text">
+        <p style="font-size:6px;color:#686868"><strong>{{ name }}</strong></p>
+        <span style="font-size:13px;">{{comment}}</span><br>
+        <span style="font-size:5px;color:#989898;">{{ commentDate }}</span>
+        <svg-icon icon-class="yes" />
       </div>
-      <br>
+      <br />
       <el-divider class="divider"></el-divider>
     </div>
   </div>
@@ -38,7 +42,9 @@ export default {
     return {
       textarea: '',
       circleUrl: '',
-      msg: '2019 Docker+Kubernetes(k8s)微服务容器化实战这个呢，被下架了？'
+      name: 'oceanLi',
+      comment: '第一次评论呢',
+      commentDate: '2019-10-03 18:39'
     }
   },
   mounted() {
@@ -82,10 +88,25 @@ export default {
   width: 903px;
   float: right;
 }
-.text {
-  margin-top: 20px;
+.area {
+  margin-top: 15px;
   padding-top: 15px;
   padding-bottom: 15px;
-  /* background-color: dodgerblue; */
+  /* background-color:hotpink; */
+}
+.avt{
+  margin-left: 10px;
+  width: 55px;
+  float:left;
+  /* background-color: khaki; */
+
+}
+.text{
+  margin-left:85px;
+  height: 65px;
+  width: 700px;
+  position: relative;
+  top: -3px;
+
 }
 </style>

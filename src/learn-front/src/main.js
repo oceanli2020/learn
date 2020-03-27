@@ -6,6 +6,7 @@ import router from './router'
 import ElementUI from 'element-ui'
 import store from './store'
 import Video from 'video.js'
+import '@/icons' // icon
 import locale from 'element-ui/lib/locale/lang/en' // element的国际化
 import 'element-ui/lib/theme-chalk/index.css'
 import 'video.js/dist/video-js.min.css'

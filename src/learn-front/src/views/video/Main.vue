@@ -34,19 +34,16 @@
       </div>
       <div class="Introduction">
         <div style="padding-top:10px;padding-left:10px">
-          <el-button
-            :type="pointType"
-            icon="el-icon-thumb"
-            circle
-            @click="pointIcon('point')"
+          <el-button :type="pointType" circle @click="pointIcon('point')"
+            ><svg-icon icon-class="point"></svg-icon
           ></el-button>
           <span class="icon_number">{{ point }}</span>
           <el-button
             :type="starType"
-            icon="el-icon-star-off"
             circle
             style="margin-left:30px"
             @click="pointIcon('star')"
+            ><svg-icon icon-class="star"></svg-icon
           ></el-button>
           <span class="icon_number">{{ star }}</span>
           <el-button
@@ -64,7 +61,9 @@
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="课程介绍" name="first"></el-tab-pane>
             <el-tab-pane label="目录" name="second"></el-tab-pane>
-            <el-tab-pane label="评论(1555)" name="third"><comment/></el-tab-pane>
+            <el-tab-pane label="评论(1555)" name="third"
+              ><comment
+            /></el-tab-pane>
           </el-tabs>
         </div>
       </div>
@@ -152,7 +151,7 @@ export default {
           durationDisplay: true,
           currentTimeDisplay: true,
           timeDivider: true,
-          remainingTimeDisplay:false,
+          remainingTimeDisplay: false,
           playbackRateMenuButton: {
             playbackRates: [0.5, 1, 1.5, 2, 2.5]
           },
@@ -167,16 +166,16 @@ export default {
               name: 'progressControl' // 进度条
             },
             {
-              name: 'currentTimeDisplay'//当前播放时间
+              name: 'currentTimeDisplay' //当前播放时间
             },
             {
               name: 'timeDivider' // '/' 分隔符
             },
             {
-              name: 'durationDisplay'//总时间
+              name: 'durationDisplay' //总时间
             },
             {
-              name:'playbackRateMenuButton'//播放速率
+              name: 'playbackRateMenuButton' //播放速率
             },
             {
               name: 'volumePanel' //音量控制
@@ -244,11 +243,11 @@ export default {
   height: 500px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
-.video-js{
+.video-js {
   font-size: 10px;
 }
 .vjs-paused .vjs-big-play-button,
 .vjs-paused.vjs-has-started .vjs-big-play-button {
-    display: block;
+  display: block;
 }
 </style>

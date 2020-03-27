@@ -11,20 +11,25 @@
         maxlength="15"
         show-word-limit="true"
         size="mini "
-      >
-      </el-input>
+      ></el-input>
       <el-button type="primary" size="mini" style="height:65px"
         >发表评论</el-button
-      ><br />
+      >
+      <br />
       <el-divider class="divider"></el-divider>
     </div>
     <div class="area" v-for="index in 9" :key="index">
-      <div  class="avt"><el-avatar :size="50" :src="circleUrl"></el-avatar></div>
+      <div class="avt">
+        <el-avatar :size="50" :src="circleUrl"></el-avatar>
+      </div>
       <div class="text">
-        <p style="font-size:6px;color:#686868"><strong>{{ name }}</strong></p>
-        <span style="font-size:13px;">{{comment}}</span><br>
+        <p style="font-size:6px;color:#686868">
+          <strong>{{ name }}</strong>
+        </p>
+        <span style="font-size:13px;">{{ comment }}</span>
+        <br />
         <span style="font-size:5px;color:#989898;">{{ commentDate }}</span>
-        <svg-icon icon-class="yes" />
+        <svg-icon icon-class="point1"></svg-icon>
       </div>
       <br />
       <el-divider class="divider"></el-divider>
@@ -94,19 +99,17 @@ export default {
   padding-bottom: 15px;
   /* background-color:hotpink; */
 }
-.avt{
+.avt {
   margin-left: 10px;
   width: 55px;
-  float:left;
+  float: left;
   /* background-color: khaki; */
-
 }
-.text{
-  margin-left:85px;
+.text {
+  margin-left: 85px;
   height: 65px;
   width: 700px;
   position: relative;
   top: -3px;
-
 }
 </style>

@@ -1,24 +1,34 @@
 <template>
   <div class="main">
     <div class="center">
-      <el-breadcrumb separator-class="el-icon-arrow-right" style="margin-top:15px">
+      <el-breadcrumb
+        separator-class="el-icon-arrow-right"
+        style="margin-top:15px"
+      >
         <el-breadcrumb-item>
           <el-link :underline="false" href>全部课程</el-link>
         </el-breadcrumb-item>
         <el-breadcrumb-item v-for="bread in breadList" :key="bread">
-          <el-link :underline="false" @click="changeTypeBread(bread.id,bread.name)">{{bread.name}}</el-link>
+          <el-link
+            :underline="false"
+            @click="changeTypeBread(bread.id, bread.name)"
+            >{{ bread.name }}</el-link
+          >
         </el-breadcrumb-item>
       </el-breadcrumb>
       <el-divider></el-divider>
       <div>
-        <el-link :underline="false" type="primary" @click="resetType()">全部</el-link>
+        <el-link :underline="false" type="primary" @click="resetType()"
+          >全部</el-link
+        >
         <el-link
           :underline="false"
           style="margin-left:50px"
           v-for="type in typeList"
           :key="type"
-          @click="changeType(type.id,type.name)"
-        >{{type.name}}</el-link>
+          @click="changeType(type.id, type.name)"
+          >{{ type.name }}</el-link
+        >
       </div>
       <el-divider></el-divider>
       <div>
@@ -29,7 +39,8 @@
             style="margin-left:0px;margin-right:55px;vertical-align:top;"
             :type="linkType"
             @click="resetBOX()"
-          >全部</el-link>
+            >全部</el-link
+          >
           <el-checkbox label="录播"></el-checkbox>
           <el-checkbox label="直播"></el-checkbox>
           <el-checkbox label="免费"></el-checkbox>
@@ -38,7 +49,12 @@
       </div>
       <el-divider></el-divider>
       <div>
-        <el-link :underline="false" :type="comprehensiveType" @click="comprehensiveSort()">综合排序</el-link>
+        <el-link
+          :underline="false"
+          :type="comprehensiveType"
+          @click="comprehensiveSort()"
+          >综合排序</el-link
+        >
         <el-link
           :underline="false"
           style="margin-left:20px"
@@ -75,7 +91,7 @@
         >
           <!-- v-bind:用于属性绑定 -->
           <el-link :underline="false">
-            <span>{{this.dropDownTitle}}</span>
+            <span>{{ this.dropDownTitle }}</span>
             <i v-if="icon" class="el-icon-arrow-down"></i>
             <i v-else class="el-icon-arrow-up"></i>
           </el-link>
@@ -93,10 +109,14 @@
           <el-col :span="6" v-for="item in tabledata" :key="item">
             <div class="grid-content" style="margin-top:3px;">
               <!--padding: 内边距-->
-              <el-card class="box-card" shadow="hover" :body-style="{ padding: '15px'}">
+              <el-card
+                class="box-card"
+                shadow="hover"
+                :body-style="{ padding: '15px' }"
+              >
                 <div class="clearfix" style="height:60px">
                   <el-link :underline="false" @click="clickLink(item.id)">
-                    <span style="font-size: 14px;">{{item.name}}</span>
+                    <span style="font-size: 14px;">{{ item.name }}</span>
                   </el-link>
                 </div>
                 <div class="text" style="margin-top:30px">
@@ -105,7 +125,7 @@
                   <span class="text" style>新东方教育</span>
                 </div>
                 <div style="font-size: 14px;color:#FF0000;margin-top:5px">
-                  {{item.priceString}}
+                  {{ item.priceString }}
                   <span class="text" style="margin-left:8px">165164人报名</span>
                 </div>
               </el-card>
@@ -124,6 +144,7 @@
           layout="prev, pager, next"
           :total="total"
           style="text-align: center"
+          :hide-on-single-page="true"
         ></el-pagination>
       </div>
     </div>
@@ -191,11 +212,9 @@ export default {
           } else {
             pId = this.breadList[this.breadList.length - 2].id
           }
-          getChildrenType(pId).then(
-            res => {
-              this.typeList = res.data
-            }
-          )
+          getChildrenType(pId).then(res => {
+            this.typeList = res.data
+          })
         }
       })
       this.query.courseTypeId = this.parentId
@@ -385,5 +404,5 @@ export default {
 }
 .el-col {
   border-radius: 4px;
-}
-</style>>
+}</style
+>>

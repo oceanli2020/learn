@@ -49,6 +49,7 @@ public class CourseController {
     public Result get(@PathVariable Long id){
 
         Course course = courseService.getById(id);
+
         CourseDTO courseDTO = new CourseDTO();
         courseDTO.setCourse(course);
         return Result.ofSuccess(courseDTO);

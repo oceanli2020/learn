@@ -37,7 +37,7 @@ export default {
   /* background-color: blueviolet; */
 }
 .el-main {
-  height: 2500px;
+  min-height:1600px
 }
 .el-footer {
   background-color: #606266;

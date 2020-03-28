@@ -29,7 +29,7 @@
       </div>
       <div class="video">
         <video id="myVideo" class="video-js vjs-big-play-centered ">
-          <source src="@/assets/video/5.mp4" type="video/mp4" />
+          <source src="" type="video/mp4" />
         </video>
       </div>
       <div class="Introduction">
@@ -193,7 +193,7 @@ export default {
 
 <style scoped>
 .center {
-  height: 1000px;
+  height:auto;
   width: 1000px;
   /* background-color: aqua; */
   margin: 0 auto;
@@ -212,13 +212,13 @@ export default {
 
 .Introduction {
   height: 150px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); */
   margin-top: 20px;
   height: auto;
 }
 .label {
-  height: 1500px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  min-height: auto;
+    /* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);   */
   margin-top: 20px;
 }
 .icon_number {

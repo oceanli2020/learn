@@ -200,7 +200,7 @@ export default {
   /* 相对定位 */
   position: relative;
   /* left: 30px; */
-  top: 0px;
+  top: -18px;
 }
 .title {
   margin-top: 5px;

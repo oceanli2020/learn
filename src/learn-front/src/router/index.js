@@ -58,6 +58,15 @@ export const constantRouterMap = [
     },
     component: () => import('@/views/video/index'),
     hidden: true
+  },
+  {
+    path: '/creation',
+    meta: {
+      title: '创作中心',
+      noCache: true
+    },
+    component: () => import('@/views/creation/index'),
+    hidden: true
   }
 ]
 

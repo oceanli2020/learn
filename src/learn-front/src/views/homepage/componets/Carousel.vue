@@ -207,7 +207,7 @@ export default {
   width: 1000px;
   position: absolute;
   left: 459px;
-  top: 120px;
+  top: 100px;
 }
 .img {
   width: 100%;

@@ -1,7 +1,7 @@
 <template>
   <div class="homepage">
     <el-container>
-      <el-header>
+      <el-header  height=80px>
         <horizontal-menu />
       </el-header>
       <el-main>

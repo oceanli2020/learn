@@ -1,7 +1,7 @@
 <template>
   <div class="course">
     <el-container>
-      <el-header>
+      <el-header  height=80px>
         <Header />
       </el-header>
       <el-main>

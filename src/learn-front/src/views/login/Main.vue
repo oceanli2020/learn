@@ -157,7 +157,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 600px;
+  height: 550px;
   background-repeat: no-repeat;
   background-position: top center;
 }

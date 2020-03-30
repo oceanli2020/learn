@@ -17,7 +17,7 @@
         size="medium"
         @click="search"
       >搜索</el-button>
-        <el-dropdown @command="a" show-timeout="0" hide-timeout="100" style="margin-right:30px">
+              <el-dropdown @command="a" show-timeout="0" hide-timeout="100" style="margin-right:30px">
           <el-link :underline="false">
             <span>开课</span>
           </el-link>
@@ -37,7 +37,7 @@
         size="medium"
         @click="search"
       >搜索</el-button>
-        <el-dropdown @command="command" show-timeout="0" hide-timeout="100" style="margin-right:30px">
+              <el-dropdown @command="a" show-timeout="0" hide-timeout="100" style="margin-right:30px">
           <el-link :underline="false">
             <span>开课</span>
           </el-link>
@@ -47,7 +47,6 @@
         </el-dropdown-menu>
       </el-dropdown>
       <el-avatar  :src="circleUrl" class="avatar"></el-avatar>
-
       <el-dropdown @command="handleCommand" show-timeout="0" hide-timeout="100">
         <!-- v-bind:用于属性绑定 -->
         <el-tooltip
@@ -137,14 +136,7 @@ export default {
         this.toLogout()
       }
     },
-    search() {
-      this.$router.push('/course')
-    },
-    command(command) {
-      if (command === 'a') {
-        this.$router.push('/creation')
-      }
-    }
+    search() {}
   },
   filters: {
     ellipsis(value) {

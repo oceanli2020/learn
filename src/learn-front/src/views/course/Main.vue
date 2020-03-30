@@ -3,7 +3,6 @@
     <div class="center">
       <el-breadcrumb
         separator-class="el-icon-arrow-right"
-        style="margin-top:15px"
       >
         <el-breadcrumb-item>
           <el-link :underline="false" href>全部课程</el-link>
@@ -376,7 +375,7 @@ export default {
   /* 相对定位 */
   position: relative;
   /* left: 30px; */
-  top: 0px;
+  top: -5px;
 }
 .el-divider--horizontal {
   /* 修改分割线的上下外边距 */
@@ -404,5 +403,5 @@ export default {
 }
 .el-col {
   border-radius: 4px;
-}</style
->>
+}
+</style>

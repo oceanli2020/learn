@@ -1,7 +1,7 @@
 <template>
   <div class="course">
     <el-container>
-      <el-header>
+      <el-header  height=80px>
         <Header />
       </el-header>
       <el-main>
@@ -34,7 +34,6 @@ export default {
 .el-header {
   text-align: center;
   line-height: 60px;
-  /* background-color: blueviolet; */
 }
 .el-main {
   height: 1100px;

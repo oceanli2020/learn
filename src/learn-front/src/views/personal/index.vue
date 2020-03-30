@@ -1,7 +1,7 @@
 <template>
   <div class="personal">
     <el-container>
-      <el-header>
+      <el-header  height=80px>
         <Header @childFn="parentFn" />
       </el-header>
       <el-container>
@@ -123,7 +123,7 @@ export default {
   width: 1000px;
   position: absolute;
   left: 459px;
-  top: 150px;
+  top: 120px;
 }
 .el-menu-vertical {
   text-align: left;

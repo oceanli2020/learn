@@ -18,7 +18,7 @@
       </el-submenu>
       <el-menu-item index="2">
         <i class="el-icon-menu"></i>
-        <span slot="title">导航二</span>
+        <span slot="title">上传视频</span>
       </el-menu-item>
       <el-menu-item index="3">
         <i class="el-icon-document"></i>
@@ -28,21 +28,21 @@
         <i class="el-icon-setting"></i>
         <span slot="title">导航四</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="5">
         <i class="el-icon-setting"></i>
-        <span slot="title">导航四</span>
+        <span slot="title">导航五</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="6">
         <i class="el-icon-setting"></i>
-        <span slot="title">导航四</span>
+        <span slot="title">导航六</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="7">
         <i class="el-icon-setting"></i>
-        <span slot="title">导航四</span>
+        <span slot="title">导航七</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="8">
         <i class="el-icon-setting"></i>
-        <span slot="title">导航四</span>
+        <span slot="title">导航八</span>
       </el-menu-item>
     </el-menu>
   </div>

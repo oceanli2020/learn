@@ -1,6 +1,7 @@
 <template>
   <div style="margin-left:230px;margin-right:200px;margin-top:10px">
-    <el-link type="primary" class="brand" href="http://localhost:8080/">在线教育平台</el-link>
+    <span class="title">创作中心</span>
+    <el-link type="info" class="brand" href="http://localhost:8080/" :underline="false">首页</el-link>
     <div class="left-menu" style="cursor: pointer; margin-right:0px">
       <el-menu class="el-menu" mode="horizontal">
         <el-menu-item>功能优势</el-menu-item>
@@ -153,10 +154,15 @@ export default {
 <style scoped>
 .brand {
   float: left;
-  min-width: 200px;
-  text-align: center;
-  color: #409eff;
-  font-size: 20px;
+  font-size: 13px;
+  margin-left:-40px;
+  margin-right: 214px;
+}
+.title{
+  float: left;
+  color:#0099FF;
+  font-size: 18px;
+  margin-left:-167px;
 }
 .left-menu {
   float: left;

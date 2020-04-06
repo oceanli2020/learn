@@ -9,11 +9,13 @@ import Video from 'video.js'
 import '@/icons' // icon
 import locale from 'element-ui/lib/locale/lang/en' // element的国际化
 import 'element-ui/lib/theme-chalk/index.css'
-import 'video.js/dist/video-js.min.css'
+import 'video.js/dist/video-js.css'
 import 'videojs-flash'
 Vue.prototype.$video = Video
+
+/* eslint-disable */
 Vue.use(ElementUI, {
-  locale
+  locale,
 })
 Vue.config.productionTip = false
 
@@ -23,7 +25,7 @@ new Vue({
   router,
   store,
   components: {
-    App
+    App,
   },
-  template: '<App/>'
+  template: '<App/>',
 })

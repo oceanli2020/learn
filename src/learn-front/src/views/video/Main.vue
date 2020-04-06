@@ -6,52 +6,45 @@
       <div class="title">
         <span>{{ title }}</span>
         <br />
-        <span style="font-size:5px;color:#989898;">{{ uploadDate }}</span>
+        <span style="font-size: 5px; color: #989898;">{{ uploadDate }}</span>
       </div>
       <div class="breadcrumb">
-        <el-breadcrumb
-          separator-class="el-icon-arrow-right"
-          style="font-size:5px;"
-        >
+        <el-breadcrumb separator-class="el-icon-arrow-right" style="font-size: 5px;">
           <el-breadcrumb-item :to="{ path: '/course' }">
             <el-link :underline="false">
-              <span style="font-size:5px;vertical-align:top;">全部课程</span>
+              <span style="font-size: 5px; vertical-align: top;">全部课程</span>
             </el-link>
           </el-breadcrumb-item>
           <el-breadcrumb-item v-for="bread in breadList" :key="bread">
             <el-link :underline="false" @click="changePath(bread.id)">
-              <span style="font-size:5px;vertical-align:top;">{{
-                bread.name
-              }}</span>
+              <span style="font-size: 5px; vertical-align: top;">{{ bread.name }}</span>
             </el-link>
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="video">
-        <video id="myVideo" class="video-js vjs-big-play-centered ">
-          <source src="" type="video/mp4" />
+        <video
+          id="myVideo"
+          class="video-js vjs-big-play-centered"
+          autoplay="autoplay"
+          data-setup="{}"
+        >
+          <!-- <source src="http://192.168.157.128:9090/1.mp4" type="video/mp4" /> -->
+          <!-- <source src="http://192.168.157.128:80/hls/abcd/index.m3u8" /> -->
+          <source src="rtmp://192.168.1.9/live/abcd" type="rtmp" />
         </video>
       </div>
       <div class="Introduction">
-        <div style="padding-top:10px;padding-left:10px">
-          <el-button :type="pointType" circle @click="pointIcon('point')"
-            ><svg-icon icon-class="point"></svg-icon
-          ></el-button>
+        <div style="padding-top: 10px; padding-left: 10px;">
+          <el-button :type="pointType" circle @click="pointIcon('point')">
+            <svg-icon icon-class="point"></svg-icon>
+          </el-button>
           <span class="icon_number">{{ point }}</span>
-          <el-button
-            :type="starType"
-            circle
-            style="margin-left:30px"
-            @click="pointIcon('star')"
-            ><svg-icon icon-class="star"></svg-icon
-          ></el-button>
+          <el-button :type="starType" circle style="margin-left: 30px;" @click="pointIcon('star')">
+            <svg-icon icon-class="star"></svg-icon>
+          </el-button>
           <span class="icon_number">{{ star }}</span>
-          <el-button
-            type="success"
-            icon="el-icon-share"
-            circle
-            style="margin-left:30px"
-          ></el-button>
+          <el-button type="success" icon="el-icon-share" circle style="margin-left: 30px;"></el-button>
           <span class="icon_number">{{ share }}</span>
         </div>
         <div class="text">{{ text }}</div>
@@ -61,9 +54,9 @@
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="课程介绍" name="first"></el-tab-pane>
             <el-tab-pane label="目录" name="second"></el-tab-pane>
-            <el-tab-pane label="评论(1555)" name="third"
-              ><comment
-            /></el-tab-pane>
+            <el-tab-pane label="评论(1555)" name="third">
+              <comment />
+            </el-tab-pane>
           </el-tabs>
         </div>
       </div>
@@ -81,7 +74,7 @@ export default {
   },
   data() {
     return {
-      title: '01 尚硅谷Nginx教程',
+      title: '李海洋的直播间',
       uploadDate: '2019-09-18 10:19:05',
       breadList: [],
       courseId: '',
@@ -93,8 +86,7 @@ export default {
       pointType: 'info',
       starType: 'info',
       activeName: 'third',
-      text:
-        '本视频从Nginx最基础的部分讲起，内容由浅入深，既适合初学者，也适合具备一定软件开发能力的人员。视频主要包含以下几部分内容：第一部分讲解Nginx最基本的概念，可以让大家对于Nginx有个全方位的认识。第二部分讲解Nginx软件的安装和基本的操作命令，让大家能够熟练安装和使用Nginx软件。第三部分是课程的重中之重，主要讲解Nginx的各种应用场景的配置，比如反向代理、负载均衡、动静分离，以及Nginx高可用的集群配置。第四部分讲解Nginx的原理，可以对Nginx有更深入的理解。'
+      text: '终于成功了呀'
     }
   },
   mounted() {
@@ -139,6 +131,7 @@ export default {
       // 初始化视频方法
       /* eslint-disable */
       let myPlayer = this.$video(myVideo, {
+        // autoplay: 'autoplay',
         // 是否显示进度条
         controls: true,
         // 建议浏览器是否应在<video>加载元素后立即开始下载视频数据。
@@ -148,6 +141,7 @@ export default {
         // 设置视频播放器的显示高度（以像素为单位）
         height: '500px',
         controlBar: {
+          progressControl: false,
           durationDisplay: true,
           currentTimeDisplay: true,
           timeDivider: true,
@@ -193,7 +187,7 @@ export default {
 
 <style scoped>
 .center {
-  height:auto;
+  height: auto;
   width: 1000px;
   /* background-color: aqua; */
   margin: 0 auto;
@@ -218,7 +212,7 @@ export default {
 }
 .label {
   min-height: auto;
-    /* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);   */
+  /* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);   */
   margin-top: 20px;
 }
 .icon_number {

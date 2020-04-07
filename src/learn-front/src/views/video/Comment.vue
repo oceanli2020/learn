@@ -134,8 +134,9 @@ export default {
           )}`
         })
       } else {
+        var url = '20200316090713.jpg'
         this.circleUrl =
-          'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'
+          'http://localhost:9090/' + url
       }
     },
     getWrite(index) {

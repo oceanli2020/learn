@@ -15,7 +15,7 @@ Vue.prototype.$video = Video
 
 /* eslint-disable */
 Vue.use(ElementUI, {
-  locale,
+  locale
 })
 Vue.config.productionTip = false
 
@@ -25,7 +25,7 @@ new Vue({
   router,
   store,
   components: {
-    App,
+    App
   },
-  template: '<App/>',
+  template: '<App/>'
 })

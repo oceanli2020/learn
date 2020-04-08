@@ -34,7 +34,6 @@ export default {
 .el-header {
   text-align: center;
   line-height: 60px;
-  /* background-color: blueviolet; */
 }
 .el-main {
   min-height:1600px

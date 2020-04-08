@@ -1,55 +1,10 @@
 <template>
-  <div style="margin-left:230px;margin-right:200px;margin-top:10px">
+  <div>
     <span class="title">创作中心</span>
     <el-link type="info" class="brand" href="http://localhost:8080/" :underline="false">首页</el-link>
-    <div class="left-menu" style="cursor: pointer; margin-right:0px">
-      <el-menu class="el-menu" mode="horizontal">
-        <el-menu-item>功能优势</el-menu-item>
-        <el-menu-item>企业合作</el-menu-item>
-        <el-menu-item>帮助中心</el-menu-item>
-      </el-menu>
-    </div>
-    <div v-if="change">
-      <el-input v-model="input" placeholder="请输入内容" class="select" size="medium"></el-input>
-      <el-button
-        type="info"
-        style="margin-right:213px"
-        icon="el-icon-search"
-        size="medium"
-        @click="search"
-      >搜索</el-button>
-              <el-dropdown @command="a" show-timeout="0" hide-timeout="100" style="margin-right:30px">
-          <el-link :underline="false">
-            <span>开课</span>
-          </el-link>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="a">个人开课</el-dropdown-item>
-          <el-dropdown-item command="b">机构开课</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-      <el-link :underline="false" @click="toLogin">登录 | 注册</el-link>
-    </div>
-    <div v-else>
-      <el-input v-model="input" placeholder="请输入内容" class="select" size="medium"></el-input>
-      <el-button
-        type="info"
-        style="margin-right:213px"
-        icon="el-icon-search"
-        size="medium"
-        @click="search"
-      >搜索</el-button>
-              <el-dropdown @command="a" show-timeout="0" hide-timeout="100" style="margin-right:30px">
-          <el-link :underline="false">
-            <span>开课</span>
-          </el-link>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="a">个人开课</el-dropdown-item>
-          <el-dropdown-item command="b">机构开课</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+    <div class="info" >
       <el-avatar  :src="circleUrl" class="avatar"></el-avatar>
       <el-dropdown @command="handleCommand" show-timeout="0" hide-timeout="100">
-        <!-- v-bind:用于属性绑定 -->
         <el-tooltip
           v-bind:content="username"
           placement="right-end"
@@ -69,6 +24,7 @@
           <el-dropdown-item command="d" divided>退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+
     </div>
   </div>
 </template>
@@ -81,9 +37,7 @@ export default {
   name: 'HorizontalMenu',
   data() {
     return {
-      input: '',
       username: '',
-      change: true,
       circleUrl: '',
       profilePhoto: ''
     }
@@ -92,9 +46,6 @@ export default {
     this.info()
   },
   methods: {
-    toLogin() {
-      this.$router.push('/login')
-    },
     info() {
       if (store.getters.token) {
         this.username = store.getters.username
@@ -112,16 +63,7 @@ export default {
             )}`
           })
         }
-        this.change = false
       }
-    },
-    toLogout() {
-      this.$store
-        .dispatch('logout')
-        .then(() => {
-          location.reload()
-        })
-        .catch(() => {})
     },
     handleCommand(command) {
       if (command === 'a') {
@@ -136,8 +78,7 @@ export default {
       if (command === 'd') {
         this.toLogout()
       }
-    },
-    search() {}
+    }
   },
   filters: {
     ellipsis(value) {
@@ -155,21 +96,22 @@ export default {
 .brand {
   float: left;
   font-size: 13px;
-  margin-left:-40px;
-  margin-right: 214px;
+  margin-left:60px;
+  margin-top: 20px;
 }
 .title{
   float: left;
   color:#0099FF;
   font-size: 18px;
-  margin-left:-167px;
+  margin-left:50px;
+  margin-top: 15px;
 }
-.left-menu {
-  float: left;
-}
+.info{
+  float: right;
+  position: relative;
+  bottom:8px;
+  margin-right: 200px;
 
-.select {
-  width: 300px;
 }
 
 .el-icon-arrow-down {
@@ -179,6 +121,7 @@ export default {
   /* 相对定位 */
   position: relative;
   /* left: 30px; */
-  top: 15px;
+  top:15px
 }
+
 </style>

@@ -34,9 +34,11 @@ export default {
 .el-header {
   text-align: center;
   line-height: 60px;
+
 }
 .el-main {
   height: 1100px;
+
 }
 .el-footer {
   background-color: #606266;

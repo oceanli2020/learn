@@ -6,5 +6,6 @@ const getters = {
   phoneNumber: state => state.user.phoneNumber,
   profilePhoto: state => state.user.profilePhoto,
   courseTypeId: state => state.course.courseTypeId
+
 }
 export default getters

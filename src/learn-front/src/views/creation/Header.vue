@@ -96,7 +96,7 @@ export default {
 .brand {
   float: left;
   font-size: 13px;
-  margin-left:60px;
+  margin-left:70px;
   margin-top: 20px;
 }
 .title{
@@ -110,7 +110,7 @@ export default {
   float: right;
   position: relative;
   bottom:8px;
-  margin-right: 200px;
+  margin-right: 140px;
 
 }
 

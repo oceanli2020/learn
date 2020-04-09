@@ -44,7 +44,7 @@ export default {
   name: 'Aside',
   data() {
     return {
-      active: '4'
+      active: '1'
     }
   },
   mounted() {},

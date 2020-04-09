@@ -104,7 +104,7 @@
         </el-dropdown>
       </div>
       <div style="margin-top:20px">
-        <el-row :gutter="20">
+        <el-row >
           <el-col :span="6" v-for="item in tabledata" :key="item">
             <div class="grid-content" style="margin-top:3px;">
               <!--padding: 内边距-->
@@ -385,23 +385,15 @@ export default {
   font-size: 5px;
   color: #707070;
 }
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: '';
-}
-.clearfix:after {
-  clear: both;
-}
 .box-card {
-  width: 250px;
+  width: 240px;
   height: 150px;
 }
 .el-row {
-  /* margin-bottom: 下外边距 */
-  margin-bottom: 20px;
+
 }
 .el-col {
-  border-radius: 4px;
+  padding: 5px 4px 5px 4px;
+
 }
 </style>

@@ -54,7 +54,7 @@ export default {
   },
   data() {
     return {
-      index: '4'
+      index: '1'
     }
   },
   mounted() {},
@@ -62,6 +62,7 @@ export default {
     parentFn(val) {
       this.index = val
     }
+
   }
 }
 </script>

@@ -9,6 +9,6 @@
   position: relative;
   bottom: 20px;
   width: 1340px;
-  left: 150px;
+  left: 50px;
 }
 </style>

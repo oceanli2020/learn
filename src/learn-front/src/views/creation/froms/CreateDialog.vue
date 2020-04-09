@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-dialog title="新建课程" :visible.sync="dialogFormVisible" width="500px">
+    <el-dialog title="新建课程" :visible.sync="dialogFormVisible" width="500px"  :before-close="handleClose" @close="close">
       <el-form :model="createForm" ref="createForm">
         <el-form-item label="课程名称" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="createForm.name" class="input"></el-input>
+          <el-input v-model="createForm.name" class="input" clearable></el-input>
         </el-form-item>
         <el-form-item label="课程类别" :label-width="formLabelWidth" prop="type">
           <el-cascader
@@ -13,10 +13,9 @@
             class="select"
             v-model="createForm.type"
             clearable
-            @getCheckedNodes="getCheckedNodes"
           ></el-cascader>
         </el-form-item>
-        <el-form-item label="课程封面" :label-width="formLabelWidth" prop="coursepicture">
+        <el-form-item label="课程封面" :label-width="formLabelWidth">
           <div>
             <el-upload
               class="cover-picture"
@@ -32,7 +31,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button @click="uncreateCourse">取 消</el-button>
         <el-button type="primary" @click="createdCourse">确 定</el-button>
       </div>
     </el-dialog>
@@ -43,14 +42,17 @@
 export default {
   name: 'CreateDialog',
   props: {
-    visible: {
+    dialogFormVisible: {
       type: Boolean,
       required: true
+    },
+    sup_this: {
+      type: Object,
+      default: null
     }
   },
   data() {
     return {
-      dialogFormVisible: this.visible,
       formLabelWidth: '100px',
       createForm: {
         name: '',
@@ -328,8 +330,21 @@ export default {
   },
   mounted() {},
   methods: {
-    createdCourse() {
+    close() {
+      this.$refs.createForm.resetFields()
+    },
+    uncreateCourse() {
       this.dialogFormVisible = false
+      this.$emit('childFn', this.dialogFormVisible)
+    },
+    createdCourse() {
+      this.sup_this.createNew(this.createForm)
+      this.dialogFormVisible = false
+      this.$emit('childFn', this.dialogFormVisible)
+    },
+    handleClose(done) {
+      this.dialogFormVisible = false
+      this.$emit('childFn', this.dialogFormVisible)
     }
   }
 }

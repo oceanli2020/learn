@@ -14,7 +14,10 @@
         <el-main v-else-if="index==='2'">
           <upload-one />
         </el-main>
-        <el-main v-else-if="index==='3-1'">
+        <el-main v-else-if="index==='3'">
+          <my-courses />
+        </el-main>
+        <!-- <el-main v-else-if="index==='3-1'">
           <my-courses />
         </el-main>
         <el-main v-else-if="index==='3-2'">
@@ -25,7 +28,7 @@
         </el-main>
         <el-main v-else-if="index==='4'">
           <data-center />
-        </el-main>
+        </el-main>-->
       </el-container>
     </el-container>
   </div>
@@ -62,7 +65,6 @@ export default {
     parentFn(val) {
       this.index = val
     }
-
   }
 }
 </script>

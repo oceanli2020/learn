@@ -7,14 +7,18 @@
       :default-active="active"
     >
       <el-menu-item index="1" @click="click('1')">
-        <i class="el-icon-setting"></i>
+        <i class="el-icon-menu"></i>
         <span slot="title">开设课程</span>
       </el-menu-item>
       <el-menu-item index="2" @click="click('2')">
         <i class="el-icon-menu"></i>
         <span slot="title">内容上传</span>
       </el-menu-item>
-      <el-submenu index="3">
+      <el-menu-item index="3" @click="click('3')">
+        <i class="el-icon-menu"></i>
+        <span slot="title">内容管理</span>
+      </el-menu-item>
+      <!-- <el-submenu index="3">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span>内容管理</span>
@@ -34,7 +38,7 @@
       <el-menu-item index="4" @click="click('4')">
         <i class="el-icon-document"></i>
         <span slot="title">数据中心</span>
-      </el-menu-item>
+      </el-menu-item>-->
     </el-menu>
   </div>
 </template>

@@ -4,7 +4,7 @@
 
 <style scoped>
 .my-words {
-  height: 500px;
+  height: 600px;
   background-color: white;
   position: relative;
   bottom: 20px;

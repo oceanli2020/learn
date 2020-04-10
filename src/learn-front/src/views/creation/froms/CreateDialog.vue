@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog title="新建课程" :visible.sync="dialogFormVisible" width="500px"  :before-close="handleClose" @close="close">
+    <el-dialog title="新建课程" :visible.sync="dialogFormVisible" width="700px"  :before-close="handleClose" @close="close">
       <el-form :model="createForm" ref="createForm">
         <el-form-item label="课程名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="createForm.name" class="input" clearable></el-input>
@@ -31,8 +31,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="uncreateCourse">取 消</el-button>
-        <el-button type="primary" @click="createdCourse">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="determine">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      formLabelWidth: '100px',
+      formLabelWidth: '80px',
       createForm: {
         name: '',
         type: ''
@@ -333,11 +333,11 @@ export default {
     close() {
       this.$refs.createForm.resetFields()
     },
-    uncreateCourse() {
+    cancel() {
       this.dialogFormVisible = false
       this.$emit('childFn', this.dialogFormVisible)
     },
-    createdCourse() {
+    determine() {
       this.sup_this.createNew(this.createForm)
       this.dialogFormVisible = false
       this.$emit('childFn', this.dialogFormVisible)
@@ -352,16 +352,17 @@ export default {
 
 <style scoped>
 .input {
-  width: 300px;
+  width: 500px;
 }
 .select {
-  width: 300px;
+  width: 500px;
 }
 .cover-picture {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;
-  width: 180px;
+  width: 240px;
+  height: 150px;
   position: relative;
   overflow: hidden;
 }
@@ -371,13 +372,13 @@ export default {
 .cover-picture-icon {
   font-size: 28px;
   color: #8c939d;
-  width: 178px;
+  width: 240px;
   height: 150px;
   line-height: 150px;
   text-align: center;
 }
 .picture {
-  width: 178px;
+  width: 240px;
   height: 150px;
   display: block;
 }

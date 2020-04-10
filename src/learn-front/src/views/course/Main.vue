@@ -389,9 +389,7 @@ export default {
   width: 240px;
   height: 150px;
 }
-.el-row {
 
-}
 .el-col {
   padding: 5px 4px 5px 4px;
 

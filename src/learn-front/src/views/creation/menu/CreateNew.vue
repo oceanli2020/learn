@@ -28,7 +28,7 @@
         </div>
       </el-col>
       </el-row>
-       <div class="block">
+       <div class="pagination">
         <el-pagination
           background
           @current-change="currentChange"
@@ -110,6 +110,11 @@ export default {
 .el-col {
   padding: 5px 8px 5px 8px;
   width: 260px;
+
+}
+.pagination{
+
+  margin-top: 20px;
 
 }
 </style>

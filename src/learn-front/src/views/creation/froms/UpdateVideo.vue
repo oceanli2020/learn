@@ -1,92 +1,66 @@
 <template>
-  <div class="upload-one">
-    <div class="block">
-      <el-form
-        :model="uploadForm"
-        class="upload-form"
-        ref="uploadForm"
-        label-position="right"
-      >
-        <el-form-item prop="file">
-          <el-upload class="upload" drag :limit="1" action>
-            <i class="el-icon-upload"></i>
-            <div class="el-upload__text">将文件拖到此处，或点击上传</div>
-            <div class="el-upload__tip" slot="tip">
-              只能上传jpg/png文件，且不超过500kb
-            </div>
-          </el-upload>
+  <div>
+    <el-dialog title="编辑视频" :visible.sync="dialogFormVisible" width="700px"  :before-close="handleClose" >
+      <el-form :model="updateForm" ref="updateForm">
+         <el-form-item label="视频名称" :label-width="formLabelWidth" prop="name" >
+          <el-input v-model="updateForm.name" class="input" clearable ></el-input>
         </el-form-item>
-        <el-form-item prop="courseName">
-          <el-select
-            v-model="uploadForm.courseName"
-            placeholder="请选择已创建课程"
-            class="select"
-            clearable
-          >
-            <el-option label="课程一" value="shanghai"></el-option>
-            <el-option label="课程二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item prop="chapter">
+           <el-form-item prop="chapter" label="选择章节" :label-width="formLabelWidth">
           <el-autocomplete
             class="autocomplete"
-            v-model="uploadForm.chapter"
+            v-model="updateForm.chapter"
             :fetch-suggestions="querySearch"
             placeholder="请选择已创建章节或新建章节"
             @select="handleSelect"
             clearable
           ></el-autocomplete>
         </el-form-item>
-        <el-form-item prop="name">
-          <el-input
-            placeholder="请填写视频名称"
-            v-model="uploadForm.name"
-            clearable
-          >
-          </el-input>
-        </el-form-item>
-        <el-form-item prop="text">
+        <el-form-item prop="text" label="视频简介" :label-width="formLabelWidth">
           <el-input
             type="textarea"
             :rows="8"
             placeholder="请填写视频简介"
-            v-model="uploadForm.text"
+            v-model="updateForm.text"
             resize="none"
             maxlength="500"
+            class="textarea"
           >
           </el-input>
         </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm" style="float: right"
-            >提交</el-button
-          >
-          <el-button @click="resetForm" style="  float: right;margin-right:10px"
-            >重置</el-button
-          >
-        </el-form-item>
       </el-form>
-    </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="determine">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'UploadOne',
+  name: 'UpdateVideo',
+  props: {
+    dialogFormVisible: {
+      type: Boolean,
+      required: true
+    },
+    sup_this: {
+      type: Object,
+      default: null
+    }
+  },
   data() {
     return {
-      uploadForm: {
-        file: null,
-        courseName: '',
-        chapter: '',
+      formLabelWidth: '80px',
+      updateForm: {
         name: '',
+        chapter: '',
         text: ''
       },
       restaurants: []
     }
   },
-  mounted() {
-    this.restaurants = this.loadAll()
-  },
+  mounted() { this.restaurants = this.loadAll() },
   methods: {
     querySearch(queryString, cb) {
       var restaurants = this.restaurants
@@ -104,8 +78,18 @@ export default {
         )
       }
     },
-    resetForm() {},
-    submitForm() {},
+    cancel() {
+      this.dialogFormVisible = false
+      this.$emit('childFn', this.dialogFormVisible)
+    },
+    determine() {
+      this.dialogFormVisible = false
+      this.$emit('childFn', this.dialogFormVisible)
+    },
+    handleClose(done) {
+      this.dialogFormVisible = false
+      this.$emit('childFn', this.dialogFormVisible)
+    },
     loadAll() {
       return [
         { value: '三全鲜食（北新泾店）', address: '长宁区新渔路144号' },
@@ -233,40 +217,16 @@ export default {
 </script>
 
 <style scoped>
-.upload-one {
-  height: 850px;
-  background-color: white;
-  position: relative;
-  bottom: 20px;
-  width: 1340px;
-  left: 50px;
+.input {
+  width: 500px;
 }
-.block {
-  height: 100%;
-  width: 600px;
-  margin: auto;
-  /* background-color: darkseagreen; */
-}
-.upload {
-  margin-top: 30px;
-  width: 600px;
-}
-.upload >>> .el-upload-dragger {
-  width: 600px;
-  height: 300px;
-}
-.el-icon-upload {
-  margin: 100px 0 16px;
-}
-
-.el-upload__tip {
-  margin-top: -15px;
-  line-height: 20px;
-}
-.select {
-  width: 600px;
+.select{
+  width: 500px;
 }
 .autocomplete {
-  width: 600px;
+  width: 500px;
+}
+.textarea{
+  width: 500px;
 }
 </style>

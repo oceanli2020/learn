@@ -45,7 +45,6 @@
                 :http-request="uploadFileMethod"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
-
               >
                 <img v-if="imageUrl" :src="imageUrl" class="avatar" />
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -689,13 +688,14 @@ export default {
   font-size: 28px;
   color: #8c939d;
   width: 178px;
-  height: 200px;
-  line-height: 200px;
+  height: 178px;
+  line-height: 178px;
   text-align: center;
 }
 .avatar {
   width: 178px;
-  height: 200px;
+  height: 178px;
   display: block;
+  border-radius: 6px;
 }
 </style>

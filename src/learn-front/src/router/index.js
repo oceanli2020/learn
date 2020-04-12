@@ -67,6 +67,24 @@ export const constantRouterMap = [
     },
     component: () => import('@/views/creation/index'),
     hidden: true
+  },
+  {
+    path: '/live',
+    meta: {
+      title: '直播中心',
+      noCache: true
+    },
+    component: () => import('@/views/live/index'),
+    hidden: true
+  },
+  {
+    path: '/livelist',
+    meta: {
+      title: '直播列表',
+      noCache: true
+    },
+    component: () => import('@/views/livelist/index'),
+    hidden: true
   }
 ]
 

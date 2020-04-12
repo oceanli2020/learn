@@ -17,10 +17,10 @@
         size="medium"
         @click="search"
       >搜索</el-button>
-        <el-dropdown @command="a" show-timeout="0" hide-timeout="100" style="margin-right:30px">
-          <el-link :underline="false">
-            <span>开课</span>
-          </el-link>
+      <el-dropdown @command="a" show-timeout="0" hide-timeout="100" style="margin-right:30px">
+        <el-link :underline="false">
+          <span>开课</span>
+        </el-link>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="a">个人开课</el-dropdown-item>
           <el-dropdown-item command="b">机构开课</el-dropdown-item>
@@ -37,16 +37,16 @@
         size="medium"
         @click="search"
       >搜索</el-button>
-        <el-dropdown @command="command" show-timeout="0" hide-timeout="100" style="margin-right:30px">
-          <el-link :underline="false">
-            <span>开课</span>
-          </el-link>
+      <el-dropdown @command="command" show-timeout="0" hide-timeout="100" style="margin-right:30px">
+        <el-link :underline="false">
+          <span>开课</span>
+        </el-link>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="a">个人开课</el-dropdown-item>
           <el-dropdown-item command="b">机构开课</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <el-avatar  :src="circleUrl" class="avatar"></el-avatar>
+      <el-avatar :src="circleUrl" class="avatar"></el-avatar>
 
       <el-dropdown @command="handleCommand" show-timeout="0" hide-timeout="100">
         <!-- v-bind:用于属性绑定 -->
@@ -143,6 +143,8 @@ export default {
     command(command) {
       if (command === 'a') {
         this.$router.push('/creation')
+      } else if (command === 'b') {
+        this.$router.push('/live')
       }
     }
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="homepage">
     <el-container>
-      <el-header  height=80px>
+      <el-header height="80px">
         <horizontal-menu />
       </el-header>
       <el-main>
@@ -9,10 +9,6 @@
       </el-main>
     </el-container>
     <el-container>
-      <!-- 该页面需要修改 -->
-      <!--<el-main>
-        <course-display />
-      </el-main>-->
       <el-footer style="height:200px">
         <home-footer />
       </el-footer>
@@ -23,14 +19,12 @@
 <script>
 import Carousel from './componets/Carousel'
 import HorizontalMenu from './componets/HorizontalMenu'
-import CourseDisplay from './componets/CourseDisplay'
 import HomeFooter from './componets/HomeFooter'
 export default {
   name: 'Homepage',
   components: {
     Carousel,
     HorizontalMenu,
-    CourseDisplay,
     HomeFooter
   },
   data() {
@@ -41,8 +35,8 @@ export default {
 
 <style scoped>
 .el-header {
-  text-align: center;
   line-height: 60px;
+  /* background-color: bisque; */
 }
 .el-main {
   height: 1100px;

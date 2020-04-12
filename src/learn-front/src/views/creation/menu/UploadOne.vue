@@ -1,19 +1,12 @@
 <template>
   <div class="upload-one">
     <div class="block">
-      <el-form
-        :model="uploadForm"
-        class="upload-form"
-        ref="uploadForm"
-        label-position="right"
-      >
+      <el-form :model="uploadForm" class="upload-form" ref="uploadForm" label-position="right">
         <el-form-item prop="file">
           <el-upload class="upload" drag :limit="1" action>
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或点击上传</div>
-            <div class="el-upload__tip" slot="tip">
-              只能上传jpg/png文件，且不超过500kb
-            </div>
+            <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
         </el-form-item>
         <el-form-item prop="courseName">
@@ -38,12 +31,7 @@
           ></el-autocomplete>
         </el-form-item>
         <el-form-item prop="name">
-          <el-input
-            placeholder="请填写视频名称"
-            v-model="uploadForm.name"
-            clearable
-          >
-          </el-input>
+          <el-input placeholder="请填写视频名称" v-model="uploadForm.name" clearable></el-input>
         </el-form-item>
         <el-form-item prop="text">
           <el-input
@@ -53,16 +41,11 @@
             v-model="uploadForm.text"
             resize="none"
             maxlength="500"
-          >
-          </el-input>
+          ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm" style="float: right"
-            >提交</el-button
-          >
-          <el-button @click="resetForm" style="  float: right;margin-right:10px"
-            >重置</el-button
-          >
+          <el-button type="primary" @click="submitForm" style="float: right">提交</el-button>
+          <el-button @click="resetForm" style="  float: right;margin-right:10px">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -238,8 +221,9 @@ export default {
   background-color: white;
   position: relative;
   bottom: 20px;
-  width: 1340px;
-  left: 50px;
+  width: 800px;
+  left: 330px;
+  border-radius: 10px;
 }
 .block {
   height: 100%;

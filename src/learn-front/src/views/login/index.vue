@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <el-container>
-      <el-header  height=80px>
+      <el-header height="80px">
         <Header />
       </el-header>
       <el-main>
@@ -28,7 +28,6 @@ export default {
 
 <style scoped>
 .el-header {
-  text-align: center;
   line-height: 60px;
 }
 </style>

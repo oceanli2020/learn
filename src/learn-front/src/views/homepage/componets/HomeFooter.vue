@@ -7,27 +7,26 @@
           <p class="font2">致力于推广知识</p>
         </div>
       </el-col>
-      <el-col :span="3" push="1"
-        ><div class="grid-content" style="height:100px;margin-top:20px">
-          <p class="font3">关于我们</p>
+      <el-col :span="3" push="1">
+        <div class="grid-content" style="height:100px;margin-top:20px">
+          <p class="font3">传送门</p>
           <div class="font4">
-            <p>公司文化&nbsp; &nbsp;&nbsp;企业介绍</p>
-            <p>联系我们&nbsp; &nbsp;&nbsp;常见问题</p>
-            <p>意见反馈&nbsp; &nbsp;&nbsp;法律条款</p>
+            <p>关于我们&nbsp; &nbsp;&nbsp;联系我们</p>
+            <p>帮助中心&nbsp; &nbsp;&nbsp;产品介绍</p>
+            <p>用户反馈&nbsp; &nbsp;&nbsp;推荐链接</p>
           </div>
-        </div></el-col>
-      <el-col :span="3" pull="2"
-        ><div class="grid-content" style="height:100px;margin-top:20px">
+        </div>
+      </el-col>
+      <el-col :span="3" pull="2">
+        <div class="grid-content" style="height:100px;margin-top:20px">
           <p class="font3">关注我们</p>
           <el-tooltip placement="top">
-             <div class="contents" slot="content"><img src="@/assets/weixin.png" class="img"/></div>
+            <div class="contents" slot="content">
+              <img src="@/assets/weixin.png" class="img" />
+            </div>
             <el-button type="success" icon="el-icon-chat-dot-round" circle></el-button>
           </el-tooltip>
-          <el-button
-            type="primary"
-            icon="el-icon-message"
-            circle
-          ></el-button>
+          <el-button type="primary" icon="el-icon-message" circle></el-button>
         </div>
       </el-col>
     </el-row>
@@ -37,10 +36,8 @@
 <script>
 export default {
   name: 'HomeFooter',
-  data () {
-    return {
-
-    }
+  data() {
+    return {}
   }
 }
 </script>
@@ -78,12 +75,11 @@ export default {
   overflow: hidden;
   line-height: 1;
 }
-.contents{
-  width:150px;
-  height:150px;
-
+.contents {
+  width: 150px;
+  height: 150px;
 }
-.img{
+.img {
   width: 100%;
 }
 </style>

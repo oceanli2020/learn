@@ -1,7 +1,7 @@
 <template>
   <div class="course">
     <el-container>
-      <el-header  height=80px>
+      <el-header height="80px">
         <Header />
       </el-header>
       <el-main>
@@ -32,13 +32,10 @@ export default {
 
 <style scoped>
 .el-header {
-  text-align: center;
   line-height: 60px;
-
 }
 .el-main {
   height: 1100px;
-
 }
 .el-footer {
   background-color: #606266;

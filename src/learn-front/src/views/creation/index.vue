@@ -85,5 +85,6 @@ export default {
   /* 去除滚动条 */
   overflow-y: hidden;
   margin-top: 20px;
+  border-radius: 0 10px 10px 0;
 }
 </style>

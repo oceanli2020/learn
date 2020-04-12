@@ -1,143 +1,93 @@
 <template>
-  <div class="block-root">
-    <div>
-      <el-col :span="5">
-        <el-menu
-          class="el-menu-vertical"
-          background-color="#545c64"
-          text-color="#FFFFFF"
-          active-text-color="#FFFFFF"
-          @select="selectMenu"
-        >
-          <el-menu-item index="1">
-            <i class="el-icon-ice-cream-round"></i>
-            <span slot="title">{{courseTypeList[0].name}}</span>
-          </el-menu-item>
-          <el-menu-item index="2">
-            <i class="el-icon-water-cup"></i>
-            <span slot="title">{{courseTypeList[1].name}}</span>
-          </el-menu-item>
-          <el-menu-item index="3">
-            <i class="el-icon-chat-line-square"></i>
-            <span slot="title">{{courseTypeList[2].name}}</span>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <i class="el-icon-attract"></i>
-            <span slot="title">{{courseTypeList[3].name}}</span>
-          </el-menu-item>
-          <el-menu-item index="5">
-            <i class="el-icon-monitor"></i>
-            <span slot="title">{{courseTypeList[4].name}}</span>
-          </el-menu-item>
-          <el-menu-item index="6">
-            <i class="el-icon-headset"></i>
-            <span slot="title">{{courseTypeList[5].name}}</span>
-          </el-menu-item>
-          <el-menu-item index="7">
-            <i class="el-icon-star-off"></i>
-            <span slot="title">{{courseTypeList[6].name}}</span>
-          </el-menu-item>
-          <el-menu-item index="8">
-            <i class="el-icon-bell"></i>
-            <span slot="title">{{courseTypeList[7].name}}</span>
-          </el-menu-item>
-        </el-menu>
-      </el-col>
+  <div class="carousel">
+    <div class="block-root">
+      <div>
+        <el-col :span="5">
+          <el-menu
+            class="el-menu-vertical"
+            background-color="#545c64"
+            text-color="#FFFFFF"
+            active-text-color="#FFFFFF"
+            @select="selectMenu"
+          >
+            <el-menu-item index="1">
+              <i class="el-icon-ice-cream-round"></i>
+              <span slot="title">{{courseTypeList[0].name}}</span>
+            </el-menu-item>
+            <el-menu-item index="2">
+              <i class="el-icon-water-cup"></i>
+              <span slot="title">{{courseTypeList[1].name}}</span>
+            </el-menu-item>
+            <el-menu-item index="3">
+              <i class="el-icon-chat-line-square"></i>
+              <span slot="title">{{courseTypeList[2].name}}</span>
+            </el-menu-item>
+            <el-menu-item index="4">
+              <i class="el-icon-attract"></i>
+              <span slot="title">{{courseTypeList[3].name}}</span>
+            </el-menu-item>
+            <el-menu-item index="5">
+              <i class="el-icon-monitor"></i>
+              <span slot="title">{{courseTypeList[4].name}}</span>
+            </el-menu-item>
+            <el-menu-item index="6">
+              <i class="el-icon-headset"></i>
+              <span slot="title">{{courseTypeList[5].name}}</span>
+            </el-menu-item>
+            <el-menu-item index="7">
+              <i class="el-icon-star-off"></i>
+              <span slot="title">{{courseTypeList[6].name}}</span>
+            </el-menu-item>
+            <el-menu-item index="8">
+              <i class="el-icon-bell"></i>
+              <span slot="title">{{courseTypeList[7].name}}</span>
+            </el-menu-item>
+          </el-menu>
+        </el-col>
+      </div>
+      <div class="block">
+        <el-carousel height="448px">
+          <el-carousel-item v-for="item in imgList" :key="item">
+            <img :src="item.idView" class="img" />
+          </el-carousel-item>
+        </el-carousel>
+      </div>
     </div>
-    <div class="block">
-      <el-carousel height="448px">
-        <el-carousel-item v-for="item in imgList" :key="item">
-          <img :src="item.idView" class="img" />
-        </el-carousel-item>
-      </el-carousel>
-    </div>
-    <div>
-      <el-tabs v-model="activeName" stretch="true">
-        <el-tab-pane label="职业技能" name="first">
-          <div class="text" style="margin-top:10px;margin-bottom:20px">{{title}}</div>
-          <el-row>
-            <el-col :span="12">
-              <div class="grid-content bg-purple">
-                <img class="course-img" src="@/assets/carousel/carousel_first.jpg" />
-              </div>
-            </el-col>
-            <el-col :span="12">
-              <div class="grid-content bg-purple-light"></div>
-            </el-col>
-          </el-row>
-        </el-tab-pane>
-        <el-tab-pane label="编程语言" name="second">
-          <div class="text" style="margin-top:10px;margin-bottom:20px">{{title}}</div>
-          <el-row>
-            <el-col :span="12">
-              <div class="grid-content bg-purple">
-                <img class="course-img" id="changeImg2" :src="Img2Url" />
-              </div>
-            </el-col>
-            <el-col :span="12">
-              <div class="grid-content bg-purple-light">
-                <el-menu
-                  class="el-menu-vertical"
-                  background-color="#E8E8E8"
-                  text-color="#272727"
-                  active-text-color="#272727"
-                >
-                  <el-menu-item index="1" @mouseenter.native="changeImg(a,'changeImg2')">
-                    <span slot="title">{{aText}}</span>
-                  </el-menu-item>
-                  <el-menu-item index="2" @mouseenter.native="changeImg(b,'changeImg2')">
-                    <span slot="title">{{bText}}</span>
-                  </el-menu-item>
-                  <el-menu-item index="3" @mouseenter.native="changeImg(c,'changeImg2')">
-                    <span slot="title">{{cText}}</span>
-                  </el-menu-item>
-                  <el-menu-item index="4" @mouseenter.native="changeImg(d,'changeImg2')">
-                    <span slot="title">{{dText}}</span>
-                  </el-menu-item>
-                  <el-menu-item index="5" @mouseenter.native="changeImg(e,'changeImg2')">
-                    <span slot="title">{{eText}}</span>
-                  </el-menu-item>
-                  <el-menu-item index="6" @mouseenter.native="changeImg(f,'changeImg2')">
-                    <span slot="title">{{fText}}</span>
-                  </el-menu-item>
-                </el-menu>
-              </div>
-            </el-col>
-          </el-row>
-        </el-tab-pane>
-        <el-tab-pane label="实用外语" name="third">
-          <div class="text" style="margin-top:10px;margin-bottom:20px">{{title}}</div>
-          <el-row>
-            <el-col :span="12">
-              <div class="grid-content bg-purple">
-                <img class="course-img" src="@/assets/carousel/carousel_third.jpg" />
-              </div>
-            </el-col>
-            <el-col :span="12">
-              <div class="grid-content bg-purple-light"></div>
-            </el-col>
-          </el-row>
-        </el-tab-pane>
-        <el-tab-pane label="传统文化" name="fourth">
-          <div class="text" style="margin-top:10px;margin-bottom:20px">{{title}}</div>
-          <el-row>
-            <el-col :span="12">
-              <div class="grid-content bg-purple">
-                <img class="course-img" src="@/assets/carousel/carousel_forth.jpg" />
-              </div>
-            </el-col>
-            <el-col :span="12">
-              <div class="grid-content bg-purple-light"></div>
-            </el-col>
-          </el-row>
-        </el-tab-pane>
-      </el-tabs>
+    <div class="courses">
+      <div class="title">
+        <span>热门推荐</span>
+      </div>
+      <div class="block-courses">
+        <el-row>
+          <el-col :span="6" v-for="item in tabledata" :key="item" class="el-col-course">
+            <div class="grid-content" style="margin-top:3px;">
+              <!--padding: 内边距-->
+              <el-card class="box-card" shadow="hover" :body-style="{ padding: '15px' }">
+                <div class="clearfix" style="height:60px">
+                  <el-link :underline="false" @click="clickLink(item.id)">
+                    <span style="font-size: 14px;">{{ item.name }}</span>
+                  </el-link>
+                </div>
+                <div class="text" style="margin-top:30px">
+                  共37节
+                  <el-divider direction="vertical"></el-divider>
+                  <span class="text" style>新东方教育</span>
+                </div>
+                <div style="font-size: 14px;color:#FF0000;margin-top:5px">
+                  {{ item.priceString }}
+                  <span class="text" style="margin-left:8px">165164人报名</span>
+                </div>
+              </el-card>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
     </div>
   </div>
 </template>
 
 <script scoped>
-import { getChildrenType } from '@/api/course'
+import { getCourse, getChildrenType } from '@/api/course'
 export default {
   name: 'Carousel',
   data() {
@@ -148,40 +98,33 @@ export default {
         { id: 2, idView: require('@/assets/carousel/carousel_third.jpg') },
         { id: 3, idView: require('@/assets/carousel/carousel_forth.jpg') }
       ],
-      activeName: 'second',
-      title: '精选直播课',
-      a: 'assets/courses/course1.jpg',
-      b: 'assets/courses/course2.jpg',
-      c: 'assets/courses/course3.jpg',
-      d: 'assets/courses/course4.jpg',
-      e: 'assets/courses/course5.jpg',
-      f: 'assets/courses/course6.jpg',
-      aText: 'PHP7进阶到架构-Laravel/Redis/Swoole/高并发分布式',
-      bText: 'Python零基础快速就业到高级工程师/网络爬虫/人工智能/商业项目',
-      cText: 'Java架构师,Java高级开发|java进阶大型互联网架构师',
-      dText: 'JAVA高级开发 架构师课程',
-      eText: 'JAVA架构师精品课 企业级架构/分布式/高并发/微服务',
-      fText: 'C/C++ 零基到大神精讲(C++17最新标准/游戏编程/项目实战)',
       courseTypeList: [],
-      Img2Url: ''
+      tabledata: [],
+      current: 1,
+      size: 8,
+      sort: 'id',
+      query: { courseTypeId: 0 }
     }
   },
   mounted() {
     this.info()
-    this.Img2Url = require('@/' + this.a)
   },
   methods: {
     info() {
       getChildrenType(0).then(res => {
         this.courseTypeList = res.data
       })
-    },
-    changeImg(x, y) {
-      document.getElementById(y).src = require('@/' + x)
+      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+        this.tabledata = res.data.content
+        this.total = res.data.totalElements
+      })
     },
     selectMenu(index) {
       this.$store.commit('SET_COURSETYPE_ID', this.courseTypeList[index - 1].id)
       this.$router.push('/course')
+    },
+    clickLink(val) {
+      this.$router.push({ path: '/video', query: { id: val } })
     }
   }
 }
@@ -205,38 +148,40 @@ export default {
 }
 .block-root {
   width: 1000px;
-  position: absolute;
-  left: 459px;
-  top: 100px;
+  height: 508px;
+  margin: auto;
 }
 .img {
   width: 100%;
   height: 100%;
 }
-.el-row {
-  margin-bottom: 20px;
+.courses {
+  width: 1000px;
+  height: 400px;
+  /* background-color: bisque; */
+  margin: auto;
+  padding-top: 10px;
 }
-.el-col {
-  border-radius: 4px;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.course-img {
-  height: 336px;
-  width: 100%;
+.box-card {
+  width: 240px;
+  height: 150px;
 }
 .text {
-  text-align: center;
-  font-size: 30px;
+  font-size: 5px;
+  color: #707070;
 }
-.bg-purple-light {
-  background: #e5e9f2;
-  height: 336px;
+.el-col-course {
+  padding: 5px 4px 5px 4px;
+}
+.block-courses {
+  margin-top: 10px;
+  height: 334px;
+  /* background-color: brown; */
+}
+.title {
+  height: 30px;
+  font-size: 20px;
+  /* background-color: chartreuse; */
+  text-align: center;
 }
 </style>

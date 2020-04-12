@@ -1,9 +1,6 @@
 <template>
-  <svg
-    :class="svgClass"
-    aria-hidden="true"
-  >
-    <title> {{ title }}</title>
+  <svg :class="svgClass" aria-hidden="true">
+    <title>{{ title }}</title>
     <use :xlink:href="iconName" />
   </svg>
 </template>
@@ -48,5 +45,6 @@ export default {
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
+  font-size: 1em;
 }
 </style>

@@ -33,3 +33,21 @@ export function getCourseInfo(courseId) {
     method: 'get'
   })
 }
+export function getOptions() {
+  return request({
+    url: prefixURL + 'course/type/options',
+    method: 'get'
+  })
+}
+
+export function saveCourse(name, typeId) {
+  const data = {
+    name,
+    typeId
+  }
+  return request({
+    url: prefixURL + 'course/save',
+    method: 'post',
+    data
+  })
+}

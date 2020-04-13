@@ -98,8 +98,8 @@ export default {
     async info() {
       this.courseId = this.$route.query.id
       await getCourseInfo(this.courseId).then(res => {
-        this.courseName = res.data.course.name
-        this.courseTypeId = res.data.course.courseTypeId
+        this.courseName = res.data.name
+        this.courseTypeId = res.data.courseTypeId
       })
       getParentsType(this.courseTypeId).then(res => {
         this.breadList = res.data

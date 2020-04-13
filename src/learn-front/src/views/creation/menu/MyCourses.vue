@@ -115,7 +115,7 @@ export default {
       size: 10,
       total: 20,
       current: 1,
-      column: ['课程名称', '课程种类', '创建时间', '订阅人数'],
+      column: ['课程名称', '课程分类', '创建时间', '订阅人数'],
       type: 0,
       breadList: [{ id: '0', name: '全部课程' }],
       tableData: [],
@@ -219,7 +219,7 @@ export default {
     changeBread(id, name) {
       if (id === '0') {
         this.breadList = [{ id: '0', name: '全部课程' }]
-        this.column = ['课程名称', '课程种类', '创建时间', '订阅人数']
+        this.column = ['课程名称', '课程分类', '创建时间', '订阅人数']
         this.tableData = this.courses
         this.type = 0
       } else if (id === '1' && this.type === 2) {

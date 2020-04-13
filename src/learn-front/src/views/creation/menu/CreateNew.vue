@@ -13,16 +13,31 @@
     <el-divider></el-divider>
     <el-row>
       <el-col :span="5" v-for="item in tabledata" :key="item" >
-        <div class="courses" style="margin-top:3px;">
+        <div class="courses" style="margin-top:3px">
           <el-card
             class="box-card"
             shadow="hover"
             :body-style="{ padding: '15px' }"
           >
-            <div class="clearfix" style="height:30px">
+            <div class="course-name">
               <el-link :underline="false">
                 <span style="font-size: 14px;">{{ item.name }}</span>
               </el-link>
+            </div>
+            <div class="text" style="margin-top:20px">
+                  <span>共{{chapterNumber}}节</span>
+            </div>
+            <div class="text" style="margin-top:5px;margin-left:-2px">
+              <svg-icon
+                icon-class="sub"
+                style="font-size: 19px;"
+              ></svg-icon>
+              <span>{{subNumber}}</span>
+               <svg-icon
+                icon-class="point1"
+                style="font-size: 19px;"
+              ></svg-icon>
+              <span>{{likeNumber}}</span>
             </div>
           </el-card>
         </div>
@@ -57,8 +72,10 @@ export default {
       sup_this: this,
       total: 0,
       size: 10,
-      current: 1
-
+      current: 1,
+      chapterNumber: 0,
+      likeNumber: 0,
+      subNumber: 0
     }
   },
   methods: {
@@ -103,6 +120,14 @@ export default {
 .box-card {
   width: 240px;
   height: 150px;
+  word-break: break-all;
+}
+.course-name{
+  height:56px;
+}
+.text {
+  font-size: 5px;
+  color: #707070;
 }
 .el-row {
   padding-left: 20px;
@@ -110,11 +135,8 @@ export default {
 .el-col {
   padding: 5px 8px 5px 8px;
   width: 260px;
-
 }
 .pagination{
-
   margin-top: 20px;
-
 }
 </style>

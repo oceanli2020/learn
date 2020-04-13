@@ -15,7 +15,7 @@
             clearable
           ></el-cascader>
         </el-form-item>
-        <el-form-item label="课程封面" :label-width="formLabelWidth">
+        <!-- <el-form-item label="课程封面" :label-width="formLabelWidth">
           <div>
             <el-upload
               class="cover-picture"
@@ -28,7 +28,7 @@
               <i v-else class="el-icon-plus cover-picture-icon"></i>
             </el-upload>
           </div>
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
@@ -357,7 +357,7 @@ export default {
 .select {
   width: 500px;
 }
-.cover-picture {
+/* .cover-picture {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;
@@ -381,5 +381,5 @@ export default {
   width: 240px;
   height: 150px;
   display: block;
-}
+} */
 </style>

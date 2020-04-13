@@ -112,6 +112,9 @@ export default {
       sup_this: this
     }
   },
+  mounted() {
+    this.info()
+  },
   methods: {
     parentFn(val) {
       this.dialogFormVisible = val

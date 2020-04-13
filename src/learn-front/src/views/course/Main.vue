@@ -113,7 +113,7 @@
                 shadow="hover"
                 :body-style="{ padding: '15px' }"
               >
-                <div class="clearfix" style="height:60px">
+                <div class="clearfix" style="height:60px;">
                   <el-link :underline="false" @click="clickLink(item.id)">
                     <span style="font-size: 14px;">{{ item.name }}</span>
                   </el-link>

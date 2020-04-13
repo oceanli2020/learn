@@ -48,7 +48,7 @@ export default {
 
 <style scoped>
 .el-header {
-  text-align: center;
+
 }
 .el-main {
   height: 1200px;

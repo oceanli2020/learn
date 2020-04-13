@@ -96,7 +96,6 @@ export default {
 
 <style scoped>
 .el-header {
-  text-align: center;
   line-height: 60px;
   /* background-color: blueviolet; */
 }

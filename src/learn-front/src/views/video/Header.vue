@@ -1,71 +1,34 @@
 <template>
   <div style="margin-left:230px;margin-right:200px;margin-top:10px">
-    <el-link type="primary" class="brand" href="http://localhost:8080/">在线教育平台</el-link>
-    <div class="left-menu" style="cursor: pointer; margin-right:0px">
-      <el-menu class="el-menu" mode="horizontal">
-        <el-menu-item>功能优势</el-menu-item>
-        <el-menu-item>企业合作</el-menu-item>
-        <el-menu-item>帮助中心</el-menu-item>
-      </el-menu>
+    <el-link type="primary" class="brand" :underline="false" href="http://localhost:8080/">在线教育平台</el-link>
+    <el-link class="live" type="info" :underline="false" @click="getLiveList">直播</el-link>
+    <el-link class="course" type="info" :underline="false" @click="getCourseList">课程</el-link>
+    <div class="search-input">
+      <el-input v-model="input" placeholder="请输入内容" class="search" size="medium"></el-input>
+      <el-button type="info" icon="el-icon-search" size="medium" @click="search" class="button">搜索</el-button>
     </div>
-    <div v-if="change">
-      <el-input v-model="input" placeholder="请输入内容" class="select" size="medium"></el-input>
-      <el-button
-        type="info"
-        style="margin-right:213px"
-        icon="el-icon-search"
-        size="medium"
-        @click="search"
-      >搜索</el-button>
-      <el-dropdown @command="a" show-timeout="0" hide-timeout="100" style="margin-right:30px">
-        <el-link :underline="false">
-          <span>开课</span>
-        </el-link>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="a">个人开课</el-dropdown-item>
-          <el-dropdown-item command="b">机构开课</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+    <div v-if="change" class="login">
       <el-link :underline="false" @click="toLogin">登录 | 注册</el-link>
     </div>
-    <div v-else>
-      <el-input v-model="input" placeholder="请输入内容" class="select" size="medium"></el-input>
-      <el-button
-        type="info"
-        style="margin-right:213px"
-        icon="el-icon-search"
-        size="medium"
-        @click="search"
-      >搜索</el-button>
-      <el-dropdown @command="command" show-timeout="0" hide-timeout="100" style="margin-right:30px">
-        <el-link :underline="false">
-          <span>开课</span>
-        </el-link>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="a">个人开课</el-dropdown-item>
-          <el-dropdown-item command="b">机构开课</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+    <div v-else class="login">
       <el-avatar :src="circleUrl" class="avatar"></el-avatar>
-
       <el-dropdown @command="handleCommand" show-timeout="0" hide-timeout="100">
-        <!-- v-bind:用于属性绑定 -->
         <el-tooltip
           v-bind:content="username"
+          :disabled="tooltip"
           placement="right-end"
-          effect="light"
-          open-delay="700"
-          class="item"
+          :open-delay="700"
+          class="user_name"
         >
           <el-link :underline="false">
-            <span>{{ username | ellipsis }}</span>
+            <span>{{username | ellipsis}}</span>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </el-link>
         </el-tooltip>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="a">课程表</el-dropdown-item>
-          <el-dropdown-item command="b">我的收藏</el-dropdown-item>
-          <el-dropdown-item command="c">个人信息</el-dropdown-item>
+          <el-dropdown-item command="a">个人信息</el-dropdown-item>
+          <el-dropdown-item command="b">创作中心</el-dropdown-item>
+          <el-dropdown-item command="c">直播中心</el-dropdown-item>
           <el-dropdown-item command="d" divided>退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -75,8 +38,6 @@
 
 <script>
 import store from '@/store'
-import { getImg } from '@/api/user'
-
 export default {
   name: 'HorizontalMenu',
   data() {
@@ -85,7 +46,8 @@ export default {
       username: '',
       change: true,
       circleUrl: '',
-      profilePhoto: ''
+      profilePhoto: '',
+      tooltip: true
     }
   },
   mounted() {
@@ -98,19 +60,15 @@ export default {
     info() {
       if (store.getters.token) {
         this.username = store.getters.username
+        if (this.username.length > 5) {
+          this.tooltip = false
+        }
         this.profilePhoto = store.getters.profilePhoto
         if (this.profilePhoto === null || this.profilePhoto === '') {
           this.circleUrl =
             'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'
         } else {
-          getImg(this.profilePhoto).then(res => {
-            this.circleUrl = `data: image/jpeg;base64,${btoa(
-              new Uint8Array(res).reduce(
-                (data, byte) => data + String.fromCharCode(byte),
-                ''
-              )
-            )}`
-          })
+          this.circleUrl = 'http://localhost:9091/' + this.profilePhoto
         }
         this.change = false
       }
@@ -119,19 +77,19 @@ export default {
       this.$store
         .dispatch('logout')
         .then(() => {
-          location.reload()
+          this.$router.push('/')
         })
         .catch(() => {})
     },
     handleCommand(command) {
       if (command === 'a') {
-        this.$router.push({ path: '/personal', query: { index: '1' } })
+        this.$router.push({ path: '/personal', query: { index: '3' } })
       }
       if (command === 'b') {
-        this.$router.push({ path: '/personal', query: { index: '2' } })
+        this.$router.push('/creation')
       }
       if (command === 'c') {
-        this.$router.push({ path: '/personal', query: { index: '3' } })
+        this.$router.push('/live')
       }
       if (command === 'd') {
         this.toLogout()
@@ -140,12 +98,11 @@ export default {
     search() {
       this.$router.push('/course')
     },
-    command(command) {
-      if (command === 'a') {
-        this.$router.push('/creation')
-      } else if (command === 'b') {
-        this.$router.push('/live')
-      }
+    getCourseList() {
+      this.$router.push('/course')
+    },
+    getLiveList() {
+      this.$router.push('/livelist')
     }
   },
   filters: {
@@ -163,26 +120,63 @@ export default {
 <style scoped>
 .brand {
   float: left;
-  min-width: 200px;
-  text-align: center;
+  width: 125px;
   color: #409eff;
   font-size: 20px;
+  /* background-color: aqua; */
+  height: 60px;
+  position: relative;
+  left: 55px;
 }
-.left-menu {
-  float: left;
-}
-
-.select {
+.search {
   width: 300px;
+  position: relative;
+  right: 120px;
 }
-
+.button {
+  position: relative;
+  right: 120px;
+}
 .el-icon-arrow-down {
   font-size: 12px;
 }
 .avatar {
   /* 相对定位 */
   position: relative;
-  /* left: 30px; */
-  top: 15px;
+  top: 10px;
+}
+.search-input {
+  /* background-color: aqua; */
+  width: 590px;
+  position: relative;
+  left: 520px;
+  height: 60px;
+}
+.login {
+  /* background-color: aqua; */
+  width: 150px;
+  float: right;
+  position: relative;
+  bottom: 60px;
+  right: 55px;
+  height: 60px;
+}
+.user_name {
+  position: relative;
+  bottom: 5px;
+}
+.live {
+  float: left;
+  position: relative;
+  left: 100px;
+  /* background-color: aqua; */
+  font-size: 15px;
+}
+.course {
+  float: left;
+  position: relative;
+  left: 120px;
+  /* background-color: aqua; */
+  font-size: 15px;
 }
 </style>

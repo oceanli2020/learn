@@ -9,8 +9,9 @@
           v-bind:content="username"
           placement="right-end"
           effect="light"
-          open-delay="700"
-          class="item"
+          :open-delay="700"
+          class="user_name"
+          :disabled="tooltip"
         >
           <el-link :underline="false">
             <span>{{ username | ellipsis }}</span>
@@ -18,9 +19,9 @@
           </el-link>
         </el-tooltip>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="a">课程表</el-dropdown-item>
-          <el-dropdown-item command="b">我的收藏</el-dropdown-item>
-          <el-dropdown-item command="c">个人信息</el-dropdown-item>
+          <el-dropdown-item command="a">个人信息</el-dropdown-item>
+          <el-dropdown-item command="b">创作中心</el-dropdown-item>
+          <el-dropdown-item command="c">直播中心</el-dropdown-item>
           <el-dropdown-item command="d" divided>退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -31,7 +32,6 @@
 
 <script>
 import store from '@/store'
-import { getImg } from '@/api/user'
 
 export default {
   name: 'HorizontalMenu',
@@ -39,7 +39,8 @@ export default {
     return {
       username: '',
       circleUrl: '',
-      profilePhoto: ''
+      profilePhoto: '',
+      tooltip: true
     }
   },
   mounted() {
@@ -49,35 +50,39 @@ export default {
     info() {
       if (store.getters.token) {
         this.username = store.getters.username
+        if (this.username.length > 5) {
+          this.tooltip = false
+        }
         this.profilePhoto = store.getters.profilePhoto
         if (this.profilePhoto === null || this.profilePhoto === '') {
           this.circleUrl =
             'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'
         } else {
-          getImg(this.profilePhoto).then(res => {
-            this.circleUrl = `data: image/jpeg;base64,${btoa(
-              new Uint8Array(res).reduce(
-                (data, byte) => data + String.fromCharCode(byte),
-                ''
-              )
-            )}`
-          })
+          this.circleUrl = 'http://localhost:9091/' + this.profilePhoto
         }
       }
     },
     handleCommand(command) {
       if (command === 'a') {
-        this.$router.push({ path: '/personal', query: { index: '1' } })
+        this.$router.push({ path: '/personal', query: { index: '3' } })
       }
       if (command === 'b') {
-        this.$router.push({ path: '/personal', query: { index: '2' } })
+        this.$router.push('/creation')
       }
       if (command === 'c') {
-        this.$router.push({ path: '/personal', query: { index: '3' } })
+        this.$router.push('/live')
       }
       if (command === 'd') {
         this.toLogout()
       }
+    },
+    toLogout() {
+      this.$store
+        .dispatch('logout')
+        .then(() => {
+          this.$router.push('/')
+        })
+        .catch(() => {})
     }
   },
   filters: {
@@ -96,7 +101,7 @@ export default {
 .brand {
   float: left;
   font-size: 13px;
-  margin-left:70px;
+  margin-left:75px;
   margin-top: 20px;
 }
 .title{

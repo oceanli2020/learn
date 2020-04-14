@@ -5,11 +5,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lihaiyang.learn.core.result.Result;
 import com.lihaiyang.learn.core.result.ResultList;
+import com.lihaiyang.learn.core.utils.UserUtils;
 import com.lihaiyang.learn.dto.CourseDTO;
 import com.lihaiyang.learn.dto.CourseInDTO;
 import com.lihaiyang.learn.dto.PageDTO;
 import com.lihaiyang.learn.entity.Course;
 import com.lihaiyang.learn.entity.CourseType;
+import com.lihaiyang.learn.entity.User;
 import com.lihaiyang.learn.service.ICourseService;
 import com.lihaiyang.learn.service.ICourseTypeService;
 import org.checkerframework.checker.units.qual.C;
@@ -30,7 +32,9 @@ public class CourseController {
     @Autowired
     private ICourseService courseService;
 
-
+    /**
+     * 获取课程列表
+     * */
     @PostMapping("/page")
     public Result page(@RequestBody PageDTO pageDTO){
 
@@ -42,6 +46,9 @@ public class CourseController {
 
     }
 
+    /**
+     * 根据课程ID获取课程信息
+     * */
     @GetMapping("/{id}")
     public Result get(@PathVariable Long id){
 
@@ -51,17 +58,16 @@ public class CourseController {
         return Result.ofSuccess(courseDTO);
     }
 
+    /**
+     * 新建课程
+     * */
     @PostMapping("/save")
     public  Result save(@RequestBody CourseInDTO courseInDTO){
         String name = courseInDTO.getName();
         Long typeId = courseInDTO.getTypeId();
-        Date date=new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        String f=df.format(date);
         Course course = new Course();
         course.setCourseTypeId(typeId);
         course.setName(name);
-        course.setCreateTime(f);
         courseService.save(course);
         return  Result.ofSuccess("保存成功");
     }

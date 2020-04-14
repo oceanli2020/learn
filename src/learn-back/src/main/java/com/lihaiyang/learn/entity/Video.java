@@ -9,14 +9,15 @@ import lombok.Data;
 
 import java.util.Date;
 
-@TableName(value = "sys_course")
+@TableName(value = "sys_chapter")
 @Data
-public class Course extends BaseEntity<Course> {
+public class Video extends BaseEntity<Video> {
+
     private static final long serialVersionUID = 1L;
 
-    private String name;
+    private  String name;
 
-    private Long courseTypeId;
+    private  Long ChapterId;
 
     private  String introduction;
 
@@ -27,12 +28,4 @@ public class Course extends BaseEntity<Course> {
             pattern = "yyyy-MM-dd HH:mm:ss"
     )
     private Date createDate;
-
-    @TableField(
-            fill = FieldFill.INSERT
-    )
-    private String createBy;
-
-
-
 }

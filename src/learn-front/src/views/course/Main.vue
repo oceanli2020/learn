@@ -108,26 +108,22 @@
           <el-col :span="6" v-for="item in tabledata" :key="item">
             <div class="grid-content" style="margin-top:3px;">
               <!--padding: 内边距-->
-              <el-card
-                class="box-card"
-                shadow="hover"
-                :body-style="{ padding: '15px' }"
-              >
-                <div class="clearfix" style="height:60px;">
-                  <el-link :underline="false" @click="clickLink(item.id)">
-                    <span style="font-size: 14px;">{{ item.name }}</span>
-                  </el-link>
-                </div>
-                <div class="text" style="margin-top:30px">
-                  共37节
-                  <el-divider direction="vertical"></el-divider>
-                  <span class="text" style>新东方教育</span>
-                </div>
-                <div style="font-size: 14px;color:#FF0000;margin-top:5px">
-                  {{ item.priceString }}
-                  <span class="text" style="margin-left:8px">165164人报名</span>
-                </div>
-              </el-card>
+            <el-card class="box-card" shadow="hover" :body-style="{ padding: '15px' }">
+            <div class="course-name">
+              <el-link :underline="false" @click="clickLink(item.id)">
+                <span style="font-size: 14px;">{{ item.name }}</span>
+              </el-link>
+            </div>
+            <div class="text" style="margin-top:20px">
+              <span>共{{chapterNumber}}节</span>
+            </div>
+            <div class="text" style="margin-top:5px;margin-left:-2px">
+              <svg-icon icon-class="sub" style="font-size: 19px;"></svg-icon>
+              <span>{{subNumber}}</span>
+              <svg-icon icon-class="point1" style="font-size: 19px;"></svg-icon>
+              <span>{{likeNumber}}</span>
+            </div>
+          </el-card>
             </div>
           </el-col>
         </el-row>
@@ -174,7 +170,10 @@ export default {
       popularityType: '',
       priceType: '',
       dropDownTitle: '价格区间',
-      lastType: 0
+      lastType: 0,
+      chapterNumber: 0,
+      likeNumber: 0,
+      subNumber: 0
     }
   },
   mounted() {
@@ -393,5 +392,8 @@ export default {
 .el-col {
   padding: 5px 4px 5px 4px;
 
+}
+.course-name {
+  height: 56px;
 }
 </style>

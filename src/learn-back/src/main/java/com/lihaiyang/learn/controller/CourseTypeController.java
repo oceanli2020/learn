@@ -35,6 +35,10 @@ public class CourseTypeController {
         return  Result.ofSuccess(courseTypeService.getParentsById(id));
     }
 
+
+    /**
+     * 获取级联菜单
+     * */
     @GetMapping("/options")
     public Result getOptions(){
        return  Result.ofSuccess(courseTypeService.getOptions());

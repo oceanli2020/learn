@@ -51,3 +51,9 @@ export function saveCourse(name, typeId) {
     data
   })
 }
+export function getChapterList(courseId) {
+  return request({
+    url: prefixURL + 'chapter/' + courseId,
+    method: 'get'
+  })
+}

@@ -37,10 +37,14 @@ public class CourseController {
      * */
     @PostMapping("/page")
     public Result page(@RequestBody PageDTO pageDTO){
-
-        Long courseTypeId = pageDTO.getQueryField("courseTypeId",Long.class);
         Course entity = new Course();
+        Long courseTypeId = pageDTO.getQueryField("courseTypeId",Long.class);
         entity.setCourseTypeId(courseTypeId);
+        Long createBy = pageDTO.getQueryField("createBy",Long.class);
+        if(createBy!=null){
+            User user = UserUtils.getUser();
+            entity.setCreateBy(user.getId());
+        }
         IPage<Course> listPage = courseService.page(pageDTO.getPage(),entity,pageDTO.getSortSql());
         return Result.ofSuccess(new ResultList<>(listPage));
 
@@ -51,12 +55,13 @@ public class CourseController {
      * */
     @GetMapping("/{id}")
     public Result get(@PathVariable Long id){
-
         Course course = courseService.getById(id);
         CourseDTO courseDTO = new CourseDTO();
         courseDTO.setCourse(course);
         return Result.ofSuccess(courseDTO);
     }
+
+
 
     /**
      * 新建课程

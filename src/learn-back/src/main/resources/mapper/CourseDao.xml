@@ -18,6 +18,9 @@
         <if test="ew.entity.courseTypeId != null and ew.entity.courseTypeId!= ''">
             AND (c.course_type_id = #{ew.entity.courseTypeId} OR ct.parent_ids like '%,'||#{ew.entity.courseTypeId}||',%')
         </if>
+        <if test="ew.entity.createBy != null and ew.entity.createBy!= ''">
+            AND c.create_by = #{ew.entity.createBy}
+        </if>
         ORDER BY ${ew.entity.sqlMap.sortSql}
     </select>
 

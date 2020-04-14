@@ -9,7 +9,7 @@ import lombok.Data;
 
 import java.util.Date;
 
-@TableName(value = "sys_chapter")
+@TableName(value = "sys_video")
 @Data
 public class Video extends BaseEntity<Video> {
 

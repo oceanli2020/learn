@@ -31,7 +31,7 @@ public class Course extends BaseEntity<Course> {
     @TableField(
             fill = FieldFill.INSERT
     )
-    private String createBy;
+    private Long createBy;
 
 
 

@@ -14,7 +14,7 @@
         <div class="courses" style="margin-top:3px">
           <el-card class="box-card" shadow="hover" :body-style="{ padding: '15px' }">
             <div class="course-name">
-              <el-link :underline="false">
+              <el-link :underline="false" @click="clickLink(item.id)">
                 <span style="font-size: 14px;">{{ item.name }}</span>
               </el-link>
             </div>
@@ -48,7 +48,7 @@
 
 <script>
 import CreateDialog from '../froms/CreateDialog'
-import { saveCourse } from '@/api/course'
+import { saveCourse, getCourse, getChapterList } from '@/api/course'
 export default {
   components: {
     CreateDialog
@@ -63,28 +63,61 @@ export default {
       current: 1,
       chapterNumber: 0,
       likeNumber: 0,
-      subNumber: 0
+      subNumber: 0,
+      sort: 'id',
+      query: { createBy: 1 }
     }
   },
+  mounted() {
+    this.info()
+  },
   methods: {
+    info() {
+      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+        this.tabledata = res.data.content
+        this.total = res.data.totalElements
+      })
+    },
     dialog() {
       this.dialogFormVisible = true
     },
     parentFn(val) {
       this.dialogFormVisible = val
     },
-    createNew(val) {
-      saveCourse(val.name, val.typeIds[val.typeIds.length - 1]).then(res => {
-        this.$message({
-          message: res.data,
-          type: 'success'
-        })
+    async createNew(val) {
+      await saveCourse(val.name, val.typeIds[val.typeIds.length - 1]).then(
+        res => {
+          this.$message({
+            message: res.data,
+            type: 'success'
+          })
+        }
+      )
+      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+        this.tabledata = res.data.content
+        this.total = res.data.totalElements
       })
-      this.tabledata.push(JSON.parse(JSON.stringify(val))) // 把引用传递变为值传递
-      this.total++
+      // this.tabledata.push(JSON.parse(JSON.stringify(val))) // 把引用传递变为值传递
     },
     currentChange(val) {
       this.current = val
+      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+        this.tabledata = res.data.content
+        this.total = res.data.totalElements
+      })
+    },
+    clickLink(val) {
+      getChapterList(val).then(res => {
+        if (res.data.length !== 0) {
+          this.$router.push({ path: '/video', query: { id: val } })
+        } else {
+          this.$message({
+            showClose: true,
+            message: '该课程没有内容',
+            type: 'error'
+          })
+        }
+      })
     }
   }
 }

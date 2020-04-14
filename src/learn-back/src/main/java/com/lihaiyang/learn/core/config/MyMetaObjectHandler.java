@@ -30,9 +30,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         if (Objects.isNull(obj)) {
             try {
                 User user = UserUtils.getUser();
-                String idStr = String.valueOf(user.getId());
-                this.setFieldValByName("createBy", idStr, metaObject);
-                this.setFieldValByName("updateBy", idStr, metaObject);
+                this.setFieldValByName("createBy", user.getId(), metaObject);
+                this.setFieldValByName("updateBy", user.getId(), metaObject);
             } catch (Exception var7) {
                 System.out.println("没有取到用户");
             }
@@ -51,8 +50,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         if (Objects.isNull(obj)) {
             try {
                 User user = UserUtils.getUser();
-                String idStr = String.valueOf(user.getId());
-                this.setFieldValByName("updateBy", idStr, metaObject);
+                this.setFieldValByName("updateBy", user.getId(), metaObject);
             } catch (Exception var6) {
                 System.out.println("没有取到用户");
             }

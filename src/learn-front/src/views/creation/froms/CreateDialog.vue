@@ -7,11 +7,11 @@
       :before-close="handleClose"
       @close="close"
     >
-      <el-form :model="createForm" ref="createForm">
+      <el-form :model="createForm" ref="createForm" :rules="createRules">
         <el-form-item label="课程名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="createForm.name" class="input" clearable></el-input>
         </el-form-item>
-        <el-form-item label="课程类别" :label-width="formLabelWidth" prop="type">
+        <el-form-item label="课程类别" :label-width="formLabelWidth" prop="typeIds">
           <el-cascader
             placeholder="请选择课程类别"
             :options="options"
@@ -38,7 +38,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
-        <el-button type="primary" @click="determine">确 定</el-button>
+        <el-button type="primary" @click="determine">保存</el-button>
       </div>
     </el-dialog>
   </div>
@@ -59,13 +59,33 @@ export default {
     }
   },
   data() {
+    var checkName = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('课程名称不能为空'))
+      } else if (value.length > 75) {
+        callback(new Error('课程名称不能大于75位'))
+      } else {
+        callback()
+      }
+    }
+    var checkTypeIds = (rule, value, callback) => {
+      if (value === null || value.length === 0) {
+        callback(new Error('课程类型不能为空'))
+      } else {
+        callback()
+      }
+    }
     return {
       formLabelWidth: '80px',
       createForm: {
         name: '',
         typeIds: []
       },
-      options: []
+      options: [],
+      createRules: {
+        name: [{ validator: checkName, trigger: 'blur' }],
+        typeIds: [{ validator: checkTypeIds, trigger: 'blur' }]
+      }
     }
   },
   mounted() {
@@ -85,9 +105,13 @@ export default {
       this.$emit('childFn', this.dialogFormVisible)
     },
     determine() {
-      this.sup_this.createNew(this.createForm)
-      this.dialogFormVisible = false
-      this.$emit('childFn', this.dialogFormVisible)
+      this.$refs.createForm.validate(valid => {
+        if (valid) {
+          this.sup_this.createNew(this.createForm)
+          this.dialogFormVisible = false
+          this.$emit('childFn', this.dialogFormVisible)
+        }
+      })
     },
     handleClose(done) {
       this.dialogFormVisible = false

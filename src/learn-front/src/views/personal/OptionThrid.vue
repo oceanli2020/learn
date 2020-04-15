@@ -180,7 +180,7 @@
 </template>
 
 <script>
-import { update, checkPass, uploadAvatar, getImg } from '@/api/user'
+import { update, checkPass, uploadAvatar } from '@/api/user'
 export default {
   name: 'OptionThrid',
 
@@ -339,14 +339,6 @@ export default {
           this.user.phone_number = data.phoneNumber
           if (data.profilePhoto !== '' && data.profilePhoto !== null) {
             this.user.profile_photo = data.profilePhoto
-            getImg(this.user.profile_photo).then(res => {
-              this.squareUrl = `data: image/jpeg;base64,${btoa(
-                new Uint8Array(res).reduce(
-                  (data, byte) => data + String.fromCharCode(byte),
-                  ''
-                )
-              )}`
-            })
           }
         })
         .catch(err => {

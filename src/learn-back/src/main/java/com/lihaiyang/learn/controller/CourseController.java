@@ -3,26 +3,18 @@ package com.lihaiyang.learn.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.lihaiyang.learn.core.convert.ObjectConvert;
 import com.lihaiyang.learn.core.result.Result;
 import com.lihaiyang.learn.core.result.ResultList;
 import com.lihaiyang.learn.core.utils.UserUtils;
 import com.lihaiyang.learn.dto.CourseDTO;
-import com.lihaiyang.learn.dto.CourseInDTO;
 import com.lihaiyang.learn.dto.PageDTO;
 import com.lihaiyang.learn.entity.Course;
-import com.lihaiyang.learn.entity.CourseType;
 import com.lihaiyang.learn.entity.User;
 import com.lihaiyang.learn.service.ICourseService;
-import com.lihaiyang.learn.service.ICourseTypeService;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 
 @RestController
@@ -33,7 +25,7 @@ public class CourseController {
     private ICourseService courseService;
 
     /**
-     * 获取课程列表
+     * 获取课程列表·分页
      * */
     @PostMapping("/page")
     public Result page(@RequestBody PageDTO pageDTO){
@@ -51,13 +43,24 @@ public class CourseController {
     }
 
     /**
+     * 获取课程列表
+     * */
+    @GetMapping("/list")
+    public Result list(){
+        Course query = new Course();
+        query.setCreateBy(UserUtils.getUser().getId());
+        return Result.ofSuccess(courseService.list(Wrappers.query(query)));
+    }
+
+    /**
      * 根据课程ID获取课程信息
      * */
     @GetMapping("/{id}")
     public Result get(@PathVariable Long id){
         Course course = courseService.getById(id);
         CourseDTO courseDTO = new CourseDTO();
-        courseDTO.setCourse(course);
+        ObjectConvert<CourseDTO> objectToDto = new ObjectConvert();
+        courseDTO = objectToDto.toDto(course, courseDTO);
         return Result.ofSuccess(courseDTO);
     }
 
@@ -67,9 +70,9 @@ public class CourseController {
      * 新建课程
      * */
     @PostMapping("/save")
-    public  Result save(@RequestBody CourseInDTO courseInDTO){
-        String name = courseInDTO.getName();
-        Long typeId = courseInDTO.getTypeId();
+    public  Result save(@RequestBody CourseDTO courseDTO){
+        String name = courseDTO.getName();
+        Long typeId = courseDTO.getCourseTypeId();
         Course course = new Course();
         course.setCourseTypeId(typeId);
         course.setName(name);

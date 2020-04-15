@@ -59,10 +59,3 @@ export function uploadAvatar(data) {
     data
   })
 }
-export function getImg(name) {
-  return request({
-    url: name,
-    method: 'get',
-    responseType: 'arraybuffer'
-  })
-}

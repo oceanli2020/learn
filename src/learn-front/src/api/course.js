@@ -40,10 +40,10 @@ export function getOptions() {
   })
 }
 
-export function saveCourse(name, typeId) {
+export function saveCourse(name, courseTypeId) {
   const data = {
     name,
-    typeId
+    courseTypeId
   }
   return request({
     url: prefixURL + 'course/save',
@@ -54,6 +54,13 @@ export function saveCourse(name, typeId) {
 export function getChapterList(courseId) {
   return request({
     url: prefixURL + 'chapter/' + courseId,
+    method: 'get'
+  })
+}
+
+export function getCourseList() {
+  return request({
+    url: prefixURL + 'course/list',
     method: 'get'
   })
 }

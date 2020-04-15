@@ -103,7 +103,6 @@
 
 <script>
 import store from '@/store'
-import { getImg } from '@/api/user'
 
 export default {
   name: 'Comment',
@@ -125,14 +124,7 @@ export default {
   methods: {
     info() {
       if (store.getters.token) {
-        getImg(store.getters.profilePhoto).then(res => {
-          this.circleUrl = `data: image/jpeg;base64,${btoa(
-            new Uint8Array(res).reduce(
-              (data, byte) => data + String.fromCharCode(byte),
-              ''
-            )
-          )}`
-        })
+
       } else {
         var url = '20200316090713.jpg'
         this.circleUrl =

@@ -125,7 +125,7 @@ export default {
 
 <style scoped>
 .create-new {
-  height: 600px;
+  height: 530px;
   background-color: white;
   position: relative;
   bottom: 20px;
@@ -160,6 +160,6 @@ export default {
   width: 260px;
 }
 .pagination {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 </style>

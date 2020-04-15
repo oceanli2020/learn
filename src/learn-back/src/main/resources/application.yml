@@ -23,8 +23,6 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath*:/mapper/*.xml
-  type-aliases-package: com.lihaiyang.learn.entity
-  type-aliases-super-type: com.lihaiyang.learn.core.base.entity.BaseEntity
   global-config:
     banner: false
     db-config:

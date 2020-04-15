@@ -18,10 +18,10 @@
                 <span style="font-size: 14px;">{{ item.name }}</span>
               </el-link>
             </div>
-            <div class="text" style="margin-top:20px">
+            <div class="text" style="margin-top:32px">
               <span>共{{chapterNumber}}节</span>
             </div>
-            <div class="text" style="margin-top:5px;margin-left:-2px">
+            <div class="text" style="margin-top:12px;margin-left:-2px">
               <svg-icon icon-class="sub" style="font-size: 19px;"></svg-icon>
               <span>{{subNumber}}</span>
               <svg-icon icon-class="point1" style="font-size: 19px;"></svg-icon>
@@ -146,7 +146,7 @@ export default {
   word-break: break-all;
 }
 .course-name {
-  height: 56px;
+  height: 40px;
 }
 .text {
   font-size: 5px;

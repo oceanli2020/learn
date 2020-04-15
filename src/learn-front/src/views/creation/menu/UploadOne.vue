@@ -12,9 +12,7 @@
           <el-upload class="upload" drag :limit="1" action>
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或点击上传</div>
-            <div class="el-upload__tip" slot="tip">
-              只能上传mp4/flv文件，且不超过1024MB
-            </div>
+            <div class="el-upload__tip" slot="tip">只能上传mp4/flv文件，且不超过1024MB</div>
           </el-upload>
         </el-form-item>
         <el-form-item prop="courseId">
@@ -26,37 +24,23 @@
             @change="getChapters"
             filterable="true"
           >
-            <el-option
-              v-for="item in selectdata"
-              :key="item"
-              :label="item.name"
-              :value="item.id"
-            ></el-option>
+            <el-option v-for="item in selectdata" :key="item" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item prop="chapterId">
+        <el-form-item prop="chapter">
           <el-select
-            v-model="uploadForm.chapterId"
+            v-model="uploadForm.chapter"
             placeholder="请选择已选课程的已创建章节或新建章节"
             class="select"
             clearable
             allow-create="true"
             filterable="true"
           >
-            <el-option
-              v-for="item in chapterList"
-              :key="item"
-              :label="item.name"
-              :value="item.id"
-            ></el-option>
+            <el-option v-for="item in chapterList" :key="item" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item prop="name">
-          <el-input
-            placeholder="请填写视频名称"
-            v-model="uploadForm.name"
-            clearable
-          ></el-input>
+          <el-input placeholder="请填写视频名称" v-model="uploadForm.name" clearable></el-input>
         </el-form-item>
         <el-form-item prop="text">
           <el-input
@@ -66,15 +50,12 @@
             v-model="uploadForm.text"
             resize="none"
             maxlength="500"
+            show-word-limit
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm" style="float: right"
-            >提交</el-button
-          >
-          <el-button @click="resetForm" style="  float: right;margin-right:10px"
-            >重置</el-button
-          >
+          <el-button type="primary" @click="submitForm" style="float: right">提交</el-button>
+          <el-button @click="resetForm" style="  float: right;margin-right:10px">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -87,19 +68,15 @@ export default {
   name: 'UploadOne',
   data() {
     var checkCourseId = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('课程名称不能为空'))
-      } else if (value.length > 75) {
-        callback(new Error('课程名称不能大于75位'))
+      if (value === '' || value === null) {
+        callback(new Error('课程不能为空'))
       } else {
         callback()
       }
     }
-    var checkChapterId = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('课程名称不能为空'))
-      } else if (value.length > 75) {
-        callback(new Error('课程名称不能大于75位'))
+    var checkChapter = (rule, value, callback) => {
+      if (value === '' || value === null) {
+        callback(new Error('章节不能为空'))
       } else {
         callback()
       }
@@ -117,15 +94,15 @@ export default {
       uploadForm: {
         file: null,
         courseId: '',
-        chapterId: '',
+        chapter: '',
         name: '',
         text: ''
       },
       chapterList: [],
       selectdata: [],
       uploadRules: {
-        courseId: [{ validator: checkCourseId, trigger: 'blur' }],
-        chapterId: [{ validator: checkChapterId, trigger: 'blur' }],
+        courseId: [{ validator: checkCourseId, trigger: 'change' }],
+        chapter: [{ validator: checkChapter, trigger: 'change' }],
         name: [{ validator: checkName, trigger: 'blur' }]
       }
     }
@@ -149,7 +126,13 @@ export default {
       }
     },
     resetForm() {},
-    submitForm() {}
+    submitForm() {
+      this.$refs.uploadForm.validate(valid => {
+        if (valid) {
+          alert(222)
+        }
+      })
+    }
   }
 }
 </script>

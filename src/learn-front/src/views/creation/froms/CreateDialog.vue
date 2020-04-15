@@ -62,8 +62,8 @@ export default {
     var checkName = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('课程名称不能为空'))
-      } else if (value.length > 75) {
-        callback(new Error('课程名称不能大于75位'))
+      } else if (value.length > 50) {
+        callback(new Error('课程名称不能大于50位'))
       } else {
         callback()
       }
@@ -84,7 +84,7 @@ export default {
       options: [],
       createRules: {
         name: [{ validator: checkName, trigger: 'blur' }],
-        typeIds: [{ validator: checkTypeIds, trigger: 'blur' }]
+        typeIds: [{ validator: checkTypeIds, trigger: 'change' }]
       }
     }
   },

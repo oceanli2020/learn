@@ -18,7 +18,7 @@
                 <span style="font-size: 14px;">{{ item.name }}</span>
               </el-link>
             </div>
-            <div class="text" style="margin-top:32px">
+            <div class="text" style="margin-top:12px">
               <span>共{{chapterNumber}}节</span>
             </div>
             <div class="text" style="margin-top:12px;margin-left:-2px">
@@ -146,7 +146,7 @@ export default {
   word-break: break-all;
 }
 .course-name {
-  height: 40px;
+  height: 60px;
 }
 .text {
   font-size: 5px;

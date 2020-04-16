@@ -27,9 +27,9 @@
             <el-option v-for="item in selectdata" :key="item" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item prop="chapter">
+        <el-form-item prop="chapterName">
           <el-select
-            v-model="uploadForm.chapter"
+            v-model="uploadForm.chapterName"
             placeholder="请选择已选课程的已创建章节或新建章节"
             class="select"
             clearable
@@ -74,18 +74,20 @@ export default {
         callback()
       }
     }
-    var checkChapter = (rule, value, callback) => {
+    var checkChapterName = (rule, value, callback) => {
       if (value === '' || value === null) {
         callback(new Error('章节不能为空'))
+      } else if (value.length > 40) {
+        callback(new Error('章节名称不能大于40位'))
       } else {
         callback()
       }
     }
     var checkName = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('课程名称不能为空'))
-      } else if (value.length > 75) {
-        callback(new Error('课程名称不能大于75位'))
+        callback(new Error('视频名称不能为空'))
+      } else if (value.length > 40) {
+        callback(new Error('视频名称不能大于40位'))
       } else {
         callback()
       }
@@ -94,7 +96,7 @@ export default {
       uploadForm: {
         file: null,
         courseId: '',
-        chapter: '',
+        chapterName: '',
         name: '',
         text: ''
       },
@@ -102,7 +104,7 @@ export default {
       selectdata: [],
       uploadRules: {
         courseId: [{ validator: checkCourseId, trigger: 'change' }],
-        chapter: [{ validator: checkChapter, trigger: 'change' }],
+        chapterName: [{ validator: checkChapterName, trigger: 'change' }],
         name: [{ validator: checkName, trigger: 'blur' }]
       }
     }

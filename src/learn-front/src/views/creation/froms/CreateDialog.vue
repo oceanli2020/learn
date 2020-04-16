@@ -62,8 +62,8 @@ export default {
     var checkName = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('课程名称不能为空'))
-      } else if (value.length > 50) {
-        callback(new Error('课程名称不能大于50位'))
+      } else if (value.length > 40) {
+        callback(new Error('课程名称不能大于40位'))
       } else {
         callback()
       }

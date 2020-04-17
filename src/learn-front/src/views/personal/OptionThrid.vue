@@ -37,7 +37,6 @@
                 <el-avatar shape="square" size="large" :src="squareUrl" class="l-avatar"></el-avatar>
               </div>
             </template>
-            <!-- :before-upload="beforeAvatarUpload" -->
             <div>
               <el-upload
                 class="avatar-uploader"
@@ -45,6 +44,7 @@
                 :http-request="uploadFileMethod"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
               >
                 <img v-if="imageUrl" :src="imageUrl" class="avatar" />
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -180,7 +180,9 @@
 </template>
 
 <script>
-import { update, checkPass, uploadAvatar } from '@/api/user'
+import {update, checkPass} from '@/api/user'
+import { uploadAvatar } from '@/api/upload'
+
 export default {
   name: 'OptionThrid',
 

@@ -21,11 +21,14 @@ public class Video extends BaseEntity<Video> {
 
     private  String introduction;
 
+    private  String path;
+
     @TableField(
             fill = FieldFill.INSERT
     )
     @JsonFormat(
-            pattern = "yyyy-MM-dd HH:mm:ss"
+            pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "GMT+8"
     )
     private Date createDate;
+
 }

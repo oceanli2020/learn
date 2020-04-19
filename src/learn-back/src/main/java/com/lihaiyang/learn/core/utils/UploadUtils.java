@@ -19,7 +19,7 @@ public class UploadUtils {
 
 
     /**
-     * 文件上传：头像
+     * 文件上传
      */
     public static  String upload(MultipartFile file, String target) {
 

@@ -6,12 +6,16 @@
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         c.id,
-        c.name
+        c.name,
+        c.course_type_id,
+        c.create_date,
+        c.create_by,
+        c.introduction
     </sql>
 
     <select id="selectPage" resultType="com.lihaiyang.learn.entity.Course">
         SELECT
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List"/>, ct.name course_type_name, (SELECT count(*) FROM sys_chapter cp WHERE cp.course_id=c.id AND cp.del_flag='0') chapter_count
         FROM sys_course c
         LEFT JOIN sys_course_type ct ON ct.id = c.course_type_id AND ct.del_flag='0'
         WHERE c.del_flag='0'

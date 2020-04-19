@@ -1,23 +1,29 @@
 <template>
   <div>
-    <el-dialog title="编辑课程" :visible.sync="dialogFormVisible" width="700px"  :before-close="handleClose" @close="close">
+    <el-dialog
+      title="编辑课程"
+      :visible.sync="dialogFormVisible"
+      width="700px"
+      :before-close="handleClose"
+      @open="open"
+    >
       <el-form :model="updateForm" ref="updateForm">
-         <el-form-item prop="text" label="课程介绍" :label-width="formLabelWidth">
+        <el-form-item prop="introduction" label="课程介绍" :label-width="formLabelWidth">
           <el-input
             type="textarea"
             :rows="15"
             placeholder="请填写课程介绍"
-            v-model="updateForm.text"
+            v-model="updateForm.introduction"
             resize="none"
             maxlength="1000"
             class="textarea"
-          >
-          </el-input>
+            show-word-limit
+          ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
-        <el-button type="primary" @click="determine">确 定</el-button>
+        <el-button type="primary" @click="determine">保 存</el-button>
       </div>
     </el-dialog>
   </div>
@@ -34,26 +40,36 @@ export default {
     sup_this: {
       type: Object,
       default: null
+    },
+    course: {
+      type: Object,
+      default: null
     }
   },
   data() {
     return {
       formLabelWidth: '80px',
       updateForm: {
-        text: ''
+        id: '',
+        introduction: ''
       }
     }
   },
   mounted() {},
   methods: {
-    close() {
-
+    open() {
+      this.updateForm.id = this.course.id
+      this.updateForm.introduction =
+        this.course.introduction != null
+          ? this.course.introduction
+          : this.updateForm.introduction
     },
     cancel() {
       this.dialogFormVisible = false
       this.$emit('childFn', this.dialogFormVisible)
     },
     determine() {
+      this.sup_this.updateCourse(this.updateForm)
       this.dialogFormVisible = false
       this.$emit('childFn', this.dialogFormVisible)
     },
@@ -66,7 +82,7 @@ export default {
 </script>
 
 <style scoped>
-.textarea{
+.textarea {
   width: 500px;
 }
 </style>

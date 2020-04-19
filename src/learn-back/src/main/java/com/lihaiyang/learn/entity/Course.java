@@ -24,7 +24,7 @@ public class Course extends BaseEntity<Course> {
             fill = FieldFill.INSERT
     )
     @JsonFormat(
-            pattern = "yyyy-MM-dd HH:mm:ss"
+            pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8"
     )
     private Date createDate;
 
@@ -32,6 +32,12 @@ public class Course extends BaseEntity<Course> {
             fill = FieldFill.INSERT
     )
     private Long createBy;
+
+    @TableField(exist = false)
+    private  Integer  chapterCount;
+
+    @TableField(exist = false)
+    private  String  courseTypeName;
 
 
 

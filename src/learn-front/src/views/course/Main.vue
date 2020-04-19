@@ -1,9 +1,7 @@
 <template>
   <div class="main">
     <div class="center">
-      <el-breadcrumb
-        separator-class="el-icon-arrow-right"
-      >
+      <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item>
           <el-link :underline="false" href>全部课程</el-link>
         </el-breadcrumb-item>
@@ -11,119 +9,62 @@
           <el-link
             :underline="false"
             @click="changeTypeBread(bread.id, bread.name)"
-            >{{ bread.name }}</el-link
-          >
+          >{{ bread.name }}</el-link>
         </el-breadcrumb-item>
       </el-breadcrumb>
       <el-divider></el-divider>
       <div>
-        <el-link :underline="false" type="primary" @click="resetType()"
-          >全部</el-link
-        >
+        <el-link :underline="false" type="primary" @click="resetType()">全部</el-link>
         <el-link
           :underline="false"
           style="margin-left:50px"
           v-for="type in typeList"
           :key="type"
           @click="changeType(type.id, type.name)"
-          >{{ type.name }}</el-link
-        >
+        >{{ type.name }}</el-link>
       </div>
       <el-divider></el-divider>
       <div>
-        <el-checkbox-group v-model="checkList" @change="checkBOX()">
-          <!--vertical-align:top 把元素的顶端与行中最高元素的顶端对齐: -->
-          <el-link
-            :underline="false"
-            style="margin-left:0px;margin-right:55px;vertical-align:top;"
-            :type="linkType"
-            @click="resetBOX()"
-            >全部</el-link
-          >
-          <el-checkbox label="录播"></el-checkbox>
-          <el-checkbox label="直播"></el-checkbox>
-          <el-checkbox label="免费"></el-checkbox>
-          <el-checkbox label="付费"></el-checkbox>
-        </el-checkbox-group>
-      </div>
-      <el-divider></el-divider>
-      <div>
-        <el-link
-          :underline="false"
-          :type="comprehensiveType"
-          @click="comprehensiveSort()"
-          >综合排序</el-link
-        >
-        <el-link
-          :underline="false"
-          style="margin-left:20px"
-          :type="praiseType"
-          @click="praiseSort()"
-        >
-          好评
-          <i class="el-icon-caret-bottom"></i>
+        <el-link :underline="false" :type="comprehensiveType" @click="comprehensiveSort()">综合排序</el-link>
+        <el-link :underline="false" style="margin-left:20px" :type="timeType" @click="timeSort()">
+          时间
+          <svg-icon icon-class="sort"></svg-icon>
         </el-link>
-        <el-link
-          :underline="false"
-          style="margin-left:20px"
-          :type="popularityType"
-          @click="popularitySort()"
-        >
-          人气
-          <i class="el-icon-caret-bottom"></i>
+        <el-link :underline="false" style="margin-left:20px" :type="subType" @click="subSort()">
+          订阅
+          <svg-icon icon-class="sort"></svg-icon>
         </el-link>
         <el-link
           :underline="false"
           style="margin-left:20px;margin-right:20px"
-          :type="priceType"
-          @click="priceSort()"
+          :type="likeType"
+          @click="likeSort()"
         >
-          价格
-          <i class="el-icon-caret-bottom"></i>
+          点赞
+          <svg-icon icon-class="sort"></svg-icon>
         </el-link>
-        <el-divider direction="vertical"></el-divider>
-        <el-dropdown
-          @command="handleCommand"
-          show-timeout="0"
-          hide-timeout="100"
-          @visible-change="visibleChange"
-        >
-          <!-- v-bind:用于属性绑定 -->
-          <el-link :underline="false">
-            <span>{{ this.dropDownTitle }}</span>
-            <i v-if="icon" class="el-icon-arrow-down"></i>
-            <i v-else class="el-icon-arrow-up"></i>
-          </el-link>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="a">不限</el-dropdown-item>
-            <el-dropdown-item command="b">￥1-99</el-dropdown-item>
-            <el-dropdown-item command="c">￥100-499</el-dropdown-item>
-            <el-dropdown-item command="d">￥500-999</el-dropdown-item>
-            <el-dropdown-item command="f">￥999----</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
       </div>
       <div style="margin-top:20px">
-        <el-row >
+        <el-row>
           <el-col :span="6" v-for="item in tabledata" :key="item">
-            <div class="grid-content" style="margin-top:3px;">
+            <div class="courses" style="margin-top:-3px">
               <!--padding: 内边距-->
-            <el-card class="box-card" shadow="hover" :body-style="{ padding: '15px' }">
-            <div class="course-name">
-              <el-link :underline="false" @click="clickLink(item.id)">
-                <span style="font-size: 14px;">{{ item.name }}</span>
-              </el-link>
-            </div>
-            <div class="text" style="margin-top:20px">
-              <span>共{{chapterNumber}}节</span>
-            </div>
-            <div class="text" style="margin-top:5px;margin-left:-2px">
-              <svg-icon icon-class="sub" style="font-size: 19px;"></svg-icon>
-              <span>{{subNumber}}</span>
-              <svg-icon icon-class="point1" style="font-size: 19px;"></svg-icon>
-              <span>{{likeNumber}}</span>
-            </div>
-          </el-card>
+              <el-card class="box-card" shadow="hover" :body-style="{ padding: '15px' }">
+                <div class="course-name">
+                  <el-link :underline="false" @click="clickLink(item.id)">
+                    <span style="font-size: 14px;">{{ item.name }}</span>
+                  </el-link>
+                </div>
+                <div class="text" style="margin-top:12px">
+                  <span>共{{item.chapterCount}}节</span>
+                </div>
+                <div class="text" style="margin-top:12px;margin-left:-2px">
+                  <svg-icon icon-class="sub" style="font-size: 19px;"></svg-icon>
+                  <span>{{subNumber}}</span>
+                  <svg-icon icon-class="point1" style="font-size: 19px;"></svg-icon>
+                  <span>{{likeNumber}}</span>
+                </div>
+              </el-card>
             </div>
           </el-col>
         </el-row>
@@ -147,7 +88,12 @@
 </template>
 
 <script>
-import { getCourse, getChildrenType, getParentsType } from '@/api/course'
+import {
+  getCourse,
+  getChildrenType,
+  getParentsType,
+  getChapterList
+} from '@/api/course'
 import store from '@/store'
 export default {
   name: 'Main',
@@ -155,25 +101,23 @@ export default {
     return {
       breadList: [], // 面包屑数组
       typeList: null,
-      checkList: [],
-      icon: true,
       tabledata: null, // 后端数据
-      current: 1, // 当前页码
       total: null, // 总条目
-      size: 16, // 每页条目数
-      sort: 'id',
-      query: { courseTypeId: 0 },
       parentId: 0,
-      linkType: 'primary',
       comprehensiveType: 'primary',
-      praiseType: '',
-      popularityType: '',
-      priceType: '',
-      dropDownTitle: '价格区间',
+      timeType: '',
+      subType: '',
+      likeType: '',
       lastType: 0,
       chapterNumber: 0,
       likeNumber: 0,
-      subNumber: 0
+      subNumber: 0,
+      coursePage: {
+        current: 1, // 当前页码
+        size: 16, // 每页条目数
+        sort: 'id',
+        query: { courseTypeId: 0 }
+      }
     }
   },
   mounted() {
@@ -185,13 +129,6 @@ export default {
   },
   watch: {},
   methods: {
-    visibleChange(visible) {
-      if (visible) {
-        this.icon = false
-      } else {
-        this.icon = true
-      }
-    },
     async routerInfo() {
       this.parentId = store.getters.courseTypeId
       this.$store.commit('SET_COURSETYPE_ID', '')
@@ -215,8 +152,8 @@ export default {
           })
         }
       })
-      this.query.courseTypeId = this.parentId
-      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+      this.coursePage.query.courseTypeId = this.parentId
+      getCourse(this.coursePage).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
       })
@@ -225,7 +162,7 @@ export default {
       getChildrenType(this.parentId).then(res => {
         this.typeList = res.data
       })
-      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+      getCourse(this.coursePage).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
       })
@@ -254,9 +191,9 @@ export default {
           this.lastType = 1
         }
       })
-      this.current = 1
-      this.query.courseTypeId = pId
-      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+      this.coursePage.current = 1
+      this.coursePage.query.courseTypeId = pId
+      getCourse(this.coursePage).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
       })
@@ -276,10 +213,10 @@ export default {
         } else {
           this.lastType = 1
         }
-        this.current = 1
-        this.query.courseTypeId = pId
+        this.coursePage.current = 1
+        this.coursePage.query.courseTypeId = pId
       })
-      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+      getCourse(this.coursePage).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
       })
@@ -290,68 +227,55 @@ export default {
       getChildrenType(this.parentId).then(res => {
         this.typeList = res.data
       })
-      this.current = 1
-      this.query.courseTypeId = 0
-      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+      this.coursePage.current = 1
+      this.coursePage.query.courseTypeId = 0
+      getCourse(this.coursePage).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
       })
     },
-    checkBOX() {
-      if (this.checkList.length === 0) {
-        this.linkType = 'primary'
-      } else {
-        this.linkType = ''
-      }
-    },
-    resetBOX() {
-      this.checkList = []
-      this.linkType = 'primary'
-    },
     comprehensiveSort() {
       this.comprehensiveType = 'primary'
-      this.praiseType = ''
-      this.popularityType = ''
-      this.priceType = ''
+      this.timeType = ''
+      this.subType = ''
+      this.likeType = ''
+      this.coursePage.sort = 'id'
+      getCourse(this.coursePage).then(res => {
+        this.tabledata = res.data.content
+        this.total = res.data.totalElements
+      })
     },
-    praiseSort() {
+    timeSort() {
       this.comprehensiveType = ''
-      this.praiseType = 'primary'
-      this.popularityType = ''
-      this.priceType = ''
+      this.timeType = 'primary'
+      this.subType = ''
+      this.likeType = ''
+      if (this.coursePage.sort !== '-createDate') {
+        this.coursePage.sort = '-createDate'
+      } else {
+        this.coursePage.sort = 'createDate'
+      }
+      getCourse(this.coursePage).then(res => {
+        this.tabledata = res.data.content
+        this.total = res.data.totalElements
+      })
     },
-    popularitySort() {
+    subSort() {
       this.comprehensiveType = ''
-      this.praiseType = ''
-      this.popularityType = 'primary'
-      this.priceType = ''
+      this.timeType = ''
+      this.subType = 'primary'
+      this.likeType = ''
     },
-    priceSort() {
+    likeSort() {
       this.comprehensiveType = ''
-      this.praiseType = ''
-      this.popularityType = ''
-      this.priceType = 'primary'
+      this.timeType = ''
+      this.subType = ''
+      this.likeType = 'primary'
     },
-    handleCommand(command) {
-      if (command === 'a') {
-        this.dropDownTitle = '价格区间'
-      }
-      if (command === 'b') {
-        this.dropDownTitle = '￥1-99'
-      }
-      if (command === 'c') {
-        this.dropDownTitle = '￥100-499'
-      }
-      if (command === 'd') {
-        this.dropDownTitle = '￥500-999'
-      }
-      if (command === 'f') {
-        this.dropDownTitle = '￥999----'
-      }
-    },
+
     currentChange(val) {
-      this.current = val
-      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+      this.coursePage.current = val
+      getCourse(this.coursePage).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
       })
@@ -359,7 +283,17 @@ export default {
     prevClick(val) {},
     nextClick(val) {},
     clickLink(val) {
-      this.$router.push({ path: '/video', query: { id: val } })
+      getChapterList(val).then(res => {
+        if (res.data.length !== 0) {
+          this.$router.push({ path: '/video', query: { id: val } })
+        } else {
+          this.$message({
+            showClose: true,
+            message: '该课程没有内容',
+            type: 'error'
+          })
+        }
+      })
     }
   }
 }
@@ -387,13 +321,13 @@ export default {
 .box-card {
   width: 240px;
   height: 150px;
+  word-break: break-all;
 }
 
 .el-col {
   padding: 5px 4px 5px 4px;
-
 }
 .course-name {
-  height: 56px;
+  height: 60px;
 }
 </style>

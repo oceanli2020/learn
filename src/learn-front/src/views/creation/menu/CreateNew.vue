@@ -19,7 +19,7 @@
               </el-link>
             </div>
             <div class="text" style="margin-top:12px">
-              <span>共{{chapterNumber}}节</span>
+              <span>共{{item.chapterCount}}节</span>
             </div>
             <div class="text" style="margin-top:12px;margin-left:-2px">
               <svg-icon icon-class="sub" style="font-size: 19px;"></svg-icon>
@@ -35,8 +35,8 @@
       <el-pagination
         background
         @current-change="currentChange"
-        :page-size="size"
-        :current-page="current"
+        :page-size="coursePage.size"
+        :current-page="coursePage.current"
         layout="prev, pager, next"
         :total="total"
         style="text-align: center"
@@ -59,13 +59,15 @@ export default {
       tabledata: [],
       sup_this: this,
       total: 0,
-      size: 10,
-      current: 1,
       chapterNumber: 0,
       likeNumber: 0,
       subNumber: 0,
-      sort: 'id',
-      query: { createBy: 1 }
+      coursePage: {
+        size: 10,
+        current: 1,
+        sort: 'id',
+        query: { isCreateBy: true }
+      }
     }
   },
   mounted() {
@@ -73,7 +75,7 @@ export default {
   },
   methods: {
     info() {
-      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+      getCourse(this.coursePage).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
       })
@@ -93,15 +95,15 @@ export default {
           })
         }
       )
-      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+      getCourse(this.coursePage).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
       })
       // this.tabledata.push(JSON.parse(JSON.stringify(val))) // 把引用传递变为值传递
     },
     currentChange(val) {
-      this.current = val
-      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+      this.coursePage.current = val
+      getCourse(this.coursePage).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
       })

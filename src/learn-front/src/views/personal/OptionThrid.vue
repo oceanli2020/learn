@@ -43,7 +43,6 @@
                 action
                 :http-request="uploadFileMethod"
                 :show-file-list="false"
-                :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload"
               >
                 <img v-if="imageUrl" :src="imageUrl" class="avatar" />
@@ -180,7 +179,7 @@
 </template>
 
 <script>
-import {update, checkPass} from '@/api/user'
+import { update, checkPass } from '@/api/user'
 import { uploadAvatar } from '@/api/upload'
 
 export default {

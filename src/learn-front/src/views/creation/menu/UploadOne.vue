@@ -8,21 +8,20 @@
         :rules="uploadRules"
         label-position="right"
       >
-        <el-form-item prop="file">
+        <el-form-item>
           <el-upload
+            ref="upload"
             class="upload"
             drag
             :limit="1"
             action
+            :auto-upload="false"
             :http-request="uploadFileMethod"
-            :on-success="handleAvatarSuccess"
-
+            :before-upload="beforeVideoUpload"
           >
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或点击上传</div>
-            <div class="el-upload__tip" slot="tip">
-              只能上传mp4/flv文件，且不超过1024MB
-            </div>
+            <div class="el-upload__tip" slot="tip">只能上传mp4文件，且不超过1024MB</div>
           </el-upload>
         </el-form-item>
         <el-form-item prop="courseId">
@@ -34,12 +33,7 @@
             @change="getChapters"
             filterable="true"
           >
-            <el-option
-              v-for="item in selectdata"
-              :key="item"
-              :label="item.name"
-              :value="item.id"
-            ></el-option>
+            <el-option v-for="item in selectdata" :key="item" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item prop="chapterName">
@@ -55,35 +49,27 @@
               v-for="item in chapterList"
               :key="item"
               :label="item.name"
-              :value="item.id"
+              :value="item.name"
             ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item prop="name">
-          <el-input
-            placeholder="请填写视频名称"
-            v-model="uploadForm.name"
-            clearable
-          ></el-input>
+          <el-input placeholder="请填写视频名称" v-model="uploadForm.name" clearable></el-input>
         </el-form-item>
-        <el-form-item prop="text">
+        <el-form-item prop="introduction">
           <el-input
             type="textarea"
             :rows="8"
             placeholder="请填写视频简介"
-            v-model="uploadForm.text"
+            v-model="uploadForm.introduction"
             resize="none"
             maxlength="500"
             show-word-limit
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm" style="float: right"
-            >提交</el-button
-          >
-          <el-button @click="resetForm" style="  float: right;margin-right:10px"
-            >重置</el-button
-          >
+          <el-button type="primary" @click="submitForm" style="float: right">提交</el-button>
+          <el-button @click="resetForm" style="  float: right;margin-right:10px">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -93,6 +79,7 @@
 <script>
 import { getCourseList, getChapterList } from '@/api/course'
 import { uploadVideo } from '@/api/upload'
+import { saveVideo } from '@/api/video'
 export default {
   name: 'UploadOne',
   data() {
@@ -123,11 +110,11 @@ export default {
     }
     return {
       uploadForm: {
-        file: null,
         courseId: '',
         chapterName: '',
         name: '',
-        text: ''
+        introduction: '',
+        path: ''
       },
       chapterList: [],
       selectdata: [],
@@ -148,32 +135,34 @@ export default {
       })
     },
     uploadFileMethod(fileObj) {
-      this.imageUrl = URL.createObjectURL(fileObj.file)
       let fromData = new FormData()
       fromData.set('file', fileObj.file)
       uploadVideo(fromData)
         .then(res => {
+          this.uploadForm.path = res.data
           this.$message({
             showClose: true,
             duration: 2500,
             message: '视频上传成功',
             type: 'success'
           })
+          this.$refs.upload.clearFiles()
+          this.saveVideo()
         })
         .catch(error => {
           console.log(error)
         })
     },
     // 规定上传文件的类型和大小
-    beforeAvatarUpload(file) {
-      const isMp4 = file.type === 'mp4/flv'
-      const isLt1024M = file.size / 1024 / 1024 < 1000
+    beforeVideoUpload(file) {
+      // alert(file.type)
+      const isMp4 = file.type === 'video/mp4'
+      const isLt1024M = file.size / 1024 / 1024 < 1024
 
       if (!isMp4) {
-        this.$message.error('上传视频只能是 mp4/flv 格式!')
-      }
-      if (!isLt1024M) {
-        this.$message.error('上传头像图片大小不能超过 1000MB!')
+        this.$message.error('上传视频只能是mp4格式!')
+      } else if (!isLt1024M) {
+        this.$message.error('上传头像图片大小不能超过1024MB!')
       }
       return isMp4 && isLt1024M
     },
@@ -186,12 +175,25 @@ export default {
         this.chapterList = []
       }
     },
-    resetForm() {},
+    resetForm() {
+      this.$refs.uploadForm.resetFields()
+    },
     submitForm() {
       this.$refs.uploadForm.validate(valid => {
         if (valid) {
-          alert(222)
+          this.$refs.upload.submit()
         }
+      })
+    },
+    saveVideo() {
+      saveVideo(this.uploadForm).then(res => {
+        this.$message({
+          showClose: true,
+          duration: 2500,
+          message: '内容已保存',
+          type: 'success'
+        })
+        this.$refs.uploadForm.resetFields()
       })
     }
   }
@@ -200,7 +202,7 @@ export default {
 
 <style scoped>
 .upload-one {
-  height: 850px;
+  height: 860px;
   background-color: white;
   position: relative;
   bottom: 20px;

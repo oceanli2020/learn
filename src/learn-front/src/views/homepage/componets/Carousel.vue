@@ -59,23 +59,23 @@
       </div>
       <div class="block-courses">
         <el-row>
-          <el-col :span="6" v-for="item in tabledata" :key="item" class="el-col-course">
-            <div class="grid-content" style="margin-top:3px;">
+          <el-col :span="6" v-for="item in tabledata" :key="item">
+            <div style="margin-top:7px;margin-left:4px;">
               <!--padding: 内边距-->
               <el-card class="box-card" shadow="hover" :body-style="{ padding: '15px' }">
-                <div class="clearfix" style="height:60px">
+                <div class="course-name">
                   <el-link :underline="false" @click="clickLink(item.id)">
                     <span style="font-size: 14px;">{{ item.name }}</span>
                   </el-link>
                 </div>
-                <div class="text" style="margin-top:30px">
-                  共37节
-                  <el-divider direction="vertical"></el-divider>
-                  <span class="text" style>新东方教育</span>
+                <div class="text" style="margin-top:12px">
+                  <span>共{{item.chapterCount}}节</span>
                 </div>
-                <div style="font-size: 14px;color:#FF0000;margin-top:5px">
-                  {{ item.priceString }}
-                  <span class="text" style="margin-left:8px">165164人报名</span>
+                <div class="text" style="margin-top:12px;margin-left:-2px">
+                  <svg-icon icon-class="sub" style="font-size: 19px;"></svg-icon>
+                  <span>{{subNumber}}</span>
+                  <svg-icon icon-class="point1" style="font-size: 19px;"></svg-icon>
+                  <span>{{likeNumber}}</span>
                 </div>
               </el-card>
             </div>
@@ -87,7 +87,7 @@
 </template>
 
 <script scoped>
-import { getCourse, getChildrenType } from '@/api/course'
+import { getCourse, getChildrenType, getChapterList } from '@/api/course'
 export default {
   name: 'Carousel',
   data() {
@@ -100,10 +100,14 @@ export default {
       ],
       courseTypeList: [],
       tabledata: [],
-      current: 1,
-      size: 8,
-      sort: 'id',
-      query: { courseTypeId: 0 }
+      likeNumber: 0,
+      subNumber: 0,
+      coursePage: {
+        current: 1,
+        size: 8,
+        sort: 'id',
+        query: { courseTypeId: 0 }
+      }
     }
   },
   mounted() {
@@ -114,9 +118,8 @@ export default {
       getChildrenType(0).then(res => {
         this.courseTypeList = res.data
       })
-      getCourse(this.current, this.size, this.sort, this.query).then(res => {
+      getCourse(this.coursePage).then(res => {
         this.tabledata = res.data.content
-        this.total = res.data.totalElements
       })
     },
     selectMenu(index) {
@@ -124,7 +127,17 @@ export default {
       this.$router.push('/course')
     },
     clickLink(val) {
-      this.$router.push({ path: '/video', query: { id: val } })
+      getChapterList(val).then(res => {
+        if (res.data.length !== 0) {
+          this.$router.push({ path: '/video', query: { id: val } })
+        } else {
+          this.$message({
+            showClose: true,
+            message: '该课程没有内容',
+            type: 'error'
+          })
+        }
+      })
     }
   }
 }
@@ -165,6 +178,7 @@ export default {
 .box-card {
   width: 240px;
   height: 150px;
+  word-break: break-all;
 }
 .text {
   font-size: 5px;
@@ -183,5 +197,8 @@ export default {
   font-size: 20px;
   /* background-color: chartreuse; */
   text-align: center;
+}
+.course-name {
+  height: 60px;
 }
 </style>

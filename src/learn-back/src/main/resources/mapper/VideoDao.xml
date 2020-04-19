@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lihaiyang.learn.dao.VideoDao">
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        v.id,
+        v.name,
+        v.chapter_id,
+        v.create_date,
+        v.introduction
+    </sql>
+
+    <select id="selectPage" resultType="com.lihaiyang.learn.entity.Video">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_video v
+        WHERE v.del_flag='0'
+        <if test="ew.entity.chapterId != null and ew.entity.chapterId!= ''">
+            AND v.chapter_id = #{ew.entity.chapterId}
+        </if>
+        ORDER BY ${ew.entity.sqlMap.sortSql}
+    </select>
+
+</mapper>

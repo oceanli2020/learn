@@ -1,13 +1,7 @@
 import request from '@/utils/request'
 import { prefixURL } from '@/utils/global'
 
-export function getCourse(current, size, sort, query) {
-  const data = {
-    current,
-    size,
-    sort,
-    query
-  }
+export function getCourse(data) {
   return request({
     url: prefixURL + 'course/page',
     method: 'post',
@@ -62,5 +56,44 @@ export function getCourseList() {
   return request({
     url: prefixURL + 'course/list',
     method: 'get'
+  })
+}
+
+export function getChapter(data) {
+  return request({
+    url: prefixURL + 'chapter/page',
+    method: 'post',
+    data
+  })
+}
+
+export function updateCourse(data) {
+  return request({
+    url: prefixURL + 'course',
+    method: 'put',
+    data
+  })
+}
+
+export function updateChapter(data) {
+  return request({
+    url: prefixURL + 'chapter',
+    method: 'put',
+    data
+  })
+}
+
+export function deleteCourse(id) {
+  return request({
+    url: prefixURL + 'course',
+    method: 'delete',
+    params: { id }
+  })
+}
+export function deleteChapter(id) {
+  return request({
+    url: prefixURL + 'chapter',
+    method: 'delete',
+    params: { id }
   })
 }

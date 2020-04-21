@@ -34,7 +34,7 @@ export default {
     },
     chapter: {
       type: Object,
-      default: null
+      required: true
     }
   },
   data() {

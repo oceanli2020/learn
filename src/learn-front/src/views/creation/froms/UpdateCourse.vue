@@ -43,7 +43,7 @@ export default {
     },
     course: {
       type: Object,
-      default: null
+      required: true
     }
   },
   data() {

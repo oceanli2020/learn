@@ -97,3 +97,10 @@ export function deleteChapter(id) {
     params: { id }
   })
 }
+
+export function getDirectory(id) {
+  return request({
+    url: prefixURL + 'course/directory/' + id,
+    method: 'get'
+  })
+}

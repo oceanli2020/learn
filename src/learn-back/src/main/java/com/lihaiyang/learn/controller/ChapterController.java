@@ -28,7 +28,7 @@ public class ChapterController {
     private IVideoService videoService;
 
     @GetMapping("/{courseId}")
-    public Result getByCourseId(@PathVariable Long courseId) {
+    public Result get(@PathVariable Long courseId) {
         Chapter query = new Chapter();
         query.setCourseId(courseId);
         return Result.ofSuccess(chapterCourse.list(new LambdaQueryWrapper<>(query).orderByAsc(Chapter::getId)));
@@ -48,7 +48,7 @@ public class ChapterController {
     }
 
     /**
-     * 修改课程
+     * 修改章节
      */
     @PutMapping
     public Result update(@RequestBody ChapterDTO chapterDTO) {
@@ -78,4 +78,6 @@ public class ChapterController {
         return Result.ofSuccess("删除成功");
 
     }
+
+
 }

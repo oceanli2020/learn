@@ -2,8 +2,8 @@
   <div>
     <span class="title">创作中心</span>
     <el-link type="info" class="brand" href="http://localhost:8080/" :underline="false">首页</el-link>
-    <div class="info" >
-      <el-avatar  :src="circleUrl" class="avatar"></el-avatar>
+    <div class="info">
+      <el-avatar :src="circleUrl" class="avatar"></el-avatar>
       <el-dropdown @command="handleCommand" show-timeout="0" hide-timeout="100">
         <el-tooltip
           v-bind:content="username"
@@ -25,7 +25,6 @@
           <el-dropdown-item command="d" divided>退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-
     </div>
   </div>
 </template>
@@ -58,7 +57,7 @@ export default {
           this.circleUrl =
             'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'
         } else {
-          this.circleUrl = 'http://localhost:9091/' + this.profilePhoto
+          this.circleUrl = 'http://localhost:9091' + this.profilePhoto
         }
       }
     },
@@ -101,22 +100,21 @@ export default {
 .brand {
   float: left;
   font-size: 13px;
-  margin-left:75px;
+  margin-left: 75px;
   margin-top: 20px;
 }
-.title{
+.title {
   float: left;
-  color:#0099FF;
+  color: #0099ff;
   font-size: 18px;
-  margin-left:50px;
+  margin-left: 50px;
   margin-top: 15px;
 }
-.info{
+.info {
   float: right;
   position: relative;
-  bottom:8px;
+  bottom: 8px;
   margin-right: 140px;
-
 }
 
 .el-icon-arrow-down {
@@ -126,7 +124,6 @@ export default {
   /* 相对定位 */
   position: relative;
   /* left: 30px; */
-  top:15px
+  top: 15px;
 }
-
 </style>

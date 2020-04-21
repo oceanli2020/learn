@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lihaiyang.learn.dao.CommentDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        cm.id,
+        cm.comment,
+        cm.create_date,
+        cm.create_by,
+        cm.create_to
+    </sql>
+
+    <select id="selectPage" resultType="com.lihaiyang.learn.entity.Comment">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_comment cm
+        WHERE cm.del_flag='0'
+        <if test="ew.entity.videoId != null and ew.entity.videoId!= ''">
+            AND cm.video_id = #{ew.entity.videoId}
+        </if>
+        AND cm.parent_id = #{ew.entity.parentId}
+        ORDER BY ${ew.entity.sqlMap.sortSql}
+    </select>
+
+</mapper>

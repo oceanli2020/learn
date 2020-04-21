@@ -53,6 +53,15 @@ export default {
   mounted() {
     this.info()
   },
+  watch: {
+    '$store.getters.username': function() {
+      this.username = store.getters.username
+    },
+    '$store.getters.profilePhoto': function() {
+      this.profilePhoto = store.getters.profilePhoto
+      this.circleUrl = 'http://localhost:9091' + this.profilePhoto
+    }
+  },
   methods: {
     toLogin() {
       this.$router.push('/login')
@@ -68,7 +77,7 @@ export default {
           this.circleUrl =
             'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'
         } else {
-          this.circleUrl = 'http://localhost:9091/' + this.profilePhoto
+          this.circleUrl = 'http://localhost:9091' + this.profilePhoto
         }
         this.change = false
       }

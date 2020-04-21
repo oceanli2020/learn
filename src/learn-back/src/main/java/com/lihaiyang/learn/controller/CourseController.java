@@ -8,6 +8,7 @@ import com.lihaiyang.learn.core.convert.ObjectConvert;
 import com.lihaiyang.learn.core.result.Result;
 import com.lihaiyang.learn.core.result.ResultList;
 import com.lihaiyang.learn.core.utils.UserUtils;
+import com.lihaiyang.learn.dto.ChapterDTO;
 import com.lihaiyang.learn.dto.CourseDTO;
 import com.lihaiyang.learn.dto.PageDTO;
 import com.lihaiyang.learn.entity.Chapter;
@@ -17,7 +18,6 @@ import com.lihaiyang.learn.entity.Video;
 import com.lihaiyang.learn.service.IChapterService;
 import com.lihaiyang.learn.service.ICourseService;
 import com.lihaiyang.learn.service.IVideoService;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -133,5 +133,25 @@ public class CourseController {
         return Result.ofSuccess("删除成功");
     }
 
+    @GetMapping("/directory/{id}")
+    public Result getDirectory(@PathVariable Long id){
+        Chapter chapterQuery = new Chapter();
+        chapterQuery.setCourseId(id);
+        List<Chapter> chapterList = chapterService.list(new LambdaQueryWrapper<>(chapterQuery).orderByAsc(Chapter::getId));
+        List<ChapterDTO> chapterDTOLIst = new ArrayList<>();
+        chapterList.forEach(chapter -> {
+            ChapterDTO chapterDTO = new ChapterDTO();
+            chapterDTO.setId(chapter.getId());
+            chapterDTO.setName(chapter.getName());
+            Video videoQuery = new Video();
+            videoQuery.setChapterId(chapter.getId());
+            List<Video> videoList = videoService.list(new LambdaQueryWrapper<>(videoQuery).orderByAsc(Video::getId));
+            chapterDTO.setVideoList(videoList);
+            chapterDTOLIst.add(chapterDTO);
+        });
+        return  Result.ofSuccess(chapterDTOLIst);
+
+
+    }
 
 }

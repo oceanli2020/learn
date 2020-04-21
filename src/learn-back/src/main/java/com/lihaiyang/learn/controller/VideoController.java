@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lihaiyang.learn.core.result.Result;
 import com.lihaiyang.learn.core.result.ResultList;
+import com.lihaiyang.learn.core.utils.UserUtils;
 import com.lihaiyang.learn.dto.PageDTO;
 import com.lihaiyang.learn.dto.VideoDTO;
 import com.lihaiyang.learn.entity.Chapter;
@@ -92,5 +93,11 @@ public class VideoController {
         videoService.removeById(id);
         return  Result.ofSuccess("删除成功");
     }
+
+//    @GetMapping("/amount/{id}")
+//    public  Result getAmount(@PathVariable Long id){
+//        Long userId = UserUtils.getUser().getId();
+//
+//    }
 
 }

@@ -63,11 +63,11 @@ export default {
     },
     video: {
       type: Object,
-      default: null
+      required: true
     },
     chapterList: {
       type: Object,
-      default: null
+      required: true
     },
     chapterName: {
       type: String,

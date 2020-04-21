@@ -85,6 +85,15 @@ export const constantRouterMap = [
     },
     component: () => import('@/views/livelist/index'),
     hidden: true
+  },
+  {
+    path: '/livestuido',
+    meta: {
+      title: '测试',
+      noCache: true
+    },
+    component: () => import('@/views/livestudio/index'),
+    hidden: true
   }
 ]
 

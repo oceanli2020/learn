@@ -23,9 +23,13 @@
         </el-breadcrumb>
       </div>
       <div class="video">
-        <video id="myVideo" class="video-js vjs-big-play-centered"></video>
+        <video id="myVideo" class="video-js vjs-big-play-centered" autoplay="autoplay">
+          <!-- <source src="http://192.168.157.128:9090/1.mp4" type="video/mp4" /> -->
+          <!-- <source src="http://192.168.157.128:80/hls/abcd/index.m3u8" /> -->
+          <!-- <source src="rtmp://192.168.1.9/live/abcd" type="rtmp" /> -->
+        </video>
       </div>
-      <div class="introduction">
+      <div class="Introduction">
         <div style="padding-top: 10px; padding-left: 10px;">
           <el-button :type="pointType" circle @click="pointIcon('point')">
             <svg-icon icon-class="point"></svg-icon>
@@ -43,18 +47,10 @@
       <div class="label">
         <div class="select">
           <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="课程介绍" name="first">
-              <introduction
-                :sup_this="sup_this"
-                :courseName="courseName"
-                :introduction="courseIntroduction"
-              />
-            </el-tab-pane>
-            <el-tab-pane label="目录" name="second">
-              <directory :sup_this="sup_this" :directory="directory" :videoId="videoId" />
-            </el-tab-pane>
-            <el-tab-pane :label="'评论('+commentNumber+')'" name="third">
-              <comment :videoId="videoId" @childFn="parentFn" />
+            <el-tab-pane label="课程介绍" name="first"></el-tab-pane>
+            <el-tab-pane label="目录" name="second"></el-tab-pane>
+            <el-tab-pane label="评论(1555)" name="third">
+              <comment />
             </el-tab-pane>
           </el-tabs>
         </div>
@@ -64,21 +60,12 @@
 </template>
 
 <script>
-import { getCourseInfo, getParentsType, getDirectory } from '@/api/course'
-import Comment from './Comment'
-import Introduction from './Introduction'
-import Directory from './Directory'
 export default {
   name: 'Main',
-  components: {
-    Comment,
-    Introduction,
-    Directory
-  },
   data() {
     return {
-      title: '',
-      uploadDate: '',
+      title: '李海洋的直播间',
+      uploadDate: '2019-09-18 10:19:05',
       breadList: [],
       courseId: '',
       courseName: '',
@@ -89,84 +76,18 @@ export default {
       pointType: 'info',
       starType: 'info',
       activeName: 'third',
-      text: '',
-      url: '',
-      directory: [],
-      video: null,
-      videoId: '',
-      sup_this: this,
-      courseIntroduction: '',
-      myPlayer: null,
-      commentNumber: 0
+      text: '终于成功了呀'
     }
   },
   mounted() {
-    this.info()
+    this.initVideo()
   },
-  watch: {
-    videoId: function() {}
-  },
+  watch: {},
   methods: {
-    async info() {
-      this.courseId = this.$route.query.id
-      getDirectory(this.courseId).then(res => {
-        this.directory = res.data
-        this.video = this.directory[0].videoList[0]
-        this.title = this.video.name
-        this.uploadDate = this.video.createDate
-        this.videoId = this.video.id
-        this.text = this.video.introduction
-        this.url = 'http://localhost:9091' + this.video.path
-        this.initVideo()
-      })
-      await getCourseInfo(this.courseId).then(res => {
-        this.courseName = res.data.name
-        this.courseTypeId = res.data.courseTypeId
-        this.courseIntroduction = res.data.introduction
-      })
-      getParentsType(this.courseTypeId).then(res => {
-        this.breadList = res.data
-        this.breadList.push({ name: this.courseName })
-      })
-    },
-    changePath(val) {
-      if (this.breadList[this.breadList.length - 1].id === val) return
-      this.$store.commit('SET_COURSETYPE_ID', val)
-      this.$router.push('/course')
-    },
-    pointIcon(val) {
-      if (val === 'point') {
-        if (this.pointType === 'info') {
-          this.pointType = 'primary'
-        } else {
-          this.pointType = 'info'
-        }
-      }
-      if (val === 'star') {
-        if (this.starType === 'info') {
-          this.starType = 'primary'
-        } else {
-          this.starType = 'info'
-        }
-      }
-    },
-    changeVideo(val) {
-      this.video = val
-      this.title = this.video.name
-      this.videoId = this.video.id
-      this.uploadDate = this.video.createDate
-      this.text = this.video.introduction
-      this.url = 'http://localhost:9091' + this.video.path
-      this.myPlayer.src({ src: this.url, type: 'video/mp4' })
-      this.myPlayer.play()
-    },
-    parentFn(val) {
-      this.commentNumber = val
-    },
     initVideo() {
       // 初始化视频方法
       /* eslint-disable */
-      this.myPlayer = this.$video(myVideo, {
+      let myPlayer = this.$video(myVideo, {
         // autoplay: 'autoplay',
         // 是否显示进度条
         controls: true,
@@ -177,10 +98,11 @@ export default {
         // 设置视频播放器的显示高度（以像素为单位）
         height: '500px',
         controlBar: {
-          progressControl: true,
+          progressControl: false,
           durationDisplay: true,
           currentTimeDisplay: true,
           timeDivider: true,
+          remainingTimeDisplay: false,
           playbackRateMenuButton: {
             playbackRates: [0.5, 1, 1.5, 2, 2.5]
           },
@@ -216,7 +138,7 @@ export default {
         },
         sources: {
           // 视频源
-          src: this.url,
+          src: 'http://localhost:9091/video/2020/20200418154250.mp4',
           type: 'video/mp4'
         }
       })
@@ -243,15 +165,17 @@ export default {
   padding-top: 6px;
   padding-bottom: 15px;
 }
-.introduction {
+
+.Introduction {
+  height: 150px;
   /* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); */
-  margin-top: 10px;
+  margin-top: 20px;
   height: auto;
 }
 .label {
-  height: auto;
-  /* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); */
-  margin-top: 10px;
+  min-height: auto;
+  /* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);   */
+  margin-top: 20px;
 }
 .icon_number {
   font-size: 10px;
@@ -266,7 +190,6 @@ export default {
   padding-left: 10px;
   padding-bottom: 10px;
   position: static;
-  word-break: break-all;
 }
 .select {
   padding-left: 6px;

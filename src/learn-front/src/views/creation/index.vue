@@ -70,9 +70,6 @@ export default {
 </script>
 
 <style scoped>
-.el-header {
-
-}
 .el-main {
   height: 900px;
   margin-top: 20px;

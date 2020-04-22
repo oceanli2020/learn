@@ -31,4 +31,16 @@ public class Video extends BaseEntity<Video> {
     )
     private Date createDate;
 
+    @TableField(exist = false)
+    private Long likeAmount;
+
+    @TableField(exist = false)
+    private  Long collectAmount;
+
+    @TableField(exist = false)
+    private  String  courseTypeName;
+
+    @TableField(exist = false)
+    private  Long courseId;
+
 }

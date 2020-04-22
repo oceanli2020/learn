@@ -10,12 +10,7 @@
       </div>
       <div class="table-block">
         <el-input v-model="input" placeholder="搜索" class="search" size="small"></el-input>
-        <el-table
-          :data="tableData"
-          style="width: 100%"
-          @row-click="rowClick"
-          @sort-change="sortChange"
-        >
+        <el-table :data="tableData" style="width: 100%" @row-click="rowClick">
           <el-table-column
             :prop="column[0].value"
             :label="column[0].name"
@@ -159,19 +154,19 @@ export default {
         { name: '课程名称', value: 'name' },
         { name: '课程分类', value: 'courseTypeName' },
         { name: '创建时间', value: 'createDate' },
-        { name: '订阅人数', value: 'subNumber' }
+        { name: '订阅人数', value: 'subscribeAmount' }
       ],
       chapterColumn: [
         { name: '章节名称', value: 'name' },
         { name: '创建时间', value: 'createDate' },
         { name: '视频个数', value: 'videoCount' },
-        { name: '点赞数量', value: 'likeNumber' }
+        { name: '点赞总数', value: 'likeCount' }
       ],
       videoColumn: [
         { name: '视频名称', value: 'name' },
         { name: '上传时间', value: 'createDate' },
-        { name: '收藏数量', value: 'CollectNumber' },
-        { name: '点赞数量', value: 'likeNumber' }
+        { name: '收藏数量', value: 'collectAmount' },
+        { name: '点赞数量', value: 'likeAmount' }
       ],
       row: null,
       chapterList: [],
@@ -391,6 +386,7 @@ export default {
   height: 100%;
   width: 1200px;
   margin: auto;
+  /* background-color: bisque; */
 }
 
 .search {

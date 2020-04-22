@@ -30,3 +30,26 @@ export function deleteVideo(id) {
     params: { id }
   })
 }
+
+export function like(id, mark) {
+  return request({
+    url: prefixURL + 'video/like/' + id,
+    method: 'post',
+    params: { mark }
+  })
+}
+
+export function getAmount(id) {
+  return request({
+    url: prefixURL + 'video/amount/' + id,
+    method: 'get'
+  })
+}
+
+export function getLike(data) {
+  return request({
+    url: prefixURL + 'video/like/page',
+    method: 'post',
+    data
+  })
+}

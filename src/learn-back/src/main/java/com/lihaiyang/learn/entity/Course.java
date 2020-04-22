@@ -39,6 +39,15 @@ public class Course extends BaseEntity<Course> {
     @TableField(exist = false)
     private  String  courseTypeName;
 
+    @TableField(exist = false)
+    private Boolean isSubscribe;
+
+    @TableField(exist = false)
+    private Long subscribeAmount;
+
+    @TableField(exist = false)
+    private  Long likeCount;
+
 
 
 }

@@ -288,8 +288,7 @@ export default {
       index_phone_number: true,
       index_password: true,
       imageUrl: '',
-      squareUrl:
-        'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'
+      squareUrl: ''
     }
   },
   created() {
@@ -338,8 +337,15 @@ export default {
           this.user.profile_photo = data.profilePhoto
           this.user.email = data.email
           this.user.phone_number = data.phoneNumber
-          if (data.profilePhoto !== '' && data.profilePhoto !== null) {
-            this.user.profile_photo = data.profilePhoto
+          this.user.profile_photo = data.profilePhoto
+          if (
+            this.user.profile_photo === null ||
+            this.user.profile_photo === ''
+          ) {
+            this.squareUrl =
+              'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'
+          } else {
+            this.squareUrl = 'http://localhost:9091' + this.user.profile_photo
           }
         })
         .catch(err => {
@@ -612,7 +618,7 @@ export default {
 <style scoped>
 .info {
   width: 600px;
-  height: 400px;
+  height: auto;
   /* background-color: yellow; */
   position: absolute;
   left: 700px;

@@ -104,3 +104,25 @@ export function getDirectory(id) {
     method: 'get'
   })
 }
+
+export function saveSubscribe(id) {
+  return request({
+    url: prefixURL + 'course/subscribe/' + id,
+    method: 'post'
+  })
+}
+
+export function removeSubscribe(id) {
+  return request({
+    url: prefixURL + 'course/subscribe/' + id,
+    method: 'delete'
+  })
+}
+
+export function getSubscribe(data) {
+  return request({
+    url: prefixURL + 'course/subscribe/page',
+    method: 'post',
+    data
+  })
+}

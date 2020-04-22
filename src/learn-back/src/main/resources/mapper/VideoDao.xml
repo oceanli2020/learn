@@ -9,12 +9,15 @@
         v.name,
         v.chapter_id,
         v.create_date,
-        v.introduction
+        v.introduction,
+        v.path
     </sql>
 
     <select id="selectPage" resultType="com.lihaiyang.learn.entity.Video">
         SELECT
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List"/>,
+        (select count(*) from user_video uv where uv.video_id=v.id and uv.is_like = '1') like_amount,
+        (select count(*) from user_video uv where uv.video_id=v.id and uv.is_collect = '1') collect_amount
         FROM sys_video v
         WHERE v.del_flag='0'
         <if test="ew.entity.chapterId != null and ew.entity.chapterId!= ''">
@@ -23,4 +26,54 @@
         ORDER BY ${ew.entity.sqlMap.sortSql}
     </select>
 
+    <select id="selectAmountByVideoIdAndUserId" resultType="com.lihaiyang.learn.entity.UserVideo">
+        SELECT
+        COALESCE(uv.is_like,'0') is_like,
+        COALESCE(uv.is_collect,'0') is_collect,
+        (select count(*) from user_video uv where uv.video_id=v.id and uv.is_like = '1') like_amount,
+        (select count(*) from user_video uv where uv.video_id=v.id and uv.is_collect = '1') collect_amount
+        FROM sys_video v
+        LEFT JOIN user_video uv ON uv.video_id=v.id AND uv.user_id = #{userId}
+        WHERE v.del_flag='0'
+        AND v.id = #{videoId}
+    </select>
+
+    <select id="selectLikeByVideoIdAndUserId" resultType="com.lihaiyang.learn.entity.UserVideo">
+        SELECT
+        is_like,
+        is_collect
+        FROM  user_video uv WHERE uv.video_id=#{videoId} AND uv.user_id = #{userId}
+    </select>
+
+    <update id="updateLikeByVideoIdAndUserId" parameterType="com.lihaiyang.learn.entity.UserVideo">
+        UPDATE user_video
+        SET
+        <if test="isLike != null">
+        is_like=#{isLike}
+        </if>
+        <if test="isCollect != null">
+        is_collect=#{isCollect}
+        </if>
+        WHERE video_id=#{videoId} AND user_id=#{userId}
+    </update>
+    
+    <insert id="insertLikeByVideoIdAndUserId" parameterType="com.lihaiyang.learn.entity.UserVideo">
+        INSERT INTO user_video (user_id,video_id,is_like,is_collect) VALUES (#{userId},#{videoId},#{isLike},#{isCollect});
+    </insert>
+
+    <select id="selectLikeByUserId" resultType="com.lihaiyang.learn.entity.Video">
+        SELECT <include refid="Base_Column_List"/>,c.id course_id,ct.name course_type_name
+        FROM sys_video v
+        INNER JOIN  user_video uv ON uv.video_id=v.id AND uv.user_id=#{userId}AND uv.is_collect = '1'
+        LEFT JOIN sys_chapter cp ON cp.id=v.chapter_id AND cp.del_flag='0'
+        LEFT JOIN sys_course c ON cp.course_id = c.id AND c.del_flag='0'
+        LEFT JOIN sys_course_type ct ON ct.id = c.course_type_id AND ct.del_flag='0'
+        WHERE v.del_flag='0'
+        <if test="sortSql != null and sortSql!= ''">
+            ORDER BY ${sortSql}
+        </if>
+        <if test="size != null and size != ''">
+            limit ${size} offset ${start}
+        </if>
+    </select>
 </mapper>

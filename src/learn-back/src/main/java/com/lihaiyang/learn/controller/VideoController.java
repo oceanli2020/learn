@@ -2,17 +2,22 @@ package com.lihaiyang.learn.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.lihaiyang.learn.core.convert.ObjectConvert;
 import com.lihaiyang.learn.core.result.Result;
 import com.lihaiyang.learn.core.result.ResultList;
 import com.lihaiyang.learn.core.utils.UserUtils;
 import com.lihaiyang.learn.dto.PageDTO;
+import com.lihaiyang.learn.dto.PageInDTO;
 import com.lihaiyang.learn.dto.VideoDTO;
 import com.lihaiyang.learn.entity.Chapter;
+import com.lihaiyang.learn.entity.UserVideo;
 import com.lihaiyang.learn.entity.Video;
 import com.lihaiyang.learn.service.IChapterService;
 import com.lihaiyang.learn.service.IVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping({"${adminPath}/video"})
@@ -94,10 +99,35 @@ public class VideoController {
         return  Result.ofSuccess("删除成功");
     }
 
-//    @GetMapping("/amount/{id}")
-//    public  Result getAmount(@PathVariable Long id){
-//        Long userId = UserUtils.getUser().getId();
-//
-//    }
+    @PostMapping("/like/{videoId}")
+    public Result like(@PathVariable Long videoId,@RequestParam("mark")String mark){
+       if(mark.equals("like")){
+           return  Result.ofSuccess(videoService.changeLikeByVideoIdAndUserId(videoId));
+       }else {
+          return Result.ofSuccess(videoService.changeCollectByVideoIdAndUserId(videoId));
+       }
 
+    }
+
+    @GetMapping("/amount/{videoId}")
+    public Result getAmount(@PathVariable Long videoId) {
+        Long userId = UserUtils.getUser().getId();
+        UserVideo userVideo = videoService.getAmountByVideoIdAndUserId(videoId,userId);
+        return Result.ofSuccess(userVideo);
+    }
+
+    @PostMapping("/like/page")
+    public Result getLike(@RequestBody PageDTO pageDTO){
+        PageInDTO pageInDTO = new PageInDTO();
+        pageInDTO.setUserId(UserUtils.getUser().getId());
+        int count = videoService.getLikeByUserId(pageInDTO).size();
+        pageInDTO.setSize(pageDTO.getSize());
+        pageInDTO.setSortSql(pageDTO.getSortSql());
+        pageInDTO.setStart((pageDTO.getCurrent()-1) * pageDTO.getSize());
+        List<Video> videoList = videoService.getLikeByUserId(pageInDTO);
+        ResultList resultList = new ResultList();
+        resultList.setTotalElements((long)count);
+        resultList.setContent(videoList);
+        return Result.ofSuccess(resultList);
+    }
 }

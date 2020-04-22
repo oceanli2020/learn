@@ -70,12 +70,14 @@
                 </div>
                 <div class="text" style="margin-top:12px">
                   <span>共{{item.chapterCount}}节</span>
+                  <el-divider direction="vertical"></el-divider>
+                  <span style="margin-left:0px">{{item.createBy}}</span>
                 </div>
                 <div class="text" style="margin-top:12px;margin-left:-2px">
                   <svg-icon icon-class="sub" style="font-size: 19px;"></svg-icon>
-                  <span>{{subNumber}}</span>
-                  <svg-icon icon-class="point1" style="font-size: 19px;"></svg-icon>
-                  <span>{{likeNumber}}</span>
+                  <span>{{item.subscribeAmount}}</span>
+                  <svg-icon icon-class="point1" style="font-size: 19px;margin-left:8px"></svg-icon>
+                  <span>{{item.likeCount}}</span>
                 </div>
               </el-card>
             </div>
@@ -100,8 +102,6 @@ export default {
       ],
       courseTypeList: [],
       tabledata: [],
-      likeNumber: 0,
-      subNumber: 0,
       coursePage: {
         current: 1,
         size: 8,

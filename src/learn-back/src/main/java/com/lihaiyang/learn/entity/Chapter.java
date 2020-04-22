@@ -27,6 +27,9 @@ public class Chapter extends BaseEntity<Chapter> {
     private Date createDate;
 
     @TableField(exist = false)
-    private  Integer  videoCount;
+    private  Long  videoCount;
+
+    @TableField(exist = false)
+    private  Long  likeCount;
 
 }

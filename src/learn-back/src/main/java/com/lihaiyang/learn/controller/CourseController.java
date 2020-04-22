@@ -11,6 +11,7 @@ import com.lihaiyang.learn.core.utils.UserUtils;
 import com.lihaiyang.learn.dto.ChapterDTO;
 import com.lihaiyang.learn.dto.CourseDTO;
 import com.lihaiyang.learn.dto.PageDTO;
+import com.lihaiyang.learn.dto.PageInDTO;
 import com.lihaiyang.learn.entity.Chapter;
 import com.lihaiyang.learn.entity.Course;
 import com.lihaiyang.learn.entity.User;
@@ -74,6 +75,9 @@ public class CourseController {
         CourseDTO courseDTO = new CourseDTO();
         ObjectConvert<CourseDTO> objectToDto = new ObjectConvert();
         courseDTO = objectToDto.toDto(course, courseDTO);
+        course = courseService.getAmountByIdAndUserId(id, UserUtils.getUser().getId());
+        courseDTO.setIsSubscribe(course.getIsSubscribe());
+        courseDTO.setSubscribeAmount(course.getSubscribeAmount());
         return Result.ofSuccess(courseDTO);
     }
 
@@ -134,7 +138,7 @@ public class CourseController {
     }
 
     @GetMapping("/directory/{id}")
-    public Result getDirectory(@PathVariable Long id){
+    public Result getDirectory(@PathVariable Long id) {
         Chapter chapterQuery = new Chapter();
         chapterQuery.setCourseId(id);
         List<Chapter> chapterList = chapterService.list(new LambdaQueryWrapper<>(chapterQuery).orderByAsc(Chapter::getId));
@@ -149,9 +153,33 @@ public class CourseController {
             chapterDTO.setVideoList(videoList);
             chapterDTOLIst.add(chapterDTO);
         });
-        return  Result.ofSuccess(chapterDTOLIst);
-
-
+        return Result.ofSuccess(chapterDTOLIst);
     }
 
+    @PostMapping("/subscribe/{id}")
+    public Result saveSubscribe(@PathVariable Long id) {
+        courseService.saveSubscribeByIdAndUserId(id, UserUtils.getUser().getId());
+        return Result.ofSuccess("订阅成功");
+    }
+
+    @DeleteMapping("/subscribe/{id}")
+    public Result removeSubscribe(@PathVariable Long id) {
+        courseService.removeSubscribeByIdAndUserId(id, UserUtils.getUser().getId());
+        return Result.ofSuccess("取消订阅成功");
+    }
+
+    @PostMapping("/subscribe/page")
+    public Result getSubscribe(@RequestBody PageDTO pageDTO){
+        PageInDTO pageInDTO = new PageInDTO();
+        pageInDTO.setUserId(UserUtils.getUser().getId());
+        int count = courseService.getSubscribeByUserId(pageInDTO).size();
+        pageInDTO.setSize(pageDTO.getSize());
+        pageInDTO.setSortSql(pageDTO.getSortSql());
+        pageInDTO.setStart((pageDTO.getCurrent()-1) * pageDTO.getSize());
+        List<Course> courseList = courseService.getSubscribeByUserId(pageInDTO);
+        ResultList resultList = new ResultList();
+        resultList.setTotalElements((long)count);
+        resultList.setContent(courseList);
+        return Result.ofSuccess(resultList);
+    }
 }

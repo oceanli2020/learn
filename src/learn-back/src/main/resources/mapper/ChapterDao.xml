@@ -11,7 +11,9 @@
 
     <select id="selectPage" resultType="com.lihaiyang.learn.entity.Chapter">
         SELECT
-        <include refid="Base_Column_List"/>, (SELECT count(*) FROM sys_video v WHERE v.chapter_id=cp.id AND v.del_flag='0') video_count
+        <include refid="Base_Column_List"/>,
+        (SELECT count(*) FROM sys_video v WHERE v.chapter_id=cp.id AND v.del_flag='0') video_count,
+        (SELECT count(*) FROM user_video uv INNER JOIN sys_video v ON uv.video_id=v.id AND v.chapter_id=cp.id AND v.del_flag='0' WHERE uv.is_like = '1' ) like_count
         FROM sys_chapter cp
         WHERE cp.del_flag='0'
         <if test="ew.entity.courseId != null and ew.entity.courseId!= ''">

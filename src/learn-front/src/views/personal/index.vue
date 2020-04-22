@@ -30,7 +30,7 @@
           <option-first />
         </el-main>
         <el-main v-else-if="index==='2'">
-          <!-- <option-second /> -->
+          <option-second />
         </el-main>
         <el-main v-else-if="index==='3'">
           <option-thrid />
@@ -49,6 +49,7 @@
 import Header from './Header'
 import OptionFirst from './OptionFirst'
 import OptionThrid from './OptionThrid'
+import OptionSecond from './OptionSecond'
 import Footer from './Footer'
 import store from '@/store'
 export default {
@@ -56,6 +57,7 @@ export default {
   components: {
     Header,
     OptionFirst,
+    OptionSecond,
     OptionThrid,
     Footer
   },

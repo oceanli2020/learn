@@ -1,10 +1,10 @@
 <template>
-  <div class="option_first">
-    <div class="sub">
-      <span class="title">我的订阅</span>
+  <div class="option_second">
+    <div class="collect">
+      <span class="title">我的收藏</span>
       <div class="table">
         <el-table :data="tableData" style="width: 100%" @row-click="rowClick">
-          <el-table-column prop="name" label="课程名称" width="300" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="name" label="视频名称" width="300" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="courseTypeName" label="类型" width="200"></el-table-column>
           <el-table-column width="100" align="right">
             <template slot-scope="scope">
@@ -13,7 +13,7 @@
                 cancelButtonText="取消"
                 icon="el-icon-info"
                 iconColor="red"
-                title="是否取消订阅？"
+                title="是否取消收藏？"
                 @onConfirm="handleCancel(scope.$index, scope.row)"
               >
                 <el-button size="mini" type="danger" @click.stop slot="reference">Cancel</el-button>
@@ -39,9 +39,9 @@
 </template>
 
 <script>
-import { getSubscribe, removeSubscribe } from '@/api/course'
+import { like, getLike } from '@/api/video'
 export default {
-  name: 'OptionFirst',
+  name: 'OptionSecond',
   data() {
     return {
       tableData: '',
@@ -58,44 +58,47 @@ export default {
   },
   methods: {
     info() {
-      getSubscribe(this.page).then(res => {
+      getLike(this.page).then(res => {
         this.tableData = res.data.content
         this.total = res.data.totalElements
       })
     },
     currentChange(val) {
       this.page.current = val
-      getSubscribe(this.page).then(res => {
+      getLike(this.page).then(res => {
         this.tableData = res.data.content
         this.total = res.data.totalElements
       })
     },
     handleCancel(index, row) {
-      removeSubscribe(row.id).then(res => {
+      like(row.id, 'collect').then(res => {
         this.$message({
           showClose: true,
           duration: 2500,
-          message: res.data,
+          message: '取消收藏成功',
           type: 'success'
         })
         if (this.tableData.length === 1) {
           this.page.current--
         }
-        getSubscribe(this.page).then(res => {
+        getLike(this.page).then(res => {
           this.tableData = res.data.content
           this.total = res.data.totalElements
         })
       })
     },
     rowClick(row, column, event) {
-      this.$router.push({ path: '/video', query: { id: row.id } })
+      this.$router.push({
+        path: '/video',
+        query: { id: row.courseId, video: row }
+      })
     }
   }
 }
 </script>
 
 <style scoped>
-.sub {
+.collect {
   width: 600px;
   height: auto;
   position: absolute;

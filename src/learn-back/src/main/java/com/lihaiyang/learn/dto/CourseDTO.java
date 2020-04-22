@@ -30,4 +30,8 @@ public class CourseDTO {
 
     @Convert
     private Long createBy;
+
+    private Boolean isSubscribe;
+
+    private Long subscribeAmount;
 }

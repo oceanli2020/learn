@@ -35,7 +35,6 @@ public abstract class BaseEntity<T> implements Serializable {
         if (this.sqlMap == null) {
             this.sqlMap = Maps.newHashMap();
         }
-
         return this.sqlMap;
     }
 

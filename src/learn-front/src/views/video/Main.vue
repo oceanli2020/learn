@@ -27,16 +27,22 @@
       </div>
       <div class="introduction">
         <div style="padding-top: 10px; padding-left: 10px;">
-          <el-button :type="pointType" circle @click="pointIcon('point')">
+          <el-button :type="pointType" circle @click="pointIcon">
             <svg-icon icon-class="point"></svg-icon>
           </el-button>
-          <span class="icon_number">{{ point }}</span>
-          <el-button :type="starType" circle style="margin-left: 30px;" @click="pointIcon('star')">
+          <span class="icon_number">{{ point==0?'点赞':point }}</span>
+          <el-button :type="starType" circle style="margin-left: 20px;" @click="starIcon">
             <svg-icon icon-class="star"></svg-icon>
           </el-button>
-          <span class="icon_number">{{ star }}</span>
-          <el-button type="success" icon="el-icon-share" circle style="margin-left: 30px;"></el-button>
-          <span class="icon_number">{{ share }}</span>
+          <span class="icon_number">{{ star==0?'收藏':star }}</span>
+          <el-button
+            :type="subType"
+            icon="el-icon-s-flag"
+            circle
+            style="margin-left: 20px;"
+            @click="subIcon"
+          ></el-button>
+          <span class="icon_number">{{ sub==0?'订阅':sub }}</span>
         </div>
         <div class="text">{{ text }}</div>
       </div>
@@ -64,7 +70,14 @@
 </template>
 
 <script>
-import { getCourseInfo, getParentsType, getDirectory } from '@/api/course'
+import {
+  getCourseInfo,
+  getParentsType,
+  getDirectory,
+  saveSubscribe,
+  removeSubscribe
+} from '@/api/course'
+import { like, getAmount } from '@/api/video'
 import Comment from './Comment'
 import Introduction from './Introduction'
 import Directory from './Directory'
@@ -83,11 +96,12 @@ export default {
       courseId: '',
       courseName: '',
       courseTypeId: '',
-      point: 50,
-      star: 20,
-      share: 10,
+      point: 0,
+      star: 0,
+      sub: 0,
       pointType: 'info',
       starType: 'info',
+      subType: 'info',
       activeName: 'third',
       text: '',
       url: '',
@@ -104,17 +118,36 @@ export default {
     this.info()
   },
   watch: {
-    videoId: function() {}
+    videoId: function() {
+      getAmount(this.videoId).then(res => {
+        this.point = res.data.likeAmount
+        this.star = res.data.collectAmount
+        if (res.data.isLike === '1') {
+          this.pointType = 'danger'
+        } else {
+          this.pointType = 'info'
+        }
+        if (res.data.isCollect === '1') {
+          this.starType = 'primary'
+        } else {
+          this.starType = 'info'
+        }
+      })
+    }
   },
   methods: {
     async info() {
       this.courseId = this.$route.query.id
       getDirectory(this.courseId).then(res => {
         this.directory = res.data
-        this.video = this.directory[0].videoList[0]
+        if (this.$route.query.video != null) {
+          this.video = this.$route.query.video
+        } else {
+          this.video = this.directory[0].videoList[0]
+        }
         this.title = this.video.name
-        this.uploadDate = this.video.createDate
         this.videoId = this.video.id
+        this.uploadDate = this.video.createDate
         this.text = this.video.introduction
         this.url = 'http://localhost:9091' + this.video.path
         this.initVideo()
@@ -123,6 +156,12 @@ export default {
         this.courseName = res.data.name
         this.courseTypeId = res.data.courseTypeId
         this.courseIntroduction = res.data.introduction
+        this.sub = res.data.subscribeAmount
+        if (res.data.isSubscribe === true) {
+          this.subType = 'success'
+        } else {
+          this.subType = 'info'
+        }
       })
       getParentsType(this.courseTypeId).then(res => {
         this.breadList = res.data
@@ -134,20 +173,59 @@ export default {
       this.$store.commit('SET_COURSETYPE_ID', val)
       this.$router.push('/course')
     },
-    pointIcon(val) {
-      if (val === 'point') {
-        if (this.pointType === 'info') {
-          this.pointType = 'primary'
+    pointIcon() {
+      like(this.videoId, 'like').then(res => {
+        if (res.data === '1') {
+          this.pointType = 'danger'
+          this.point++
         } else {
           this.pointType = 'info'
+          this.point--
         }
-      }
-      if (val === 'star') {
-        if (this.starType === 'info') {
+      })
+    },
+    starIcon() {
+      like(this.videoId, 'collect').then(res => {
+        if (res.data === '1') {
           this.starType = 'primary'
+          this.star++
         } else {
           this.starType = 'info'
+          this.star--
         }
+      })
+    },
+    subIcon() {
+      if (this.subType === 'info') {
+        saveSubscribe(this.courseId).then(res => {
+          this.$message({
+            showClose: true,
+            duration: 2500,
+            message: res.data,
+            type: 'success'
+          })
+          this.sub++
+          this.subType = 'success'
+        })
+      } else {
+        this.$confirm('确定取消订阅该课程?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+          .then(() => {
+            removeSubscribe(this.courseId).then(res => {
+              this.$message({
+                showClose: true,
+                duration: 2500,
+                message: res.data,
+                type: 'success'
+              })
+              this.sub--
+              this.subType = 'info'
+            })
+          })
+          .catch(() => {})
       }
     },
     changeVideo(val) {
@@ -257,6 +335,9 @@ export default {
   font-size: 10px;
   color: #787878;
   margin-left: 5px;
+  width: 30px;
+  /* background-color: aqua; */
+  display: inline-block;
 }
 .text {
   font-size: 12px;

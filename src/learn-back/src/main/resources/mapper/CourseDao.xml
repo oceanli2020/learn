@@ -15,7 +15,13 @@
 
     <select id="selectPage" resultType="com.lihaiyang.learn.entity.Course">
         SELECT
-        <include refid="Base_Column_List"/>, ct.name course_type_name, (SELECT count(*) FROM sys_chapter cp WHERE cp.course_id=c.id AND cp.del_flag='0') chapter_count
+        <include refid="Base_Column_List"/>, ct.name course_type_name,
+        (SELECT count(*) FROM sys_chapter cp WHERE cp.course_id=c.id AND cp.del_flag='0') chapter_count,
+        (select count(*) FROM user_course uc WHERE c.id = uc.course_id) subscribe_amount,
+        (SELECT count(*) FROM user_video uv
+        INNER JOIN sys_video v ON uv.video_id=v.id AND v.del_flag='0'
+        INNER JOIN sys_chapter cp ON cp.course_id=c.id AND v.chapter_id=cp.id AND cp.del_flag='0'
+        WHERE uv.is_like = '1' ) like_count
         FROM sys_course c
         LEFT JOIN sys_course_type ct ON ct.id = c.course_type_id AND ct.del_flag='0'
         WHERE c.del_flag='0'
@@ -28,5 +34,35 @@
         ORDER BY ${ew.entity.sqlMap.sortSql}
     </select>
 
+    <select id="selectAmountByIdAndUserId" resultType="com.lihaiyang.learn.entity.Course">
+        SELECT case when uc.course_id is not null then true when uc.course_id is null then false end isSubscribe,
+        (select count(*)FROM user_course uc WHERE c.id = uc.course_id) subscribe_amount
+        FROM sys_course c
+        LEFT JOIN user_course uc ON c.id = uc.course_id AND uc.user_id=#{userId}
+        WHERE c.id=#{id}
+        AND c.del_flag='0'
+    </select>
+
+    <insert id="insertSubscribeByIdAndUserId">
+        INSERT INTO user_course (user_id,course_id) VALUES (#{userId},#{id})
+    </insert>
+
+    <delete id="deleteSubscribeByIdAndUserId">
+        DELETE FROM user_course uc WHERE uc.course_id=#{id}AND uc.user_id=#{userId}
+    </delete>
+
+    <select id="selectSubscribeByUserId" resultType="com.lihaiyang.learn.entity.Course">
+        SELECT <include refid="Base_Column_List"/>,ct.name course_type_name
+        FROM sys_course c
+        INNER JOIN  user_course uc ON uc.course_id=c.id AND uc.user_id=#{userId}
+        LEFT JOIN sys_course_type ct ON ct.id = c.course_type_id AND ct.del_flag='0'
+        WHERE c.del_flag='0'
+        <if test="sortSql != null and sortSql!= ''">
+            ORDER BY ${sortSql}
+        </if>
+        <if test="size != null and size != ''">
+            limit ${size} offset ${start}
+        </if>
+    </select>
     
 </mapper>

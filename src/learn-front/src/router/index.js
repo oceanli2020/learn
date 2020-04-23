@@ -69,12 +69,12 @@ export const constantRouterMap = [
     hidden: true
   },
   {
-    path: '/live',
+    path: '/livecenter',
     meta: {
       title: '直播中心',
       noCache: true
     },
-    component: () => import('@/views/live/index'),
+    component: () => import('@/views/livecenter/index'),
     hidden: true
   },
   {

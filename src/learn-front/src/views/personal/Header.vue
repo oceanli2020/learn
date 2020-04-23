@@ -26,7 +26,7 @@
           </el-link>
         </el-tooltip>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="a">个人信息</el-dropdown-item>
+          <el-dropdown-item command="a">个人中心</el-dropdown-item>
           <el-dropdown-item command="b">创作中心</el-dropdown-item>
           <el-dropdown-item command="c">直播中心</el-dropdown-item>
           <el-dropdown-item command="d" divided>退出登录</el-dropdown-item>
@@ -98,7 +98,7 @@ export default {
         this.$router.push('/creation')
       }
       if (command === 'c') {
-        this.$router.push('/live')
+        this.$router.push('/livecenter')
       }
       if (command === 'd') {
         this.toLogout()

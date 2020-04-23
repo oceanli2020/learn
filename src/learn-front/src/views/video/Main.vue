@@ -140,7 +140,10 @@ export default {
       this.courseId = this.$route.query.id
       getDirectory(this.courseId).then(res => {
         this.directory = res.data
-        if (this.$route.query.video != null) {
+        if (
+          this.$route.query.video != null &&
+          this.$route.query.video.id !== undefined
+        ) {
           this.video = this.$route.query.video
         } else {
           this.video = this.directory[0].videoList[0]

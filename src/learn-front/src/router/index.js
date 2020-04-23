@@ -87,9 +87,9 @@ export const constantRouterMap = [
     hidden: true
   },
   {
-    path: '/livestuido',
+    path: '/livestudio',
     meta: {
-      title: '测试',
+      title: '直播画面',
       noCache: true
     },
     component: () => import('@/views/livestudio/index'),

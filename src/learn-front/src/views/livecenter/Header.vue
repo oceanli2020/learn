@@ -8,7 +8,6 @@
         <el-tooltip
           v-bind:content="username"
           placement="right-end"
-          effect="light"
           :open-delay="700"
           class="user_name"
           :disabled="tooltip"

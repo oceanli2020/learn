@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lihaiyang.learn.dao.LiveDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        l.id,
+        l.name,
+        l.create_by,
+        l.is_start
+    </sql>
+
+    <select id="selectPage" resultType="com.lihaiyang.learn.entity.Live">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_live l
+        WHERE l.del_flag='0'
+        <if test="ew.entity.isStart != null and ew.entity.isStart!= ''">
+            AND l.is_start = #{ew.entity.isStart}
+        </if>
+        ORDER BY ${ew.entity.sqlMap.sortSql}
+    </select>
+</mapper>

@@ -47,11 +47,8 @@ export default {
 </script>
 
 <style scoped>
-.el-header {
-
-}
 .el-main {
-  height: 1200px;
+  min-height: 900px;
   margin-top: 20px;
 }
 .el-aside {

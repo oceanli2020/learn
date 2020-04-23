@@ -5,54 +5,56 @@
     <div class="center">
       <div class="title">
         <span>{{ title }}</span>
-        <br />
-        <span style="font-size: 5px; color: #989898;">{{ uploadDate }}</span>
-      </div>
-      <div class="breadcrumb">
-        <el-breadcrumb separator-class="el-icon-arrow-right" style="font-size: 5px;">
-          <el-breadcrumb-item :to="{ path: '/course' }">
-            <el-link :underline="false">
-              <span style="font-size: 5px; vertical-align: top;">全部课程</span>
-            </el-link>
-          </el-breadcrumb-item>
-          <el-breadcrumb-item v-for="bread in breadList" :key="bread">
-            <el-link :underline="false" @click="changePath(bread.id)">
-              <span style="font-size: 5px; vertical-align: top;">{{ bread.name }}</span>
-            </el-link>
-          </el-breadcrumb-item>
-        </el-breadcrumb>
       </div>
       <div class="video">
-        <video id="myVideo" class="video-js vjs-big-play-centered" autoplay="autoplay">
-          <!-- <source src="http://192.168.157.128:9090/1.mp4" type="video/mp4" /> -->
-          <!-- <source src="http://192.168.157.128:80/hls/abcd/index.m3u8" /> -->
-          <!-- <source src="rtmp://192.168.1.9/live/abcd" type="rtmp" /> -->
-        </video>
-      </div>
-      <div class="Introduction">
-        <div style="padding-top: 10px; padding-left: 10px;">
-          <el-button :type="pointType" circle @click="pointIcon('point')">
-            <svg-icon icon-class="point"></svg-icon>
-          </el-button>
-          <span class="icon_number">{{ point }}</span>
-          <el-button :type="starType" circle style="margin-left: 30px;" @click="pointIcon('star')">
-            <svg-icon icon-class="star"></svg-icon>
-          </el-button>
-          <span class="icon_number">{{ star }}</span>
-          <el-button type="success" icon="el-icon-share" circle style="margin-left: 30px;"></el-button>
-          <span class="icon_number">{{ share }}</span>
+        <div v-if="isStart==='1'">
+          <video id="myVideo" class="video-js vjs-big-play-centered" autoplay="autoplay"></video>
         </div>
+        <div v-else class="warn">
+          <span class="warn_word">{{warn}}</span>
+        </div>
+      </div>
+      <div class="introduction">
         <div class="text">{{ text }}</div>
       </div>
-      <div class="label">
-        <div class="select">
-          <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="课程介绍" name="first"></el-tab-pane>
-            <el-tab-pane label="目录" name="second"></el-tab-pane>
-            <el-tab-pane label="评论(1555)" name="third">
-              <comment />
-            </el-tab-pane>
-          </el-tabs>
+      <div class="replay_block">
+        <p>
+          <svg-icon
+            icon-class="replay"
+            aria-hidden="true"
+            style="font-size: 35px;fill:#1296db;position: relative;top:5px;"
+          ></svg-icon>
+          <span>直播回放</span>
+        </p>
+        <div class="replay">
+          <el-row>
+            <el-col :span="5" v-for="item in 8" :key="item">
+              <div style="margin-top:3px">
+                <el-card class="box-card" shadow="hover" :body-style="{ padding: '15px' }">
+                  <div class="replay-name">
+                    <el-link :underline="false">
+                      <span style="font-size: 14px;"></span>
+                    </el-link>
+                  </div>
+                  <div class="text" style="margin-top:12px">
+                    <span></span>
+                  </div>
+                  <div class="text" style="margin-top:12px;margin-left:-2px"></div>
+                </el-card>
+              </div>
+            </el-col>
+          </el-row>
+          <div class="pagination">
+            <el-pagination
+              background
+              @current-change="currentChange"
+              :page-size="page.size"
+              :current-page="page.current"
+              layout="prev, pager, next"
+              :total="total"
+              style="text-align: center"
+            ></el-pagination>
+          </div>
         </div>
       </div>
     </div>
@@ -60,30 +62,46 @@
 </template>
 
 <script>
+import { getLiveInfo } from '@/api/live'
 export default {
   name: 'Main',
   data() {
     return {
-      title: '李海洋的直播间',
-      uploadDate: '2019-09-18 10:19:05',
-      breadList: [],
-      courseId: '',
-      courseName: '',
-      courseTypeId: '',
-      point: 50,
-      star: 20,
-      share: 10,
-      pointType: 'info',
-      starType: 'info',
-      activeName: 'third',
-      text: '终于成功了呀'
+      title: '',
+      text: '',
+      liveId: '',
+      rtmp: '',
+      pushCode: '',
+      isStart: '',
+      warn: '主人还在休息哦',
+      tabledata: [],
+      page: {
+        size: 8,
+        current: 1,
+        sort: 'id',
+        query: { liveId: '' }
+      },
+      total: 0
     }
   },
   mounted() {
-    this.initVideo()
+    this.info()
   },
   watch: {},
   methods: {
+    async info() {
+      this.liveId = this.$route.query.id
+      await getLiveInfo(this.liveId).then(res => {
+        this.title = res.data.name
+        this.text = res.data.introduction
+        this.rtmp = res.data.rtmp
+        this.pushCode = res.data.pushCode
+        this.isStart = res.data.isStart
+      })
+      if (this.isStart === '1') {
+        this.initVideo()
+      }
+    },
     initVideo() {
       // 初始化视频方法
       /* eslint-disable */
@@ -138,8 +156,8 @@ export default {
         },
         sources: {
           // 视频源
-          src: 'http://localhost:9091/video/2020/20200418154250.mp4',
-          type: 'video/mp4'
+          src: this.rtmp + '/' + this.pushCode,
+          type: 'rtmp'
         }
       })
     }
@@ -159,28 +177,12 @@ export default {
   top: -18px;
 }
 .title {
-  margin-top: 5px;
-}
-.breadcrumb {
-  padding-top: 6px;
   padding-bottom: 15px;
 }
-
-.Introduction {
-  height: 150px;
+.introduction {
   /* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); */
-  margin-top: 20px;
+  margin-top: 30px;
   height: auto;
-}
-.label {
-  min-height: auto;
-  /* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);   */
-  margin-top: 20px;
-}
-.icon_number {
-  font-size: 10px;
-  color: #787878;
-  margin-left: 5px;
 }
 .text {
   font-size: 12px;
@@ -190,10 +192,7 @@ export default {
   padding-left: 10px;
   padding-bottom: 10px;
   position: static;
-}
-.select {
-  padding-left: 6px;
-  padding-right: 6px;
+  word-break: break-all;
 }
 .video {
   height: 500px;
@@ -205,5 +204,42 @@ export default {
 .vjs-paused .vjs-big-play-button,
 .vjs-paused.vjs-has-started .vjs-big-play-button {
   display: block;
+}
+.warn {
+  height: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  line-height: 500px;
+}
+.replay_block {
+  height: 500px;
+  margin-top: 60px;
+  /* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); */
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 2px;
+}
+.el-row {
+  height: auto;
+}
+.el-col {
+  padding: 0px 3px 3px 2px;
+  width: 240px;
+}
+.box-card {
+  width: 234px;
+  height: 150px;
+  word-break: break-all;
+}
+.replay-name {
+  height: 60px;
+}
+.text {
+  font-size: 5px;
+  color: #707070;
+}
+.pagination {
+  margin-top: 30px;
 }
 </style>

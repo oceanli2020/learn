@@ -35,7 +35,7 @@ export default {
   line-height: 60px;
 }
 .el-main {
-  height: 1100px;
+  height: 1000px;
 }
 .el-footer {
   background-color: #606266;

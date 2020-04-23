@@ -207,7 +207,7 @@ export default {
   position: relative;
   bottom: 20px;
   width: 800px;
-  left: 330px;
+  left: 320px;
   border-radius: 10px;
 }
 .block {

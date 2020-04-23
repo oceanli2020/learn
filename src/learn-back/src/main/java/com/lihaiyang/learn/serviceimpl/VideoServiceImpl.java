@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class VideoServideImpl extends BaseServiceImpl<VideoDao, Video> implements IVideoService {
+public class VideoServiceImpl extends BaseServiceImpl<VideoDao, Video> implements IVideoService {
 
 
     @Override

@@ -47,7 +47,7 @@
       <div style="margin-top:20px">
         <el-row>
           <el-col :span="6" v-for="item in tabledata" :key="item">
-            <div class="courses" style="margin-top:-3px">
+            <div style="margin-top:-3px">
               <!--padding: 内边距-->
               <el-card class="box-card" shadow="hover" :body-style="{ padding: '15px' }">
                 <div class="course-name">
@@ -318,7 +318,7 @@ export default {
 
 <style scoped>
 .center {
-  height: 1000px;
+  height: 900px;
   width: 1000px;
   /* background-color: aqua; */
   margin: 0 auto;

@@ -97,6 +97,21 @@
               </p>
             </el-card>
           </el-timeline-item>
+          <el-timeline-item timestamp="第六步" placement="top">
+            <el-card class="card-Tutorial">
+              <h4>开始直播和关闭直播</h4>
+              <p>
+                <span>1、开始直播</span>
+                <br />
+                <el-image style="width: 150px; height: 80px" :src="img6" :fit="cover"></el-image>
+              </p>
+              <p>
+                <span>2、关闭直播</span>
+                <br />
+                <el-image style="width: 185px; height: 80px" :src="img7" :fit="cover"></el-image>
+              </p>
+            </el-card>
+          </el-timeline-item>
         </el-timeline>
       </div>
     </el-dialog>
@@ -122,7 +137,9 @@ export default {
       img2: 'http://192.168.1.9:9090/2.PNG',
       img3: 'http://192.168.1.9:9090/3.PNG',
       img4: 'http://192.168.1.9:9090/4.PNG',
-      img5: 'http://192.168.1.9:9090/5.PNG'
+      img5: 'http://192.168.1.9:9090/5.PNG',
+      img6: 'http://192.168.1.9:9090/6.PNG',
+      img7: 'http://192.168.1.9:9090/7.PNG'
     }
   },
   mounted() {},

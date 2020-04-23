@@ -18,7 +18,7 @@ import Header from './Header'
 import Footer from './Footer'
 import Main from './Main'
 export default {
-  name: 'Video',
+  name: 'LiveStudio',
   components: {
     Header,
     Footer,
@@ -33,9 +33,10 @@ export default {
 <style scoped>
 .el-header {
   line-height: 60px;
+  /* background-color: aquamarine; */
 }
 .el-main {
-  min-height: 1600px;
+  min-height: 1500px;
 }
 .el-footer {
   background-color: #606266;

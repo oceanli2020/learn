@@ -317,9 +317,7 @@ export default {
   /* left: 30px; */
   top: -18px;
 }
-.title {
-  margin-top: 5px;
-}
+
 .breadcrumb {
   padding-top: 6px;
   padding-bottom: 15px;

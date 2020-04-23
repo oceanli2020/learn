@@ -157,6 +157,7 @@ export default {
 .el-col {
   padding: 5px 8px 5px 8px;
   width: 260px;
+  background-color: yellow;
 }
 .pagination {
   margin-top: 30px;

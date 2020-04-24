@@ -23,7 +23,10 @@
         </el-breadcrumb>
       </div>
       <div class="video">
-        <video id="myVideo" class="video-js vjs-big-play-centered"></video>
+        <div class="warn">
+          <video id="myVideo" class="video-js vjs-big-play-centered"></video>
+          <span>{{warn}}</span>
+        </div>
       </div>
       <div class="introduction">
         <div style="padding-top: 10px; padding-left: 10px;">
@@ -111,7 +114,9 @@ export default {
       sup_this: this,
       courseIntroduction: '',
       myPlayer: null,
-      commentNumber: 0
+      commentNumber: 0,
+      warn: '没有内容',
+      isVideo: true
     }
   },
   mounted() {
@@ -145,12 +150,14 @@ export default {
           this.$route.query.video.id !== undefined
         ) {
           this.video = this.$route.query.video
+        } else if (this.directory[0].videoList.length === 0) {
+          return
         } else {
           this.video = this.directory[0].videoList[0]
         }
         this.title = this.video.name
         this.videoId = this.video.id
-        this.uploadDate = this.video.createDate
+        this.uploadDate = this.video.createDateer
         this.text = this.video.introduction
         this.url = 'http://localhost:9091' + this.video.path
         this.initVideo()
@@ -238,8 +245,12 @@ export default {
       this.uploadDate = this.video.createDate
       this.text = this.video.introduction
       this.url = 'http://localhost:9091' + this.video.path
-      this.myPlayer.src({ src: this.url, type: 'video/mp4' })
-      this.myPlayer.play()
+      if (this.myPlayer === null) {
+        this.initVideo()
+      } else {
+        this.myPlayer.src({ src: this.url, type: 'video/mp4' })
+        this.myPlayer.play()
+      }
     },
     parentFn(val) {
       this.commentNumber = val
@@ -364,5 +375,12 @@ export default {
 .vjs-paused .vjs-big-play-button,
 .vjs-paused.vjs-has-started .vjs-big-play-button {
   display: block;
+}
+.warn {
+  height: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  line-height: 200px;
 }
 </style>

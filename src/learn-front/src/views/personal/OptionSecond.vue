@@ -78,7 +78,7 @@ export default {
           message: '取消收藏成功',
           type: 'success'
         })
-        if (this.tableData.length === 1) {
+        if (this.tableData.length === 1 && this.page.current !== 1) {
           this.page.current--
         }
         getLike(this.page).then(res => {

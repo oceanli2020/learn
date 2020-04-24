@@ -1,6 +1,7 @@
 package com.lihaiyang.learn.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lihaiyang.learn.core.base.entity.BaseEntity;
@@ -26,4 +27,7 @@ public class Replay extends BaseEntity<Replay> {
     private String path;
 
     private Long liveId;
+
+    @TableField(exist = false)
+    private String durationTime;
 }

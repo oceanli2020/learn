@@ -9,10 +9,10 @@
           <Aside @childFn="parentFn" />
         </el-aside>
         <el-main v-if="index==='1'">
-          <start-live />
+          <start-live @childFn="parentFn1" />
         </el-main>
         <el-main v-else-if="index==='2'">
-          <manage-live />
+          <manage-replay :liveId="liveId" />
         </el-main>
       </el-container>
     </el-container>
@@ -23,24 +23,28 @@
 import Header from './Header'
 import Aside from './Aside'
 import StartLive from './menu/StartLive'
-import ManageLive from './menu/ManageLive'
+import ManageReplay from './menu/ManageReplay'
 export default {
   name: 'Creation',
   components: {
     Header,
     Aside,
     StartLive,
-    ManageLive
+    ManageReplay
   },
   data() {
     return {
-      index: '1'
+      index: '1',
+      liveId: ''
     }
   },
   mounted() {},
   methods: {
     parentFn(val) {
       this.index = val
+    },
+    parentFn1(val) {
+      this.liveId = val
     }
   }
 }

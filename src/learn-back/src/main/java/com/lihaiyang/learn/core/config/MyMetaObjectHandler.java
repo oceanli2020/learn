@@ -33,7 +33,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
                 this.setFieldValByName("createBy", user.getId(), metaObject);
                 this.setFieldValByName("updateBy", user.getId(), metaObject);
             } catch (Exception var7) {
-                System.out.println("没有取到用户");
+                 System.out.println("没有取到用户");
+
             }
         }
 

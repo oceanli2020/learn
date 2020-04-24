@@ -209,7 +209,7 @@ export default {
             message: res.data,
             type: 'success'
           })
-          if (this.tableData.length === 1) {
+          if (this.tableData.length === 1 && this.coursePage.current !== 1) {
             this.coursePage.current--
           }
           getCourse(this.coursePage).then(res => {
@@ -225,7 +225,7 @@ export default {
             message: res.data,
             type: 'success'
           })
-          if (this.tableData.length === 1) {
+          if (this.tableData.length === 1 && this.chapterPage.current !== 1) {
             this.chapterPage.current--
           }
           getChapter(this.chapterPage).then(res => {
@@ -241,7 +241,7 @@ export default {
             message: res.data,
             type: 'success'
           })
-          if (this.tableData.length === 1) {
+          if (this.tableData.length === 1 && this.videoPage.current !== 1) {
             this.videoPage.current--
           }
           getVideo(this.videoPage).then(res => {
@@ -351,7 +351,7 @@ export default {
           message: res.data,
           type: 'success'
         })
-        if (this.tableData.length === 1) {
+        if (this.tableData.length === 1 && this.videoPage.current !== 1) {
           this.videoPage.current--
         }
         getVideo(this.videoPage).then(res => {
@@ -379,7 +379,7 @@ export default {
   position: relative;
   bottom: 20px;
   width: 1340px;
-  left: 50px;
+  left: 27px;
   padding-top: 10px;
 }
 .block {

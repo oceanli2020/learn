@@ -4,18 +4,20 @@
     <el-backtop></el-backtop>
     <div class="center">
       <div class="title">
-        <span>{{ title }}</span>
+        <p>{{ title }}</p>
+        <el-tag type="success" size="mini">UP</el-tag>
+        <span style="font-size: 5px; color: #989898;">{{userName}}</span>
       </div>
       <div class="video">
         <div v-if="isStart==='1'">
           <video id="myVideo" class="video-js vjs-big-play-centered" autoplay="autoplay"></video>
         </div>
         <div v-else class="warn">
-          <span class="warn_word">{{warn}}</span>
+          <span>{{warn}}</span>
         </div>
       </div>
-      <div class="introduction">
-        <div class="text">{{ text }}</div>
+      <div class="introduction-block">
+        <div class="introduction">{{ text }}</div>
       </div>
       <div class="replay_block">
         <p>
@@ -28,21 +30,28 @@
         </p>
         <div class="replay">
           <el-row>
-            <el-col :span="5" v-for="item in 8" :key="item">
+            <el-col :span="5" v-for="item in tabledata" :key="item">
               <div style="margin-top:3px">
                 <el-card class="box-card" shadow="hover" :body-style="{ padding: '15px' }">
                   <div class="replay-name">
-                    <el-link :underline="false">
-                      <span style="font-size: 14px;"></span>
+                    <el-link :underline="false" @click="clickReplay(item)">
+                      <span style="font-size: 14px;">{{item.name}}</span>
                     </el-link>
                   </div>
                   <div class="text" style="margin-top:12px">
-                    <span></span>
+                    <span>{{item.durationTime}}</span>
                   </div>
-                  <div class="text" style="margin-top:12px;margin-left:-2px"></div>
+                  <div class="text" style="margin-top:12px">
+                    <span>{{item.createDate}}</span>
+                  </div>
                 </el-card>
               </div>
             </el-col>
+            <replay-dialog
+              :dialogFormVisible="dialogFormVisible"
+              :replay="replay"
+              @childFn="parentFn"
+            />
           </el-row>
           <div class="pagination">
             <el-pagination
@@ -53,6 +62,7 @@
               layout="prev, pager, next"
               :total="total"
               style="text-align: center"
+              :hide-on-single-page="true"
             ></el-pagination>
           </div>
         </div>
@@ -62,9 +72,13 @@
 </template>
 
 <script>
-import { getLiveInfo } from '@/api/live'
+import { getLiveInfo, getReplayList } from '@/api/live'
+import ReplayDialog from './ReplayDialog'
 export default {
   name: 'Main',
+  components: {
+    ReplayDialog
+  },
   data() {
     return {
       title: '',
@@ -81,7 +95,10 @@ export default {
         sort: 'id',
         query: { liveId: '' }
       },
-      total: 0
+      total: 0,
+      userName: '',
+      dialogFormVisible: false,
+      replay: ''
     }
   },
   mounted() {
@@ -97,54 +114,49 @@ export default {
         this.rtmp = res.data.rtmp
         this.pushCode = res.data.pushCode
         this.isStart = res.data.isStart
+        this.userName = res.data.createBy
       })
       if (this.isStart === '1') {
         this.initVideo()
       }
+      this.page.query.liveId = this.liveId
+      getReplayList(this.page).then(res => {
+        this.tabledata = res.data.content
+        this.total = res.data.totalElements
+      })
+    },
+    currentChange(val) {
+      this.page.current = val
+      getReplayList(this.page).then(res => {
+        this.tabledata = res.data.content
+        this.total = res.data.totalElements
+      })
+    },
+    clickReplay(item) {
+      this.replay = item
+      this.dialogFormVisible = true
+    },
+    parentFn(val) {
+      this.dialogFormVisible = val
     },
     initVideo() {
       // 初始化视频方法
       /* eslint-disable */
       let myPlayer = this.$video(myVideo, {
-        // autoplay: 'autoplay',
-        // 是否显示进度条
         controls: true,
-        // 建议浏览器是否应在<video>加载元素后立即开始下载视频数据。
+        // 建议浏览器是否应在<video>加载元素后立即开始下载视频数据
         preload: 'auto',
         // 设置视频播放器的显示宽度（以像素为单位）
         width: '1000px',
         // 设置视频播放器的显示高度（以像素为单位）
         height: '500px',
         controlBar: {
-          progressControl: false,
-          durationDisplay: true,
-          currentTimeDisplay: true,
-          timeDivider: true,
-          remainingTimeDisplay: false,
-          playbackRateMenuButton: {
-            playbackRates: [0.5, 1, 1.5, 2, 2.5]
-          },
           volumePanel: {
             inline: false //竖直的音量面板
           },
           children: [
             {
               name: 'playToggle' //播放暂停按钮
-            },
-            {
-              name: 'progressControl' // 进度条
-            },
-            {
-              name: 'currentTimeDisplay' //当前播放时间
-            },
-            {
-              name: 'timeDivider' // '/' 分隔符
-            },
-            {
-              name: 'durationDisplay' //总时间
-            },
-            {
-              name: 'playbackRateMenuButton' //播放速率
             },
             {
               name: 'volumePanel' //音量控制
@@ -179,12 +191,12 @@ export default {
 .title {
   padding-bottom: 15px;
 }
-.introduction {
+.introduction-block {
   /* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); */
   margin-top: 30px;
   height: auto;
 }
-.text {
+.introduction {
   font-size: 12px;
   color: #585858;
   width: 600px;
@@ -201,10 +213,10 @@ export default {
 .video-js {
   font-size: 10px;
 }
-.vjs-paused .vjs-big-play-button,
-.vjs-paused.vjs-has-started .vjs-big-play-button {
+/* .vjs-paused.vjs-big-play-button,
+.vjs-paused.vjs-has-started.vjs-big-play-button {
   display: block;
-}
+} */
 .warn {
   height: 100%;
   background-color: black;

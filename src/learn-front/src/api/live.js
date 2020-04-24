@@ -24,3 +24,18 @@ export function getLiveList(data) {
     data
   })
 }
+
+export function getReplayList(data) {
+  return request({
+    url: prefixURL + 'replay/page',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteReplay(id) {
+  return request({
+    url: prefixURL + 'replay/' + id,
+    method: 'delete'
+  })
+}

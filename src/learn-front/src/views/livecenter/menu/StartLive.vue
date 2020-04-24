@@ -166,6 +166,7 @@ export default {
         this.isStart = res.data.isStart
         this.introduction = res.data.introduction
         this.address += res.data.id
+        this.$emit('childFn', this.live.id)
       })
     },
     parentFn(val) {

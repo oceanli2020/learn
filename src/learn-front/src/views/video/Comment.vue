@@ -92,7 +92,7 @@
       style="margin-top:20px;margin-left:73px;"
       :hide-on-single-page="true"
     ></el-pagination>
-    <div class="write">
+    <div class="write" v-if="videoId!=''">
       <el-avatar :size="50" :src="myCircleUrl" class="avatar"></el-avatar>
       <el-input
         type="textarea"

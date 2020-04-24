@@ -129,7 +129,8 @@ export default {
   position: relative;
   bottom: 20px;
   width: 1340px;
-  left: 50px;
+  left: 27px;
+  /* background-color: aqua; */
 }
 .title {
   height: 35px;
@@ -157,7 +158,7 @@ export default {
 .el-col {
   padding: 5px 8px 5px 8px;
   width: 260px;
-  background-color: yellow;
+  /* background-color: yellow; */
 }
 .pagination {
   margin-top: 30px;

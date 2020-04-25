@@ -1,8 +1,8 @@
 package com.lihaiyang.learn.servlet;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.lihaiyang.learn.core.cache.ReplayPools;
 import com.lihaiyang.learn.core.utils.RandomUtils;
+import com.lihaiyang.learn.core.utils.RedisUtil;
 import com.lihaiyang.learn.core.utils.VideoUtils;
 import com.lihaiyang.learn.entity.Live;
 import com.lihaiyang.learn.entity.Replay;
@@ -26,6 +26,9 @@ public class Scheduler {
     @Autowired
     private ILiveService liveService;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     @Scheduled(initialDelay = 1000 * 30, fixedDelay = 1000 * 30)
     public void saveReplayInfo() throws Exception {
         System.out.println("执行存入直播回放时间：" + dateFormat.format(new Date()));
@@ -36,11 +39,10 @@ public class Scheduler {
             Live query = new Live();
             query.setPushCode(code);
             Long liveId = liveService.getOne(Wrappers.query(query)).getId();
-            Integer key = ReplayPools.get(liveId);
-            if (key == null) {
-                key = 0;
-                ReplayPools.put(liveId, key);
+            if (!redisUtil.hasKey(liveId.toString())) {
+                redisUtil.set(liveId.toString(),0);
             }
+            Integer key = (Integer) redisUtil.get(liveId.toString());
             System.out.println(key);
             File[] files = folder.listFiles();
             for (int i = key; i < files.length; i++) {
@@ -74,13 +76,13 @@ public class Scheduler {
                 entity.setPath(f.getPath().replace("G:", "").replace("\\", "/"));
                 replayService.save(entity);
             }
-            ReplayPools.put(liveId, folder.listFiles().length);
+            redisUtil.set(liveId.toString(),folder.listFiles().length);
         }
 
 
     }
 
-    @Scheduled(cron = "15 24 01 ? * *")
+    @Scheduled(cron = "00 00 16 ? * *")
     public void deleteReplayInfo() {
         System.out.println("执行清除直播回放时间：" + dateFormat.format(new Date()));
         File file = new File("G:/replay");
@@ -106,8 +108,16 @@ public class Scheduler {
                     }
                 }
             }
-            ReplayPools.put(liveId, folder.listFiles().length);
+            redisUtil.set(liveId.toString(),folder.listFiles().length);
         }
 
     }
+
+
+
+//    @Scheduled(initialDelay = 1000 * 3, fixedDelay = 1000 * 3000)
+//    public void test() {
+//
+//
+//    }
 }

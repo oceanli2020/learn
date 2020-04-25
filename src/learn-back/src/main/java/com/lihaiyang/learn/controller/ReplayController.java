@@ -2,9 +2,9 @@ package com.lihaiyang.learn.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.lihaiyang.learn.core.cache.ReplayPools;
 import com.lihaiyang.learn.core.result.Result;
 import com.lihaiyang.learn.core.result.ResultList;
+import com.lihaiyang.learn.core.utils.RedisUtil;
 import com.lihaiyang.learn.core.utils.TimeUtils;
 import com.lihaiyang.learn.dto.PageDTO;
 import com.lihaiyang.learn.entity.Replay;
@@ -21,6 +21,9 @@ public class ReplayController {
 
     @Autowired
     private IReplayService replayService;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @PostMapping("/page")
     public Result page(@RequestBody PageDTO pageDTO){
@@ -45,7 +48,7 @@ public class ReplayController {
             System.gc(); // 回收资源
             result = f.delete();
         }
-        ReplayPools.put(replay.getLiveId(),ReplayPools.get(replay.getLiveId())-1);
+       redisUtil.set(replay.getLiveId().toString(),(Integer)redisUtil.get(replay.getLiveId().toString())-1);
         replayService.removeById(id);
         return Result.ofSuccess("删除成功");
     }

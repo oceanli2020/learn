@@ -18,6 +18,8 @@ spring:
     multipart:
       maxFileSize: 1024MB
       maxRequestSize: 1024MB
+  profiles:
+      active: dev
 
 #mybatis-plus配置控制台打印完整带参数SQL语句
 mybatis-plus:
@@ -33,5 +35,7 @@ mybatis-plus:
 UploadPath: D:/upload
 
 Rtmp: rtmp://192.168.1.9/live
+
+
 
 

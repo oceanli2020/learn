@@ -15,31 +15,31 @@
               <span slot="title">{{courseTypeList[0].name}}</span>
             </el-menu-item>
             <el-menu-item index="2">
-              <i class="el-icon-water-cup"></i>
+              <i class="el-icon-lollipop"></i>
               <span slot="title">{{courseTypeList[1].name}}</span>
             </el-menu-item>
             <el-menu-item index="3">
-              <i class="el-icon-chat-line-square"></i>
+              <i class="el-icon-milk-tea"></i>
               <span slot="title">{{courseTypeList[2].name}}</span>
             </el-menu-item>
             <el-menu-item index="4">
-              <i class="el-icon-attract"></i>
+              <i class="el-icon-coffee-cup"></i>
               <span slot="title">{{courseTypeList[3].name}}</span>
             </el-menu-item>
             <el-menu-item index="5">
-              <i class="el-icon-monitor"></i>
+              <i class="el-icon-sugar"></i>
               <span slot="title">{{courseTypeList[4].name}}</span>
             </el-menu-item>
             <el-menu-item index="6">
-              <i class="el-icon-headset"></i>
+              <i class="el-icon-cold-drink"></i>
               <span slot="title">{{courseTypeList[5].name}}</span>
             </el-menu-item>
             <el-menu-item index="7">
-              <i class="el-icon-star-off"></i>
+              <i class="el-icon-food"></i>
               <span slot="title">{{courseTypeList[6].name}}</span>
             </el-menu-item>
             <el-menu-item index="8">
-              <i class="el-icon-bell"></i>
+              <i class="el-icon-burger"></i>
               <span slot="title">{{courseTypeList[7].name}}</span>
             </el-menu-item>
           </el-menu>
@@ -71,7 +71,7 @@
                 <div class="text" style="margin-top:12px">
                   <span>共{{item.chapterCount}}节</span>
                   <el-divider direction="vertical"></el-divider>
-                  <span style="margin-left:0px">{{item.createBy}}</span>
+                  <span style="margin-left:0px">{{item.userName}}</span>
                 </div>
                 <div class="text" style="margin-top:12px;margin-left:-2px">
                   <svg-icon icon-class="sub" style="font-size: 19px;"></svg-icon>
@@ -95,17 +95,18 @@ export default {
   data() {
     return {
       imgList: [
-        { id: 0, idView: require('@/assets/carousel/carousel_first.jpg') },
-        { id: 1, idView: require('@/assets/carousel/carousel_second.jpg') },
-        { id: 2, idView: require('@/assets/carousel/carousel_third.jpg') },
-        { id: 3, idView: require('@/assets/carousel/carousel_forth.jpg') }
+        { id: 0, idView: 'http://192.168.1.9:9090/carousel1.jpg' },
+        { id: 1, idView: 'http://192.168.1.9:9090/carousel2.jpg' },
+        { id: 2, idView: 'http://192.168.1.9:9090/carousel3.jpg' },
+        { id: 3, idView: 'http://192.168.1.9:9090/carousel4.jpg' },
+        { id: 4, idView: 'http://192.168.1.9:9090/carousel5.jpg' }
       ],
       courseTypeList: [],
       tabledata: [],
       coursePage: {
         current: 1,
         size: 8,
-        sort: 'id',
+        sort: '-likeCount,-subscribeAmount',
         query: { courseTypeId: 0 }
       }
     }

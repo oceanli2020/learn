@@ -15,7 +15,7 @@
 
     <select id="selectPage" resultType="com.lihaiyang.learn.entity.Course">
         SELECT
-        <include refid="Base_Column_List"/>, ct.name course_type_name,
+        <include refid="Base_Column_List"/>, ct.name course_type_name, u.user_name,
         (SELECT count(*) FROM sys_chapter cp WHERE cp.course_id=c.id AND cp.del_flag='0') chapter_count,
         (select count(*) FROM user_course uc WHERE c.id = uc.course_id) subscribe_amount,
         (SELECT count(*) FROM user_video uv
@@ -24,12 +24,19 @@
         WHERE uv.is_like = '1' ) like_count
         FROM sys_course c
         LEFT JOIN sys_course_type ct ON ct.id = c.course_type_id AND ct.del_flag='0'
+        LEFT JOIN sys_user u ON c.create_by = u.id AND u.del_flag='0'
         WHERE c.del_flag='0'
         <if test="ew.entity.courseTypeId != null and ew.entity.courseTypeId!= ''">
             AND (c.course_type_id = #{ew.entity.courseTypeId} OR ct.parent_ids like '%,'||#{ew.entity.courseTypeId}||',%')
         </if>
         <if test="ew.entity.createBy != null and ew.entity.createBy!= ''">
             AND c.create_by = #{ew.entity.createBy}
+        </if>
+        <if test="ew.entity.name != null and ew.entity.name!= ''">
+            AND  c.name  like  '%${ew.entity.name}%'
+        </if>
+        <if test="ew.entity.userName != null and ew.entity.userName!= ''">
+            AND  u.user_name  like  '%${ew.entity.userName}%'
         </if>
         ORDER BY ${ew.entity.sqlMap.sortSql}
     </select>

@@ -58,7 +58,7 @@
                 <div class="text" style="margin-top:12px">
                   <span>共{{item.chapterCount}}节</span>
                   <el-divider direction="vertical"></el-divider>
-                  <span style="margin-left:0px">{{item.createBy}}</span>
+                  <span style="margin-left:0px">{{item.userName}}</span>
                 </div>
                 <div class="text" style="margin-top:12px;margin-left:-2px">
                   <svg-icon icon-class="sub" style="font-size: 19px;"></svg-icon>
@@ -115,8 +115,9 @@ export default {
         current: 1, // 当前页码
         size: 16, // 每页条目数
         sort: 'id',
-        query: { courseTypeId: 0 }
-      }
+        query: { courseTypeId: 0, input: '' }
+      },
+      sup_this: this
     }
   },
   mounted() {
@@ -124,6 +125,14 @@ export default {
       this.info()
     } else {
       this.routerInfo()
+    }
+    this.$emit('childFn', this.sup_this)
+    if (
+      this.$route.query.input !== null &&
+      this.$route.query.input !== '' &&
+      this.$route.query.input.length !== 0
+    ) {
+      this.search(this.$route.query.input)
     }
   },
   watch: {},
@@ -239,6 +248,7 @@ export default {
       this.subType = ''
       this.likeType = ''
       this.coursePage.sort = 'id'
+      this.coursePage.current = 1
       getCourse(this.coursePage).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
@@ -254,6 +264,7 @@ export default {
       } else {
         this.coursePage.sort = 'createDate'
       }
+      this.coursePage.current = 1
       getCourse(this.coursePage).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
@@ -269,6 +280,7 @@ export default {
       } else {
         this.coursePage.sort = 'subscribeAmount'
       }
+      this.coursePage.current = 1
       getCourse(this.coursePage).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
@@ -284,6 +296,7 @@ export default {
       } else {
         this.coursePage.sort = 'likeCount'
       }
+      this.coursePage.current = 1
       getCourse(this.coursePage).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
@@ -310,6 +323,15 @@ export default {
             type: 'error'
           })
         }
+      })
+    },
+    search(val) {
+      this.coursePage.current = 1
+      this.coursePage.query.input = val
+      getCourse(this.coursePage).then(res => {
+        this.tabledata = res.data.content
+        this.total = res.data.totalElements
+        this.coursePage.query.input = ''
       })
     }
   }

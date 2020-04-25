@@ -22,7 +22,7 @@
           <p class="font3">关注我们</p>
           <el-tooltip placement="top">
             <div class="contents" slot="content">
-              <img src="@/assets/weixin.png" class="img" />
+              <img :src="weixinUrl" class="img" />
             </div>
             <el-button type="success" icon="el-icon-chat-dot-round" circle></el-button>
           </el-tooltip>
@@ -37,7 +37,9 @@
 export default {
   name: 'HomeFooter',
   data() {
-    return {}
+    return {
+      weixinUrl: 'http://192.168.1.9:9090/weixin.png'
+    }
   }
 }
 </script>

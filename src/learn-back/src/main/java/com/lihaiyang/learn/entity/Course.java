@@ -48,6 +48,9 @@ public class Course extends BaseEntity<Course> {
     @TableField(exist = false)
     private  Long likeCount;
 
+    @TableField(exist = false)
+    private  String userName;
+
 
 
 }

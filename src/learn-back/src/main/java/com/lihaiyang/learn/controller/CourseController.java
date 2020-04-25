@@ -51,7 +51,14 @@ public class CourseController {
             User user = UserUtils.getUser();
             entity.setCreateBy(user.getId());
         }
+        String input = pageDTO.getQueryField("input", String.class);
+        entity.setName(input);
         IPage<Course> listPage = courseService.page(pageDTO.getPage(), entity, pageDTO.getSortSql());
+        if(input!=null&&input.length()!=0&&listPage.getRecords().size()==0){
+            entity.setName(null);
+            entity.setUserName(input);
+            listPage = courseService.page(pageDTO.getPage(), entity, pageDTO.getSortSql());
+        }
         return Result.ofSuccess(new ResultList<>(listPage));
 
     }

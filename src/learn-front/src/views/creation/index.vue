@@ -43,6 +43,7 @@ import MyCourses from './menu/MyCourses'
 import MyWords from './menu/MyWords'
 import PictureCollection from './menu/PictureCollection'
 import UploadOne from './menu/UploadOne'
+import store from '@/store'
 export default {
   name: 'Creation',
   components: {
@@ -58,6 +59,11 @@ export default {
   data() {
     return {
       index: '1'
+    }
+  },
+  created() {
+    if (!store.getters.token) {
+      this.$router.push('/')
     }
   },
   mounted() {},

@@ -184,7 +184,11 @@ export default {
       this.$router.push('/course')
     },
     pointIcon() {
-      like(this.videoId, 'like').then(res => {
+      var val = this.videoId
+      if (val === '') {
+        val = null
+      }
+      like(val, 'like').then(res => {
         if (res.data === '1') {
           this.pointType = 'danger'
           this.point++
@@ -195,7 +199,11 @@ export default {
       })
     },
     starIcon() {
-      like(this.videoId, 'collect').then(res => {
+      var val = this.videoId
+      if (val === '') {
+        val = null
+      }
+      like(val, 'collect').then(res => {
         if (res.data === '1') {
           this.starType = 'primary'
           this.star++

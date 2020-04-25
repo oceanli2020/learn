@@ -13,9 +13,9 @@ public class MobileProperties {
 
     private int passwordIterations = 1024;
 
-    private long tokenTimeout =  12000000L;
+    private long tokenTimeout =  86400000L;
 
-    private long refreshTokenTimeout = 600000000L;
+    private long refreshTokenTimeout = 604800000L;
 
     private String initialPassword = "123456";
 }

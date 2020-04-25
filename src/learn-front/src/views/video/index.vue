@@ -17,12 +17,20 @@
 import Header from './Header'
 import Footer from './Footer'
 import Main from './Main'
+import store from '@/store'
 export default {
   name: 'Video',
   components: {
     Header,
     Footer,
     Main
+  },
+  created() {
+    if (!store.getters.token) {
+      this.$router.push('/')
+    } else if (this.$route.query.id === undefined) {
+      this.$router.push('/')
+    }
   },
   data() {
     return {}

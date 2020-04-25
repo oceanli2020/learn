@@ -15,6 +15,7 @@ import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSessionStorageEvaluator;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,11 @@ import org.springframework.context.annotation.DependsOn;
 
 @Configuration
 public class ShiroConfig {
+
+
+    @Value("${adminPath}")
+    private String adminPath;
+
     public ShiroConfig() {
     }
 
@@ -79,6 +85,10 @@ public class ShiroConfig {
         chainDefinition.addPathDefinition("/api/v1/token", "anon");
         chainDefinition.addPathDefinition("/logout", "anon");
         chainDefinition.addPathDefinition("/api/v1/sys/user/register", "anon");
+        chainDefinition.addPathDefinition("/api/v1/course/type/children/*", "anon");
+        chainDefinition.addPathDefinition("/api/v1/course/type/parents/*", "anon");
+        chainDefinition.addPathDefinition("/api/v1/course/page", "anon");
+        chainDefinition.addPathDefinition("/api/v1/live/page", "anon");
         chainDefinition.addPathDefinition("/**", "noSessionCreation,authcToken");
         return chainDefinition;
     }

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
 import router from '@/router'
-import { MessageBox } from 'element-ui'
+import { Notification } from 'element-ui'
 import {
   getToken,
   setToken,
@@ -52,18 +52,13 @@ service.interceptors.request.use(
               console.log(err)
               store.dispatch('logout').then(() => {
                 // location.reload() // 为了重新实例化vue-router对象 避免bug
-                MessageBox.confirm('登录状态已过期，是否重新登录?', '提示', {
-                  confirmButtonText: '确定',
-                  cancelButtonText: '取消',
-                  type: 'warning',
-                  center: true
+                router.push('/login')
+                Notification.error({
+                  title: '失败',
+                  showClose: true,
+                  duration: 10000,
+                  message: '登录状态已过期，请重新登录'
                 })
-                  .then(() => {
-                    router.push('/login')
-                  })
-                  .catch(() => {
-                    router.push('/')
-                  })
               })
             })
         }
@@ -95,20 +90,30 @@ service.interceptors.response.use(
   error => {
     let code = error.response.data.code
     let status = error.response.status
-    if (code === -401 || status === 401) {
+    let message = error.response.data.message
+    if (code === -401 && status === 401) {
       store.dispatch('logout').then(() => {
-        MessageBox.confirm('登录状态已过期，是否重新登录?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-          center: true
+        router.push('/login')
+        Notification.error({
+          title: '失败',
+          showClose: true,
+          duration: 10000,
+          message: '登录状态已过期，请重新登录'
         })
-          .then(() => {
-            router.push('/login')
-          })
-          .catch(() => {
-            router.push('/')
-          })
+      })
+    }
+    if (message === 'token为空' && status === 500) {
+      Notification.warning({
+        title: '警告',
+        showClose: true,
+        message: '无权限，请登陆后操作'
+      })
+    }
+    if (status === 400) {
+      Notification.error({
+        title: '错误',
+        showClose: true,
+        message: '错误参数'
       })
     }
     return Promise.reject(error)

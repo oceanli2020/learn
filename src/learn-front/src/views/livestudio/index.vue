@@ -17,6 +17,7 @@
 import Header from './Header'
 import Footer from './Footer'
 import Main from './Main'
+import store from '@/store'
 export default {
   name: 'LiveStudio',
   components: {
@@ -26,6 +27,13 @@ export default {
   },
   data() {
     return {}
+  },
+  created() {
+    if (!store.getters.token) {
+      this.$router.push('/')
+    } else if (this.$route.query.id === undefined) {
+      this.$router.push('/')
+    }
   }
 }
 </script>

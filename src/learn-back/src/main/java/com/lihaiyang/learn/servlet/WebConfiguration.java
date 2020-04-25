@@ -14,41 +14,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfiguration {
 
-    @Value("${adminPath}")
-    private String adminPath;
     @Value("${allowed.origins}")
     private String allowedOrigins;
 
     public WebConfiguration() {
-    }
-
-    @Bean
-    public FilterRegistrationBean requestBodyRegistrationBean() {
-        StringBuffer excludedUriStr = new StringBuffer();
-        excludedUriStr.append("/+" + this.adminPath + "/login");
-        excludedUriStr.append(",");
-        excludedUriStr.append("/" + this.adminPath + "/login/*");
-        excludedUriStr.append(",");
-        excludedUriStr.append("/" + this.adminPath + "/js/*");
-        excludedUriStr.append(",");
-        excludedUriStr.append("/logout/*");
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new RequestReplacedFilter());
-        registration.addInitParameter("excludedUri", excludedUriStr.toString());
-        registration.addUrlPatterns(new String[]{"/*"});
-        registration.setName("requestFilter");
-        registration.setOrder(5);
-        return registration;
-    }
-
-    @Bean
-    public FilterRegistrationBean xssRegistrationBean() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new XssFilter());
-        registration.addUrlPatterns(new String[]{"/*"});
-        registration.setName("requestFilter");
-        registration.setOrder(6);
-        return registration;
     }
 
     @Bean

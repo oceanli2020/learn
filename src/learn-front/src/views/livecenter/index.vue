@@ -24,6 +24,7 @@ import Header from './Header'
 import Aside from './Aside'
 import StartLive from './menu/StartLive'
 import ManageReplay from './menu/ManageReplay'
+import store from '@/store'
 export default {
   name: 'Creation',
   components: {
@@ -36,6 +37,11 @@ export default {
     return {
       index: '1',
       liveId: ''
+    }
+  },
+  created() {
+    if (!store.getters.token) {
+      this.$router.push('/')
     }
   },
   mounted() {},

@@ -66,18 +66,14 @@ export default {
       index: this.$route.query.index
     }
   },
-  mounted() {
-    if (this.$route.query.index === undefined) {
-      this.index = '3'
+  created() {
+    if (!store.getters.token) {
+      this.$router.push('/')
+    } else if (this.$route.query.index === undefined) {
+      this.$router.push('/')
     }
-    this.judge()
   },
   methods: {
-    judge() {
-      if (!store.getters.token) {
-        this.$router.push('/')
-      }
-    },
     changeContent(i) {
       this.index = i
     },

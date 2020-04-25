@@ -68,7 +68,12 @@
                 class="real_nameForm"
               >
                 <el-form-item label="更改真实姓名" prop="real_name">
-                  <el-input type="text" v-model="user_input.real_name" class="real_name_input"></el-input>
+                  <el-input
+                    type="text"
+                    v-model="user_input.real_name"
+                    class="real_name_input"
+                    maxlength="20"
+                  ></el-input>
                 </el-form-item>
                 <el-form-item>
                   <el-button type="primary" @click="submitForm('real_nameForm')" size="medium">保存</el-button>
@@ -90,7 +95,12 @@
                 class="emailForm"
               >
                 <el-form-item label="更改邮箱" prop="email">
-                  <el-input type="text" v-model="user_input.email" class="email_input"></el-input>
+                  <el-input
+                    type="text"
+                    v-model="user_input.email"
+                    class="email_input"
+                    maxlength="40"
+                  ></el-input>
                 </el-form-item>
                 <el-form-item>
                   <el-button type="primary" @click="submitForm('emailForm')" size="medium">保存</el-button>
@@ -187,10 +197,10 @@ export default {
 
   data() {
     var checkName = (rule, value, callback) => {
-      if (value === '') {
+      if (value === '' || value === null) {
         callback(new Error('用户名不能为空'))
-      } else if (value.length < 2 || value.length > 10) {
-        callback(new Error('用户名应为2~10位'))
+      } else if (value.length < 2 || value.length > 16) {
+        callback(new Error('用户名应为2~16位'))
       } else {
         callback()
       }
@@ -229,7 +239,7 @@ export default {
       }
     }
     var checkPassWord1 = (rule, value, callback) => {
-      if (value === '') {
+      if (value === '' || value === null) {
         callback(new Error('请输入密码'))
       } else if (value.length < 8 || value.length > 16) {
         callback(new Error('密码应为8~16位'))
@@ -492,7 +502,7 @@ export default {
                 this.$message({
                   showClose: true,
                   duration: 2500,
-                  message: '密码不正确',
+                  message: '当前密码输入不正确',
                   type: 'error'
                 })
                 this.$refs.passwordForm.resetFields()

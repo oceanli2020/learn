@@ -12,11 +12,18 @@
 
     <select id="selectPage" resultType="com.lihaiyang.learn.entity.Live">
         SELECT
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List"/>,u.user_name
         FROM sys_live l
+        LEFT JOIN sys_user u ON u.id = l.create_by AND u.del_flag='0'
         WHERE l.del_flag='0'
         <if test="ew.entity.isStart != null and ew.entity.isStart!= ''">
             AND l.is_start = #{ew.entity.isStart}
+        </if>
+        <if test="ew.entity.name != null and ew.entity.name!= ''">
+            AND  l.name  like  '%${ew.entity.name}%'
+        </if>
+        <if test="ew.entity.userName != null and ew.entity.userName!= ''">
+            AND  u.user_name  like  '%${ew.entity.userName}%'
         </if>
         ORDER BY ${ew.entity.sqlMap.sortSql}
     </select>

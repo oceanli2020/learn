@@ -22,7 +22,7 @@
                 <div class="text" style="margin-top:24px">
                   <span>{{item.isStart==='1'?'已开播':'在休息'}}</span>
                   <el-divider direction="vertical"></el-divider>
-                  <span>{{item.createBy}}</span>
+                  <span>{{item.userName}}</span>
                 </div>
               </el-card>
             </div>
@@ -58,12 +58,14 @@ export default {
         size: 16,
         current: 1,
         sort: 'id',
-        query: { isStart: '1' }
-      }
+        query: { isStart: '1', input: '' }
+      },
+      sup_this: this
     }
   },
   mounted() {
     this.info()
+    this.$emit('childFn', this.sup_this)
   },
   watch: {},
   methods: {
@@ -94,6 +96,15 @@ export default {
     },
     clickLink(val) {
       this.$router.push({ path: '/livestudio', query: { id: val } })
+    },
+    search(val) {
+      this.page.current = 1
+      this.page.query.input = val
+      getLiveList(this.page).then(res => {
+        this.tabledata = res.data.content
+        this.total = res.data.totalElements
+        this.page.query.input = ''
+      })
     }
   }
 }

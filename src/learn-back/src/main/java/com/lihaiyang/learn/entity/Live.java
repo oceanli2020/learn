@@ -27,5 +27,8 @@ public class Live  extends BaseEntity<Live> {
     )
     private Long createBy;
 
+    @TableField(exist = false)
+    private String userName;
+
 
 }

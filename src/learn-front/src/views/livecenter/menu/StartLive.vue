@@ -3,9 +3,11 @@
     <el-backtop></el-backtop>
     <div class="block">
       <div class="info">
-        <el-avatar :size="70" :src="circleUrl" class="avatar"></el-avatar>
-        <span class="my-name">{{username}}</span>
-        <span class="my-address">我的直播间地址:</span>
+        <div class="left">
+          <el-avatar :size="70" :src="circleUrl" class="avatar"></el-avatar>
+          <span class="my-name">{{username}}</span>
+        </div>
+        <span class="my-address-title">我的直播间地址:</span>
         <el-link
           :underline="false"
           class="my-address"
@@ -258,6 +260,9 @@ export default {
   border-radius: 10px;
 }
 
+.left {
+  width: 400px;
+}
 .avatar {
   margin-left: 20px;
 }
@@ -268,16 +273,21 @@ export default {
 }
 .el-divider--horizontal {
   /* 修改分割线的上下外边距 */
-  margin: 10px 13px;
+  margin: 5px 13px;
   width: 770px;
+}
+.my-address-title {
+  position: relative;
+  left: 450px;
+  bottom: 37px;
+  font-size: 5px;
 }
 .my-address {
   position: relative;
-  left: 240px;
-  bottom: 15px;
+  left: 450px;
+  bottom: 38px;
   font-size: 5px;
 }
-
 .method {
   /* background-color: aqua; */
   height: 63px;

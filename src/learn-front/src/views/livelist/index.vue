@@ -2,10 +2,10 @@
   <div class="course">
     <el-container>
       <el-header height="80px">
-        <Header />
+        <Header :sup_this="sup_this" />
       </el-header>
       <el-main>
-        <Main />
+        <Main @childFn="parentFn" />
       </el-main>
       <el-footer style="height:100px">
         <Footer />
@@ -25,7 +25,14 @@ export default {
     Main
   },
   data() {
-    return {}
+    return {
+      sup_this: null
+    }
+  },
+  methods: {
+    parentFn(val) {
+      this.sup_this = val
+    }
   }
 }
 </script>

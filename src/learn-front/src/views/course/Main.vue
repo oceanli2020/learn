@@ -55,12 +55,12 @@
                     <span style="font-size: 14px;">{{ item.name }}</span>
                   </el-link>
                 </div>
-                <div class="text" style="margin-top:12px">
+                <div class="text1">
                   <span>共{{item.chapterCount}}节</span>
                   <el-divider direction="vertical"></el-divider>
                   <span style="margin-left:0px">{{item.userName}}</span>
                 </div>
-                <div class="text" style="margin-top:12px;margin-left:-2px">
+                <div class="text2">
                   <svg-icon icon-class="sub" style="font-size: 19px;"></svg-icon>
                   <span>{{item.subscribeAmount}}</span>
                   <svg-icon icon-class="point1" style="font-size: 19px;;margin-left:8px"></svg-icon>
@@ -126,7 +126,6 @@ export default {
     } else {
       this.routerInfo()
     }
-    this.$emit('childFn', this.sup_this)
     if (
       this.$route.query.input !== null &&
       this.$route.query.input !== '' &&
@@ -134,6 +133,7 @@ export default {
     ) {
       this.search(this.$route.query.input)
     }
+    this.$emit('childFn', this.sup_this)
   },
   watch: {},
   methods: {
@@ -353,9 +353,19 @@ export default {
   /* 修改分割线的上下外边距 */
   margin: 15px 0;
 }
-.text {
+.text1 {
   font-size: 5px;
   color: #707070;
+  /* background-color: darkcyan; */
+  height: 33px;
+  margin-top: 12px;
+}
+.text2 {
+  font-size: 5px;
+  color: #707070;
+  /* background-color: darkcyan; */
+  margin-top: 0px;
+  margin-left: -2px;
 }
 .box-card {
   width: 240px;

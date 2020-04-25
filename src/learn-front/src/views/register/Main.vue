@@ -11,7 +11,7 @@
     >
       <h3 class="title">{{ title }}</h3>
       <el-form-item prop="username" label="用户名">
-        <el-input placeholder="2~10位" type="text" v-model="registerForm.username" maxlength="10"></el-input>
+        <el-input placeholder="2~16位" type="text" v-model="registerForm.username"></el-input>
       </el-form-item>
       <el-form-item prop="password" label="密码">
         <el-input
@@ -22,7 +22,12 @@
         ></el-input>
       </el-form-item>
       <el-form-item prop="checkPass" label="确认密码">
-        <el-input placeholder="请再次输入密码" type="password" v-model="registerForm.checkPass"></el-input>
+        <el-input
+          placeholder="请再次输入密码"
+          type="password"
+          v-model="registerForm.checkPass"
+          maxlength="16"
+        ></el-input>
       </el-form-item>
       <el-form-item prop="email" label="邮箱">
         <el-input placeholder="请输入邮箱" type="text" v-model="registerForm.email"></el-input>
@@ -47,8 +52,8 @@ export default {
     var checkName = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('用户名不能为空'))
-      } else if (value.length < 2 || value.length > 10) {
-        callback(new Error('用户名应为2~10位'))
+      } else if (value.length < 2 || value.length > 16) {
+        callback(new Error('用户名应为2~16位'))
       } else {
         callback()
       }

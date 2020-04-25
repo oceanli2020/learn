@@ -62,7 +62,14 @@ public class LiveController {
         Live entity = new Live();
         String isStart = pageDTO.getQueryField("isStart", String.class);
         entity.setIsStart(isStart);
+        String input = pageDTO.getQueryField("input", String.class);
+        entity.setName(input);
         IPage<Live> listPage = liveService.page(pageDTO.getPage(), entity, pageDTO.getSortSql());
+        if(input!=null&&input.length()!=0&&listPage.getRecords().size()==0){
+            entity.setName(null);
+            entity.setUserName(input);
+            listPage = liveService.page(pageDTO.getPage(), entity, pageDTO.getSortSql());
+        }
         return Result.ofSuccess(new ResultList<>(listPage));
     }
 }

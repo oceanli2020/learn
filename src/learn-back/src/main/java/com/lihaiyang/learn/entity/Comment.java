@@ -36,5 +36,14 @@ public class Comment extends BaseEntity<Comment> {
 
     private Long parentId;
 
+    @TableField(exist = false)
+    private String userName;
+
+    @TableField(exist = false)
+    private String toName;
+
+    @TableField(exist = false)
+    private String profilePhoto;
+
 
 }

@@ -57,13 +57,16 @@
                 :sup_this="sup_this"
                 :courseName="courseName"
                 :introduction="courseIntroduction"
+                :userName="userName"
+                :courseCreateBy="courseCreateBy"
+                @childFnIntroduction="parentFnIntroduction"
               />
             </el-tab-pane>
             <el-tab-pane label="目录" name="second">
               <directory :sup_this="sup_this" :directory="directory" :videoId="videoId" />
             </el-tab-pane>
             <el-tab-pane :label="'评论('+commentNumber+')'" name="third">
-              <comment :videoId="videoId" @childFn="parentFn" />
+              <comment :videoId="videoId" @childFn="parentFn" @childFnComment="CommentparentFn" />
             </el-tab-pane>
           </el-tabs>
         </div>
@@ -116,7 +119,10 @@ export default {
       myPlayer: null,
       commentNumber: 0,
       warn: '没有内容',
-      isVideo: true
+      isVideo: true,
+      userName: '',
+      children_this: null,
+      children_comment_this: null
     }
   },
   mounted() {
@@ -167,6 +173,15 @@ export default {
         this.courseTypeId = res.data.courseTypeId
         this.courseIntroduction = res.data.introduction
         this.sub = res.data.subscribeAmount
+        this.userName = res.data.userName
+        this.children_comment_this.getCreateBy(res.data.createBy)
+        if (
+          res.data.profilePhoto != null &&
+          res.data.profilePhoto !== '' &&
+          res.data.profilePhoto.length !== 0
+        ) {
+          this.children_this.getCircleUrl(res.data.profilePhoto)
+        }
         if (res.data.isSubscribe === true) {
           this.subType = 'success'
         } else {
@@ -177,6 +192,12 @@ export default {
         this.breadList = res.data
         this.breadList.push({ name: this.courseName })
       })
+    },
+    parentFnIntroduction(val) {
+      this.children_this = val
+    },
+    CommentparentFn(val) {
+      this.children_comment_this = val
     },
     changePath(val) {
       if (this.breadList[this.breadList.length - 1].id === val) return

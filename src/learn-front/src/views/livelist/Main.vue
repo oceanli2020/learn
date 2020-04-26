@@ -65,6 +65,13 @@ export default {
   },
   mounted() {
     this.info()
+    if (
+      this.$route.query.input !== null &&
+      this.$route.query.input !== '' &&
+      this.$route.query.input.length !== 0
+    ) {
+      this.search(this.$route.query.input)
+    }
     this.$emit('childFn', this.sup_this)
   },
   watch: {},

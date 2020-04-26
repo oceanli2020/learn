@@ -2,7 +2,7 @@
   <div class="introduction">
     <div class="info">
       <el-avatar :size="70" :src="circleUrl" class="avatar"></el-avatar>
-      <span class="author">我亦飘零久</span>
+      <span class="author">{{userName}}</span>
     </div>
     <div class="content">
       <div>
@@ -34,11 +34,28 @@ export default {
     introduction: {
       type: String,
       default: ''
+    },
+    userName: {
+      type: String,
+      default: ''
     }
   },
   data() {
     return {
-      circleUrl: ''
+      children_this: this,
+      circleUrl:
+        'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'
+    }
+  },
+  mounted() {
+    this.info()
+  },
+  methods: {
+    info() {
+      this.$emit('childFnIntroduction', this.children_this)
+    },
+    getCircleUrl(val) {
+      this.circleUrl = 'http://localhost:9091' + val
     }
   }
 }
@@ -62,7 +79,7 @@ export default {
 .content {
   padding: 10px 10px 15px 15px;
   margin-top: 5px;
-  height: auto;
+  min-height: 45px;
   /* background-color: bisque; */
 }
 .title {
@@ -71,22 +88,22 @@ export default {
   float: left;
   position: relative;
   top: 3px;
+  height: 22px;
+  /* background-color: aqua; */
 }
 .name-content {
   font-size: 13px;
-  margin-left: 10px;
+  margin-left: 30px;
 }
 .introduction-block {
   margin-top: 5px;
   width: 700px;
-  /* background-color: brown; */
 }
 .introduction-content {
   font-size: 13px;
-  margin-left: 63px;
+  margin-left: 83px;
   top: 3px;
   position: relative;
   word-break: break-all;
-  /* background-color: brown; */
 }
 </style>

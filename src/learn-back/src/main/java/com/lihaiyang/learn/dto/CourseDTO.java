@@ -34,4 +34,8 @@ public class CourseDTO {
     private Boolean isSubscribe;
 
     private Long subscribeAmount;
+
+    private String userName;
+
+    private String profilePhoto;
 }

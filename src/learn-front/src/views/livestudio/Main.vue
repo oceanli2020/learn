@@ -98,7 +98,8 @@ export default {
       total: 0,
       userName: '',
       dialogFormVisible: false,
-      replay: ''
+      replay: '',
+      myPlayer: null
     }
   },
   mounted() {
@@ -114,7 +115,7 @@ export default {
         this.rtmp = res.data.rtmp
         this.pushCode = res.data.pushCode
         this.isStart = res.data.isStart
-        this.userName = res.data.createBy
+        this.userName = res.data.userName
       })
       if (this.isStart === '1') {
         this.initVideo()
@@ -142,7 +143,7 @@ export default {
     initVideo() {
       // 初始化视频方法
       /* eslint-disable */
-      let myPlayer = this.$video(myVideo, {
+      this.myPlayer = this.$video(myVideo, {
         controls: true,
         // 建议浏览器是否应在<video>加载元素后立即开始下载视频数据
         preload: 'auto',

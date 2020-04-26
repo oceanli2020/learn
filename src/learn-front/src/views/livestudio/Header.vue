@@ -4,7 +4,7 @@
     <el-link class="live" type="info" :underline="false" @click="getLiveList">直播</el-link>
     <el-link class="course" type="info" :underline="false" @click="getCourseList">课程</el-link>
     <div class="search-input">
-      <el-input v-model="input" placeholder="请输入内容" class="search" size="medium"></el-input>
+      <el-input v-model="input" placeholder="请输入直播间名称或UP名字" class="search" size="medium"></el-input>
       <el-button type="info" icon="el-icon-search" size="medium" @click="search" class="button">搜索</el-button>
     </div>
     <div v-if="change" class="login">
@@ -96,7 +96,7 @@ export default {
       }
     },
     search() {
-      this.$router.push('/course')
+      this.$router.push({ path: '/livelist', query: { input: this.input } })
     },
     getCourseList() {
       this.$router.push('/course')

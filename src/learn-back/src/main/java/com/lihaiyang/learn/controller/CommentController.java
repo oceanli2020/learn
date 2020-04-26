@@ -8,7 +8,9 @@ import com.lihaiyang.learn.dto.CommentInfoDTO;
 import com.lihaiyang.learn.dto.IsDisplays;
 import com.lihaiyang.learn.dto.PageDTO;
 import com.lihaiyang.learn.entity.Comment;
+import com.lihaiyang.learn.entity.User;
 import com.lihaiyang.learn.service.ICommentServide;
+import com.lihaiyang.learn.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +25,9 @@ public class CommentController {
 
     @Autowired
     private ICommentServide commentServide;
+
+    @Autowired
+    private IUserService userService;
 
     /**
      * 获取评论总列表·分页
@@ -54,6 +59,8 @@ public class CommentController {
             commentDTO.setPageDTO(pageChildDTO);
             commentDTO.setTotal(listChildPage.getTotal());
             commentDTO.setCreateDate(comment.getCreateDate());
+            commentDTO.setUserName(comment.getUserName());
+            commentDTO.setProfilePhoto(comment.getProfilePhoto());
             IsDisplays  displays = new IsDisplays();
             displays.setIsDisplay(false);
             commentDTO.setIsDisplays(displays);

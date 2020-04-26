@@ -28,6 +28,10 @@ public class CommentDTO {
     private  PageDTO pageDTO;
 
     private  Long total;
+
+    private String userName;
+
+    private String profilePhoto;
 }
 
 

@@ -13,8 +13,10 @@
 
     <select id="selectPage" resultType="com.lihaiyang.learn.entity.Comment">
         SELECT
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List"/>,u1.user_name,u1.profile_photo,u2.user_name to_name
         FROM sys_comment cm
+        LEFT JOIN sys_user u1 ON u1.id = cm.create_by AND u1.del_flag ='0'
+        LEFT JOIN sys_user u2 ON u2.id = cm.create_to AND u2.del_flag ='0'
         WHERE cm.del_flag='0'
         <if test="ew.entity.videoId != null and ew.entity.videoId!= ''">
             AND cm.video_id = #{ew.entity.videoId}

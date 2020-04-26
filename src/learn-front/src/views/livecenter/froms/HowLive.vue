@@ -15,7 +15,9 @@
               <h4>下载并安装OBS-Studio</h4>
               <p>
                 <span>1、下载OBS安装包</span>
-                <svg-icon icon-class="obs" style="font-size:35px; "></svg-icon>
+                <el-link :underline="false" @click="down">
+                  <svg-icon icon-class="obs" style="font-size:35px; "></svg-icon>
+                </el-link>
               </p>
               <p>
                 <span>2、安装OBS-Studio</span>
@@ -119,6 +121,7 @@
 </template>
 
 <script>
+import { baseURL, prefixURL } from '@/utils/global'
 export default {
   name: 'HowLive',
   props: {
@@ -148,6 +151,11 @@ export default {
     handleClose(done) {
       this.dialogFormVisible = false
       this.$emit('childFn', this.dialogFormVisible)
+    },
+    down() {
+      var fileName = 'OBS-Studio-25.0.1-Full-Installer-x64.exe'
+      window.location.href =
+        baseURL + prefixURL + 'upload/down?fileName=' + fileName
     }
   }
 }

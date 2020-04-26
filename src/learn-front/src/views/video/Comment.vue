@@ -3,17 +3,21 @@
     <div class="areas">
       <div class="area" v-for="index in tabledata" :key="index">
         <div class="avt">
-          <el-avatar :size="50" :src="circleUrl"></el-avatar>
+          <el-avatar
+            :size="50"
+            :src="(index.profilePhoto==null||index.profilePhoto==='')? 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png':'http://localhost:9091' + index.profilePhoto"
+          ></el-avatar>
         </div>
         <div class="text">
           <div style="font-size:6px;color:#686868">
-            <strong>{{ index.createBy }}</strong>
+            <el-tag type="danger" size="mini" effect="plain" v-if="index.createBy===createBy">UP</el-tag>
+            <strong>{{ index.userName }}</strong>
           </div>
           <span style="font-size:13px; word-break:break-all;">{{ index.comment }}</span>
           <br />
           <span style="font-size:5px;color:#989898;">{{ index.createDate }}</span>
-          <svg-icon icon-class="point1" style="margin-left:10px"></svg-icon>
-          <span style="font-size:5px;color:#989898;">12</span>
+          <!-- <svg-icon icon-class="point1" style="margin-left:10px"></svg-icon>
+          <span style="font-size:5px;color:#989898;">12</span>-->
           <el-link
             :underline="false"
             style="font-size:5px;margin-left:15px;margin-bottom:2px"
@@ -22,25 +26,34 @@
         </div>
         <div class="areachild" v-for="indexchild in index.commentChildList" :key="indexchild">
           <div class="avtchild">
-            <el-avatar size="small" :src="circleUrl"></el-avatar>
+            <el-avatar
+              size="small"
+              :src="(indexchild.profilePhoto==null||indexchild.profilePhoto==='')? 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png':'http://localhost:9091' + indexchild.profilePhoto"
+            ></el-avatar>
           </div>
           <div class="textchild">
             <span style="font-size:6px;color:#686868">
-              <strong>{{ indexchild.createBy }}</strong>
+              <el-tag
+                type="danger"
+                size="mini"
+                effect="plain"
+                v-if="indexchild.createBy===createBy"
+              >UP</el-tag>
+              <strong>{{ indexchild.userName }}</strong>
             </span>
             <span style="font-size:6px;color:#686868" v-if="indexchild.createTo!==0">
               <strong>回复</strong>
             </span>
             <span style="font-size:6px;color:#686868" v-if="indexchild.createTo!==0">
-              <strong>{{indexchild.createTo}}</strong>
+              <strong>{{indexchild.toName}}</strong>
             </span>
             <span
               style="font-size:13px;margin-left:10px;word-break:break-all;"
             >{{ indexchild.comment }}</span>
             <br />
             <span style="font-size:5px;color:#989898;">{{ indexchild.createDate }}</span>
-            <svg-icon icon-class="point1" style="margin-left:10px"></svg-icon>
-            <span style="font-size:5px;color:#989898;">12</span>
+            <!-- <svg-icon icon-class="point1" style="margin-left:10px"></svg-icon>
+            <span style="font-size:5px;color:#989898;">12</span>-->
             <el-link
               :underline="false"
               style="font-size:5px;margin-left:15px;margin-bottom:2px"
@@ -59,11 +72,11 @@
           :current-page="index.pageDTO.current"
         ></el-pagination>
         <div class="writechild" v-if="index.isDisplays.isDisplay">
-          <el-avatar :size="50" :src="circleUrl" class="avatar"></el-avatar>
+          <el-avatar :size="50" :src="myCircleUrl" class="avatar"></el-avatar>
           <el-input
             type="textarea"
             :rows="3"
-            :placeholder="'回复 '+createTO"
+            :placeholder="'回复 '+toName"
             v-model="commentChildInfo.comment"
             resize="none"
             :maxlength="500"
@@ -154,7 +167,10 @@ export default {
         createTo: ''
       },
       createTO: '',
-      index: ''
+      index: '',
+      toName: '',
+      createBy: '',
+      children_this: this
     }
   },
   watch: {
@@ -174,21 +190,24 @@ export default {
   },
   methods: {
     info() {
-      if (store.getters.token) {
-        this.profilePhoto = store.getters.profilePhoto
-        if (this.profilePhoto === null || this.profilePhoto === '') {
-          this.circleUrl =
-            'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'
-        } else {
-          this.myCircleUrl = 'http://localhost:9091' + this.profilePhoto
-        }
+      this.profilePhoto = store.getters.profilePhoto
+      if (this.profilePhoto === null || this.profilePhoto === '') {
+        this.myCircleUrl =
+          'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'
+      } else {
+        this.myCircleUrl = 'http://localhost:9091' + this.profilePhoto
       }
+      this.$emit('childFnComment', this.children_this)
+    },
+    getCreateBy(val) {
+      this.createBy = val
     },
     getWrite(index) {
       if (index.isDisplays.isDisplay === false) {
         index.isDisplays.id = index.id
         index.isDisplays.isDisplay = true
         this.createTO = index.createBy
+        this.toName = index.userName
         this.index = index
         this.tabledata.forEach(t => {
           if (index.id !== t.id) {
@@ -209,6 +228,7 @@ export default {
       ) {
         index.isDisplays.id = index.id
         this.createTO = index.createBy
+        this.toName = index.userName
         this.index = index
       }
     },
@@ -218,6 +238,7 @@ export default {
         index.isDisplays.isDisplay = true
         this.index = indexchild
         this.createTO = indexchild.createBy
+        this.toName = indexchild.userName
         this.tabledata.forEach(t => {
           if (index.id !== t.id) {
             t.isDisplays.id = ''
@@ -237,6 +258,7 @@ export default {
       ) {
         index.isDisplays.id = indexchild.id
         this.createTO = indexchild.createBy
+        this.toName = indexchild.userName
         this.index = indexchild
       }
     },

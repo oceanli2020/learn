@@ -21,7 +21,7 @@
           >
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或点击上传</div>
-            <div class="el-upload__tip" slot="tip">只能上传mp4文件，且不超过1024MB</div>
+            <div class="el-upload__tip" slot="tip">只能上传mp4文件，且不超过5120MB</div>
           </el-upload>
         </el-form-item>
         <el-form-item prop="courseId">
@@ -68,8 +68,12 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm" style="float: right">提交</el-button>
-          <el-button @click="resetForm" style="  float: right;margin-right:10px">重置</el-button>
+          <el-button type="primary" @click="submitForm" style="float: right" :loading="loading">提交</el-button>
+          <el-button
+            @click="resetForm"
+            style="  float: right;margin-right:10px"
+            :loading="loading"
+          >重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -122,7 +126,8 @@ export default {
         courseId: [{ validator: checkCourseId, trigger: 'change' }],
         chapterName: [{ validator: checkChapterName, trigger: 'change' }],
         name: [{ validator: checkName, trigger: 'blur' }]
-      }
+      },
+      loading: false
     }
   },
   mounted() {
@@ -137,6 +142,13 @@ export default {
     uploadFileMethod(fileObj) {
       let fromData = new FormData()
       fromData.set('file', fileObj.file)
+      this.loading = true
+      this.$message({
+        showClose: true,
+        duration: 2500,
+        message: '视频正在上传',
+        type: 'info'
+      })
       uploadVideo(fromData)
         .then(res => {
           this.uploadForm.path = res.data
@@ -146,8 +158,9 @@ export default {
             message: '视频上传成功',
             type: 'success'
           })
-          this.$refs.upload.clearFiles()
+          this.loading = false
           this.saveVideo()
+          this.$refs.upload.clearFiles()
         })
         .catch(error => {
           console.log(error)
@@ -157,14 +170,14 @@ export default {
     beforeVideoUpload(file) {
       // alert(file.type)
       const isMp4 = file.type === 'video/mp4'
-      const isLt1024M = file.size / 1024 / 1024 < 1024
+      const isLt5120M = file.size / 1024 / 1024 < 5120
 
       if (!isMp4) {
         this.$message.error('上传视频只能是mp4格式!')
-      } else if (!isLt1024M) {
-        this.$message.error('上传头像图片大小不能超过1024MB!')
+      } else if (!isLt5120M) {
+        this.$message.error('上传头像图片大小不能超过5120MB!')
       }
-      return isMp4 && isLt1024M
+      return isMp4 && isLt5120M
     },
     getChapters() {
       if (this.uploadForm.courseId.length !== 0) {

@@ -47,7 +47,9 @@ public class LiveController {
             }
             return Result.ofSuccess(live);
        }else {
-            return Result.ofSuccess(liveService.getById(id));
+            Live live = liveService.getById(id);
+            live.setUserName(userService.getById(live.getCreateBy()).getUserName());
+            return  Result.ofSuccess(live);
         }
     }
 

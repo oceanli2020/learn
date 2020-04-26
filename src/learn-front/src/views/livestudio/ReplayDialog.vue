@@ -13,7 +13,7 @@
     >
       <div class="video">
         <div class="warn">
-          <video id="myVideo" class="video-js vjs-big-play-centered"></video>
+          <video id="replayVideo" class="video-js vjs-big-play-centered"></video>
         </div>
       </div>
     </el-dialog>
@@ -64,7 +64,7 @@ export default {
     initVideo() {
       // 初始化视频方法
       /* eslint-disable */
-      this.myPlayer = this.$video(myVideo, {
+      this.myPlayer = this.$video(replayVideo, {
         // autoplay: 'autoplay',
         // 是否显示进度条
         controls: true,

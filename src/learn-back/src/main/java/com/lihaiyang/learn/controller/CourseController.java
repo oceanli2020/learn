@@ -18,6 +18,7 @@ import com.lihaiyang.learn.entity.User;
 import com.lihaiyang.learn.entity.Video;
 import com.lihaiyang.learn.service.IChapterService;
 import com.lihaiyang.learn.service.ICourseService;
+import com.lihaiyang.learn.service.IUserService;
 import com.lihaiyang.learn.service.IVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,8 @@ public class CourseController {
     private IChapterService chapterService;
     @Autowired
     private IVideoService videoService;
+    @Autowired
+    private IUserService userService;
 
 
     /**
@@ -85,6 +88,9 @@ public class CourseController {
         course = courseService.getAmountByIdAndUserId(id, UserUtils.getUser().getId());
         courseDTO.setIsSubscribe(course.getIsSubscribe());
         courseDTO.setSubscribeAmount(course.getSubscribeAmount());
+        User user = userService.getById(courseDTO.getCreateBy());
+        courseDTO.setUserName(user.getUserName());
+        courseDTO.setProfilePhoto(user.getProfilePhoto());
         return Result.ofSuccess(courseDTO);
     }
 

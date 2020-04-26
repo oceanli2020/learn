@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,6 +55,16 @@ public class UploadController {
         String path = UploadUtils.upload(file,target);
         path = path.replace(UploadPath,"");
         return Result.ofSuccess(path);
+
+    }
+
+    /**
+     * 文件下载
+     */
+    @GetMapping({"/down"})
+    public Result down(@RequestParam("fileName") String fileName, HttpServletResponse response, HttpServletRequest request) {
+
+       return UploadUtils.downloadFile(fileName,response,request);
 
     }
 }

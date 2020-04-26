@@ -16,8 +16,8 @@ spring:
           driver-class-name: org.postgresql.Driver
   servlet:
     multipart:
-      maxFileSize: 1024MB
-      maxRequestSize: 1024MB
+      maxFileSize: 5120MB
+      maxRequestSize: 5120MB
   profiles:
       active: dev
 

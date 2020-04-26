@@ -14,7 +14,9 @@ public enum ResultStatus {
     EMAIL_ALREADY_EXIST(-1006, "邮箱已被注册"),
     PHONENUMBER_ALREADY_EXIST(-1007, "手机号码已被注册"),
     USER_PASS_EDIT_FAIL(-1008, "密码不正确"),
-    DATA_NOT_POWER(-4004, "无权操作");
+    DATA_NOT_POWER(-4004, "无权操作"),
+    NO_RESOURCES(-4001, "资源不存在"),
+    IO_EXCEPTION(-1023, "IO错误");
 
     private int code;
     private String message;

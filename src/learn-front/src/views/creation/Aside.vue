@@ -11,11 +11,11 @@
         <span slot="title">开设课程</span>
       </el-menu-item>
       <el-menu-item index="2" @click="click('2')">
-        <i class="el-icon-menu"></i>
+        <i class="el-icon-upload"></i>
         <span slot="title">内容上传</span>
       </el-menu-item>
       <el-menu-item index="3" @click="click('3')">
-        <i class="el-icon-menu"></i>
+        <i class="el-icon-s-tools"></i>
         <span slot="title">内容管理</span>
       </el-menu-item>
       <!-- <el-submenu index="3">

@@ -1,11 +1,21 @@
 <template>
   <div class="row">
     <div class="grid-content">
-      <p class="font">Copyright © 2020 Tencent. All Rights Reserved.</p>
+      <p class="font">Copyright © 2020 Ocean. All Rights Reserved.</p>
       <p class="font">
-        深圳市腾讯计算机系统有限公司 版权所有
-        <el-link type="info">| 腾讯课堂服务协议</el-link>
-        <el-link type="info">| 站点地图</el-link>
+        <span>南京市XXXXXX有限公司 版权所有</span>
+        <el-link type="info">
+          <span>| 隐私政策</span>
+        </el-link>
+        <el-link type="info">
+          <span>| 侵权投诉</span>
+        </el-link>
+        <el-link type="info">
+          <span>| 问题反馈</span>
+        </el-link>
+        <el-link type="info">
+          <span>| 帮助</span>
+        </el-link>
       </p>
     </div>
   </div>

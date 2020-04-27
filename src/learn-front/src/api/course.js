@@ -9,6 +9,13 @@ export function getCourse(data) {
   })
 }
 
+export function getMyCourses(data) {
+  return request({
+    url: prefixURL + 'course/myCourses/page',
+    method: 'post',
+    data
+  })
+}
 export function getChildrenType(parentId) {
   return request({
     url: prefixURL + 'course/type/children/' + parentId,

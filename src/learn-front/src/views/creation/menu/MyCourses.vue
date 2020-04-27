@@ -9,7 +9,13 @@
         </el-breadcrumb>
       </div>
       <div class="table-block">
-        <el-input v-model="input" placeholder="搜索" class="search" size="small"></el-input>
+        <el-input
+          v-model="input"
+          :placeholder="placeholder"
+          class="search"
+          size="small"
+          @change="search"
+        ></el-input>
         <el-table :data="tableData" style="width: 100%" @row-click="rowClick">
           <el-table-column
             :prop="column[0].value"
@@ -106,13 +112,13 @@ import UpdateCourse from '../froms/UpdateCourse'
 import UpdateChapter from '../froms/UpdateChapter'
 import UpdateVideo from '../froms/UpdateVideo'
 import {
-  getCourse,
   getChapter,
   getChapterList,
   updateCourse,
   updateChapter,
   deleteCourse,
-  deleteChapter
+  deleteChapter,
+  getMyCourses
 } from '@/api/course'
 import { getVideo, updateVideo, deleteVideo } from '@/api/video'
 export default {
@@ -128,19 +134,19 @@ export default {
         size: 7,
         current: 1,
         sort: 'id',
-        query: { isCreateBy: true }
+        query: { name: '' }
       },
       chapterPage: {
         size: 7,
         current: 1,
         sort: 'id',
-        query: { courseId: '' }
+        query: { courseId: '', name: '' }
       },
       videoPage: {
         size: 7,
         current: 1,
         sort: 'id',
-        query: { chapterId: '' }
+        query: { chapterId: '', name: '' }
       },
       column: [],
       type: 0,
@@ -172,7 +178,9 @@ export default {
       chapterList: [],
       chapterName: '',
       courseId: '',
-      total: 0
+      total: 0,
+      input: '',
+      placeholder: '请输入课程名称'
     }
   },
   mounted() {
@@ -180,7 +188,7 @@ export default {
   },
   methods: {
     info() {
-      getCourse(this.coursePage).then(res => {
+      getMyCourses(this.coursePage).then(res => {
         this.column = this.courseColumn
         this.tableData = res.data.content
         this.total = res.data.totalElements
@@ -212,7 +220,7 @@ export default {
           if (this.tableData.length === 1 && this.coursePage.current !== 1) {
             this.coursePage.current--
           }
-          getCourse(this.coursePage).then(res => {
+          getMyCourses(this.coursePage).then(res => {
             this.tableData = res.data.content
             this.total = res.data.totalElements
           })
@@ -253,7 +261,7 @@ export default {
     },
     currentCourse(val) {
       this.coursePage.current = val
-      getCourse(this.coursePage).then(res => {
+      getMyCourses(this.coursePage).then(res => {
         this.tableData = res.data.content
         this.total = res.data.totalElements
       })
@@ -275,6 +283,8 @@ export default {
     rowClick(row, column, event) {
       if (this.type === 0) {
         this.chapterPage.current = 1
+        this.input = ''
+        this.placeholder = '请输入章节名称'
         this.chapterPage.query.courseId = row.id
         getChapter(this.chapterPage).then(res => {
           this.breadList.push({ id: '1', name: row.name })
@@ -285,6 +295,8 @@ export default {
         })
       } else if (this.type === 1) {
         this.videoPage.current = 1
+        this.input = ''
+        this.placeholder = '请输入视频名称'
         this.videoPage.query.chapterId = row.id
         this.chapterName = row.name
         getVideo(this.videoPage).then(res => {
@@ -298,7 +310,9 @@ export default {
     },
     changeBread(id, name) {
       if (id === '0') {
-        getCourse(this.coursePage).then(res => {
+        this.input = ''
+        this.placeholder = '请输入课程名称'
+        getMyCourses(this.coursePage).then(res => {
           this.breadList = [{ id: '0', name: '全部课程' }]
           this.column = this.courseColumn
           this.tableData = res.data.content
@@ -306,6 +320,8 @@ export default {
           this.type = 0
         })
       } else if (id === '1' && this.type === 2) {
+        this.input = ''
+        this.placeholder = '请输入章节名称'
         getChapter(this.chapterPage).then(res => {
           this.breadList.pop()
           this.column = this.chapterColumn
@@ -323,7 +339,7 @@ export default {
           message: res.data,
           type: 'success'
         })
-        getCourse(this.coursePage).then(res => {
+        getMyCourses(this.coursePage).then(res => {
           this.tableData = res.data.content
           this.total = res.data.totalElements
         })
@@ -367,6 +383,30 @@ export default {
         this.chapterVisible = val
       } else if (this.type === 2) {
         this.videoVisible = val
+      }
+    },
+    search() {
+      if (this.type === 0) {
+        this.coursePage.current = 1
+        this.coursePage.query.name = this.input
+        getMyCourses(this.coursePage).then(res => {
+          this.tableData = res.data.content
+          this.total = res.data.totalElements
+        })
+      } else if (this.type === 1) {
+        this.chapterPage.current = 1
+        this.chapterPage.query.name = this.input
+        getChapter(this.chapterPage).then(res => {
+          this.tableData = res.data.content
+          this.total = res.data.totalElements
+        })
+      } else {
+        this.videoPage.current = 1
+        this.videoPage.query.name = this.input
+        getVideo(this.videoPage).then(res => {
+          this.tableData = res.data.content
+          this.total = res.data.totalElements
+        })
       }
     }
   }

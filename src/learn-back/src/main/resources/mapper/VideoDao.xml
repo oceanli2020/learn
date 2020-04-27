@@ -23,6 +23,9 @@
         <if test="ew.entity.chapterId != null and ew.entity.chapterId!= ''">
             AND v.chapter_id = #{ew.entity.chapterId}
         </if>
+        <if test="ew.entity.name != null and ew.entity.name!= ''">
+            AND  v.name  like  '%${ew.entity.name}%'
+        </if>
         ORDER BY ${ew.entity.sqlMap.sortSql}
     </select>
 

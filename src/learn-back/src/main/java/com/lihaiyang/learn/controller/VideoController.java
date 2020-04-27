@@ -60,6 +60,8 @@ public class VideoController {
         Video entity = new Video();
         Long chapterId = pageDTO.getQueryField("chapterId", Long.class);
         entity.setChapterId(chapterId);
+        String name = pageDTO.getQueryField("name", String.class);
+        entity.setName(name);
         IPage<Video> listPage = videoService.page(pageDTO.getPage(), entity, pageDTO.getSortSql());
         return Result.ofSuccess(new ResultList<>(listPage));
 

@@ -48,7 +48,7 @@
 
 <script>
 import CreateDialog from '../froms/CreateDialog'
-import { saveCourse, getCourse, getChapterList } from '@/api/course'
+import { saveCourse, getMyCourses, getChapterList } from '@/api/course'
 export default {
   components: {
     CreateDialog
@@ -63,7 +63,7 @@ export default {
         size: 10,
         current: 1,
         sort: 'id',
-        query: { isCreateBy: true }
+        query: {}
       }
     }
   },
@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     info() {
-      getCourse(this.coursePage).then(res => {
+      getMyCourses(this.coursePage).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
       })
@@ -92,7 +92,7 @@ export default {
           })
         }
       )
-      getCourse(this.coursePage).then(res => {
+      getMyCourses(this.coursePage).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
       })
@@ -100,7 +100,7 @@ export default {
     },
     currentChange(val) {
       this.coursePage.current = val
-      getCourse(this.coursePage).then(res => {
+      getMyCourses(this.coursePage).then(res => {
         this.tabledata = res.data.content
         this.total = res.data.totalElements
       })

@@ -49,11 +49,6 @@ public class CourseController {
         Course entity = new Course();
         Long courseTypeId = pageDTO.getQueryField("courseTypeId", Long.class);
         entity.setCourseTypeId(courseTypeId);
-        Boolean isCreateBy = pageDTO.getQueryField("isCreateBy", Boolean.class);
-        if (isCreateBy != null) {
-            User user = UserUtils.getUser();
-            entity.setCreateBy(user.getId());
-        }
         String input = pageDTO.getQueryField("input", String.class);
         entity.setName(input);
         IPage<Course> listPage = courseService.page(pageDTO.getPage(), entity, pageDTO.getSortSql());
@@ -62,6 +57,20 @@ public class CourseController {
             entity.setUserName(input);
             listPage = courseService.page(pageDTO.getPage(), entity, pageDTO.getSortSql());
         }
+        return Result.ofSuccess(new ResultList<>(listPage));
+
+    }
+
+    /**
+     * 获取我的课程列表·分页
+     */
+    @PostMapping("/myCourses/page")
+    public Result pageByCreateBy(@RequestBody PageDTO pageDTO) {
+        Course entity = new Course();
+        entity.setCreateBy(UserUtils.getUser().getId());
+        String name = pageDTO.getQueryField("name", String.class);
+        entity.setName(name);
+        IPage<Course> listPage = courseService.page(pageDTO.getPage(), entity, pageDTO.getSortSql());
         return Result.ofSuccess(new ResultList<>(listPage));
 
     }

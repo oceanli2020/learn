@@ -19,6 +19,9 @@
         <if test="ew.entity.courseId != null and ew.entity.courseId!= ''">
             AND cp.course_id = #{ew.entity.courseId}
         </if>
+        <if test="ew.entity.name != null and ew.entity.name!= ''">
+            AND  cp.name  like  '%${ew.entity.name}%'
+        </if>
         ORDER BY ${ew.entity.sqlMap.sortSql}
     </select>
 

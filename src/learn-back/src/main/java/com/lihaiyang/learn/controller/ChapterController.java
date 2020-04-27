@@ -42,6 +42,8 @@ public class ChapterController {
         Chapter entity = new Chapter();
         Long courseId = pageDTO.getQueryField("courseId", Long.class);
         entity.setCourseId(courseId);
+        String name = pageDTO.getQueryField("name", String.class);
+        entity.setName(name);
         IPage<Chapter> listPage = chapterCourse.page(pageDTO.getPage(), entity, pageDTO.getSortSql());
         return Result.ofSuccess(new ResultList<>(listPage));
 

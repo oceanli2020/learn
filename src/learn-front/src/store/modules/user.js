@@ -11,7 +11,6 @@ import {
 const user = {
   state: {
     token: getToken(),
-    id: '',
     username: '',
     realname: '',
     email: '',

@@ -163,7 +163,7 @@ export default {
         }
         this.title = this.video.name
         this.videoId = this.video.id
-        this.uploadDate = this.video.createDateer
+        this.uploadDate = this.video.createDate
         this.text = this.video.introduction
         this.url = 'http://localhost:9091' + this.video.path
         this.initVideo()

@@ -7,13 +7,13 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ChapterAnnotation {
+public @interface VideoAnnotation {
 
-    ChapterAnnotation.Type type() default Type.ChapterAnnotation;
+    VideoAnnotation.Type type() default Type.VideoAnnotation;
 
     public static enum Type {
         ADD,
         DELETE,
-        ChapterAnnotation;
+        VideoAnnotation;
     }
 }

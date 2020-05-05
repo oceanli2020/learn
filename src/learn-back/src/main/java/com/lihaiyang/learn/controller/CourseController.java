@@ -4,7 +4,6 @@ package com.lihaiyang.learn.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.lihaiyang.learn.annotation.ChapterAnnotation;
 import com.lihaiyang.learn.core.convert.ObjectConvert;
 import com.lihaiyang.learn.core.result.Result;
 import com.lihaiyang.learn.core.result.ResultList;
@@ -134,7 +133,6 @@ public class CourseController {
      * 删除课程
      */
     @DeleteMapping
-    @ChapterAnnotation(type = ChapterAnnotation.Type.DELETE)
     public Result delete(@RequestParam("id") Long id) {
         Chapter chapterQuery = new Chapter();
         chapterQuery.setCourseId(id);

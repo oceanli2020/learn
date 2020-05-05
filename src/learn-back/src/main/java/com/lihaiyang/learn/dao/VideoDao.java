@@ -20,4 +20,6 @@ public interface VideoDao  extends BaseDao<Video> {
     Boolean insertLikeByVideoIdAndUserId(UserVideo userVideo);
 
     List<Video> selectLikeByUserId(PageInDTO pageInDTO);
+
+    Boolean deleteCollectByVideoIdsAndUserId(@Param("videoIds")List<Long> videoIds, @Param("userId")Long userId);
 }

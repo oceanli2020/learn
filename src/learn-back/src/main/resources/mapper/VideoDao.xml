@@ -79,4 +79,13 @@
             limit ${size} offset ${start}
         </if>
     </select>
+
+    <delete id="deleteCollectByVideoIdsAndUserId">
+        DELETE FROM user_video uv
+        WHERE uv.user_id=#{userId}
+        AND video_id IN
+        <foreach collection="videoIds" item="videoId" open="(" close=")" separator="," >
+            #{videoId}
+        </foreach>
+    </delete>
 </mapper>

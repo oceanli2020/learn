@@ -88,4 +88,9 @@ public class VideoServiceImpl extends BaseServiceImpl<VideoDao, Video> implement
     public  List<Video> getLikeByUserId(PageInDTO pageInDTO){
         return baseMapper.selectLikeByUserId(pageInDTO);
     }
+
+    @Override
+    public Boolean removeCollectByVideoIdsAndUserId(List<Long> videoIds, Long userId){
+        return baseMapper.deleteCollectByVideoIdsAndUserId(videoIds,userId);
+    }
 }

@@ -23,4 +23,6 @@ public interface IVideoService extends IBaseService<Video> {
 
     List<Video> getLikeByUserId(PageInDTO pageInDTO);
 
+    Boolean removeCollectByVideoIdsAndUserId(List<Long> videoIds, Long userId);
+
 }

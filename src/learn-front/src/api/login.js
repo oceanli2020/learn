@@ -21,7 +21,7 @@ export function refreshToken(refreshToken) {
 }
 export function logout() {
   return request({
-    url: 'logout',
+    url: prefixURL + 'logout',
     method: 'get'
   })
 }

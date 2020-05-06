@@ -1,6 +1,6 @@
 <template>
   <div style="margin-left:230px;margin-right:200px;margin-top:10px">
-    <el-link type="primary" class="brand" :underline="false" href="http://localhost:8080/">在线教育平台</el-link>
+    <el-link type="primary" class="brand" :underline="false" @click="home">在线教育平台</el-link>
     <el-link class="live" type="info" :underline="false" @click="getLiveList">直播</el-link>
     <el-link class="course" type="info" :underline="false" @click="getCourseList">课程</el-link>
     <div class="search-input">
@@ -54,6 +54,9 @@ export default {
     this.info()
   },
   methods: {
+    home() {
+      this.$router.push('/')
+    },
     toLogin() {
       this.$router.push('/login')
     },

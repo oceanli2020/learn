@@ -1,7 +1,7 @@
 <template>
   <div>
     <span class="title">直播中心</span>
-    <el-link type="info" class="brand" href="http://localhost:8080/" :underline="false">首页</el-link>
+    <el-link type="info" class="brand" @click="home" :underline="false">首页</el-link>
     <div class="info">
       <el-avatar :src="circleUrl" class="avatar"></el-avatar>
       <el-dropdown @command="handleCommand" show-timeout="0" hide-timeout="100">
@@ -45,6 +45,9 @@ export default {
     this.info()
   },
   methods: {
+    home() {
+      this.$router.push('/')
+    },
     info() {
       if (store.getters.token) {
         this.username = store.getters.username

@@ -11,7 +11,6 @@ import com.lihaiyang.learn.service.IReplayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,7 +28,7 @@ public class Scheduler {
     @Autowired
     private RedisUtil redisUtil;
 
-    @Scheduled(initialDelay = 1000 * 30, fixedDelay = 1000 * 30)
+    @Scheduled(initialDelay = 1000 * 30, fixedDelay = 1000 * 60 * 30)
     public void saveReplayInfo() throws Exception {
         System.out.println("执行存入直播回放时间：" + dateFormat.format(new Date()));
         File file = new File("G:/replay");
@@ -82,7 +81,7 @@ public class Scheduler {
 
     }
 
-    @Scheduled(cron = "00 00 16 ? * *")
+    @Scheduled(cron = "00 00 01 ? * *")
     public void deleteReplayInfo() {
         System.out.println("执行清除直播回放时间：" + dateFormat.format(new Date()));
         File file = new File("G:/replay");

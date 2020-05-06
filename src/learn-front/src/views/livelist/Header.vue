@@ -1,6 +1,6 @@
 <template>
   <div style="margin-left:230px;margin-right:200px;margin-top:10px">
-    <el-link type="primary" class="brand" :underline="false" href="http://localhost:8080/">在线教育平台</el-link>
+    <el-link type="primary" class="brand" :underline="false" @click="home">在线教育平台</el-link>
     <div class="search-input">
       <el-input v-model="input" placeholder="请输入直播间名称或UP名字" class="search" size="medium"></el-input>
       <el-button type="info" icon="el-icon-search" size="medium" @click="search" class="button">搜索</el-button>
@@ -58,6 +58,9 @@ export default {
     this.info()
   },
   methods: {
+    home() {
+      this.$router.push('/')
+    },
     toLogin() {
       this.$router.push('/login')
     },

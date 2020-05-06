@@ -5,10 +5,10 @@ import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class WebApplicationTests {
+public class WebApplicationTests {
 
     @Test
-    void contextLoads() {
+    public void contextLoads() {
 
     }
 

@@ -1,9 +1,7 @@
-server:
-  port: 8088
 
-allowed.origins: http://localhost:8080
+allowed.origins: http://localhost:8091
 
-adminPath: /api/v1
+adminPath: learn/api/v1
 
 spring:
   datasource:
@@ -36,6 +34,5 @@ UploadPath: D:/upload
 
 Rtmp: rtmp://192.168.1.9/live
 
-
-
-
+server:
+  port: 8090

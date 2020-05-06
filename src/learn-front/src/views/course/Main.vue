@@ -121,19 +121,15 @@ export default {
     }
   },
   mounted() {
+    this.$emit('childFn', this.sup_this)
     if (store.getters.courseTypeId === '') {
       this.info()
     } else {
       this.routerInfo()
     }
-    if (
-      this.$route.query.input !== null &&
-      this.$route.query.input !== '' &&
-      this.$route.query.input.length !== 0
-    ) {
+    if (this.$route.query.input !== null && this.$route.query.input !== '') {
       this.search(this.$route.query.input)
     }
-    this.$emit('childFn', this.sup_this)
   },
   watch: {},
   methods: {

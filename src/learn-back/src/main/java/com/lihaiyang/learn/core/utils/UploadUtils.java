@@ -3,9 +3,8 @@ package com.lihaiyang.learn.core.utils;
 
 import com.lihaiyang.learn.core.result.Result;
 import com.lihaiyang.learn.core.result.ResultStatus;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;

@@ -67,7 +67,7 @@ public class LoginController {
     /**
      * 用户登出
      * */
-    @GetMapping({"/logout"})
+    @GetMapping({"${adminPath}/logout"})
     public ResponseEntity<Void> logout() {
         SecurityUtils.getSubject().logout();
         return ResponseEntity.ok().build();

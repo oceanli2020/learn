@@ -131,7 +131,7 @@ export default {
       msg2: '点击关闭直播，今天也要早点休息哦',
       username: '',
       profilePhoto: '',
-      address: 'http://localhost:8080/livestuido?id=',
+      address: 'http://localhost:8091/livestuido?id=',
       rtmp: '',
       code: '',
       live: {

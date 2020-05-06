@@ -1,6 +1,6 @@
 <template>
   <div style="margin-left:230px;margin-right:200px;margin-top:10px">
-    <el-link type="primary" class="brand" :underline="false" href="http://localhost:8080/">在线教育平台</el-link>
+    <el-link type="primary" class="brand" :underline="false" @click="home">在线教育平台</el-link>
   </div>
 </template>
 
@@ -10,7 +10,11 @@ export default {
   data() {
     return {}
   },
-  methods: {}
+  methods: {
+    home() {
+      this.$router.push('/')
+    }
+  }
 }
 </script>
 

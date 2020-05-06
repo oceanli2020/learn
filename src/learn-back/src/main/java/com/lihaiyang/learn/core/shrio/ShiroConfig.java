@@ -25,8 +25,7 @@ import org.springframework.context.annotation.DependsOn;
 public class ShiroConfig {
 
 
-    @Value("${adminPath}")
-    private String adminPath;
+    private String adminPath = "/learn/api/v1";
 
     public ShiroConfig() {
     }
@@ -81,14 +80,14 @@ public class ShiroConfig {
     @Bean
     protected ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
-        chainDefinition.addPathDefinition("/api/v1/login", "anon");
-        chainDefinition.addPathDefinition("/api/v1/token", "anon");
-        chainDefinition.addPathDefinition("/logout", "anon");
-        chainDefinition.addPathDefinition("/api/v1/sys/user/register", "anon");
-        chainDefinition.addPathDefinition("/api/v1/course/type/children/*", "anon");
-        chainDefinition.addPathDefinition("/api/v1/course/type/parents/*", "anon");
-        chainDefinition.addPathDefinition("/api/v1/course/page", "anon");
-        chainDefinition.addPathDefinition("/api/v1/live/page", "anon");
+        chainDefinition.addPathDefinition(adminPath+"/login", "anon");
+        chainDefinition.addPathDefinition(adminPath+"/token", "anon");
+        chainDefinition.addPathDefinition(adminPath+"/logout", "anon");
+        chainDefinition.addPathDefinition(adminPath+"/sys/user/register", "anon");
+        chainDefinition.addPathDefinition(adminPath+"/course/type/children/*", "anon");
+        chainDefinition.addPathDefinition(adminPath+"/course/type/parents/*", "anon");
+        chainDefinition.addPathDefinition(adminPath+"/course/page", "anon");
+        chainDefinition.addPathDefinition(adminPath+"/live/page", "anon");
         chainDefinition.addPathDefinition("/**", "noSessionCreation,authcToken");
         return chainDefinition;
     }

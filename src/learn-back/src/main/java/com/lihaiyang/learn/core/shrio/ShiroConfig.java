@@ -25,7 +25,7 @@ import org.springframework.context.annotation.DependsOn;
 public class ShiroConfig {
 
 
-    private String adminPath = "/learn/api/v1";
+    private String adminPath = "/api/v1";
 
     public ShiroConfig() {
     }

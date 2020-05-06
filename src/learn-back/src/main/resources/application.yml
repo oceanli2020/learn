@@ -1,7 +1,7 @@
 
 allowed.origins: http://localhost:8091
 
-adminPath: learn/api/v1
+adminPath: api/v1
 
 spring:
   datasource:

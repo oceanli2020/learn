@@ -35,7 +35,7 @@ public class Scheduler {
     @Scheduled(initialDelay = 1000 * 30, fixedDelay = 1000 * 60 * 5)
     public void saveReplayInfo() throws Exception {
         System.out.println("执行存入直播回放时间：" + dateFormat.format(new Date()));
-        File file = new File("/home/ocean/replay");
+        File file = new File("G:/replay");
         File[] folders = file.listFiles();
         for (File folder : folders) {
             String code = folder.getName();
@@ -65,7 +65,8 @@ public class Scheduler {
                     String[] strings = name.split("-");
                     int index = strings[0].length() + strings[1].length() + 2;
                     String time = name.substring(index).replace(".mp4", "");
-                    date = formatStringToDateLinux(time);
+                    // date = formatStringToDateLinux(time);
+                    date = dateFormat.parse(time);
                 } catch (Exception e) {
                     throw new Exception(e);
                 }

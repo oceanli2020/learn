@@ -15,6 +15,9 @@ public class VideoUtils {
      */
     public static long getDuration(File file) throws IOException {
         IsoFile isoFile = new IsoFile(file.getPath());
+        if(isoFile.getMovieBox()==null){
+            return 0;
+        }
         long lengthInSeconds =
                 isoFile.getMovieBox().getMovieHeaderBox().getDuration() /
                         isoFile.getMovieBox().getMovieHeaderBox().getTimescale();

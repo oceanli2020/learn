@@ -84,7 +84,7 @@ public class Scheduler {
                 entity.setDuration(duration);
                 entity.setCreateDate(date);
                 entity.setLiveId(liveId);
-                entity.setPath(f.getPath().replace("\\", "/").replace("/home/ocean", ""));
+                entity.setPath(f.getPath().replace("\\", "/").replace("G:", ""));
                 replayService.save(entity);
                 count++;
             }

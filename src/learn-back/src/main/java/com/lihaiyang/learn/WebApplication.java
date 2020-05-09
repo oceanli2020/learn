@@ -13,12 +13,6 @@ public class WebApplication{
     public static void main(String[] args) {
         SpringApplication.run(WebApplication.class, args);
     }
-
-//    extends SpringBootServletInitializer
-//    @Override
-//    protected SpringApplicationBuilder configure(
-//            SpringApplicationBuilder builder) {
-//        return builder.sources(this.getClass());
-//    }
+    
 
 }

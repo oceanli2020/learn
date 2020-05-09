@@ -1,3 +1,5 @@
+server:
+  port: 8090
 
 allowed.origins: http://localhost:8091
 
@@ -34,5 +36,3 @@ UploadPath: D:/upload
 
 Rtmp: rtmp://192.168.1.9/live
 
-server:
-  port: 8090

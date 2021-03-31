@@ -21,7 +21,7 @@
         <shiro.version>1.4.0</shiro.version>
         <jjwt.version>0.9.0</jjwt.version>
         <commons-io.version>2.6</commons-io.version>
-        <guava.version>27.0.1-jre</guava.version>
+        <guava.version>29.0-jre</guava.version>
         <commons-text.version>1.3</commons-text.version>
         <fastjson.version>1.2.56</fastjson.version>
     </properties>
